@@ -1,6 +1,8 @@
 ---
-title: "Introduction to waxer"
-output: rmarkdown::html_vignette
+title: "Getting started with {waxer}"
+output:
+  rmarkdown::html_vignette:
+    df_print: kable
 vignette: >
   %\VignetteIndexEntry{waxer}
   %\VignetteEngine{knitr::rmarkdown}
@@ -10,10 +12,111 @@ vignette: >
 ```{r, include = FALSE}
 knitr::opts_chunk$set(
   collapse = TRUE,
-  comment = "#>"
+  comment = "#>",
+  fig.height = 5, fig.width = 7, dpi = 200,
+  out.height = 500, out.width = 700
 )
 ```
 
 ```{r setup}
 library(waxer)
+```
+
+## Active editors
+
+Suppose we wanted to get the daily number of non-bot active editors of content pages on English Wikipedia in January 2020. This is easy with {waxer}'s `wx_active_editors` function:
+
+```{r active_editors, cache=TRUE}
+active_editors <- wx_active_editors(
+  project = "en.wikipedia", editor_type = "user", page_type = "content",
+  start_date = "20200101", end_date = "20200131"
+)
+```
+```{r}
+head(active_editors)
+```
+
+### By activity level
+
+Suppose we wanted to visualize these daily counts broken down by activity level. {purrr} makes it very easy to programmatically obtain various metrics. For this example we will use [`purrr::map_dfr`](https://purrr.tidyverse.org/reference/map.html) to use the function with each activity level we're interested in, keeping all the other parameters constant:
+
+```{r warning=FALSE, message=FALSE}
+library(dplyr)
+library(purrr)
+library(ggplot2)
+```
+
+```{r active_editors_by_activity, cache=TRUE}
+activity_levels <- c(
+  "low" = "1-4",
+  "medium" = "5-24",
+  "high" = "25-99",
+  "very high" = "100+"
+)
+active_editors_by_activity <- map_dfr(
+  activity_levels,
+  wx_active_editors,
+  project = "en.wikipedia", editor_type = "user", page_type = "content",
+  start_date = "20200101", end_date = "20200131",
+  .id = "activity_level"
+)
+```
+
+```{r}
+active_editors_by_activity <- active_editors_by_activity %>%
+  mutate(
+    date = as.Date(timestamp),
+    activity_level = factor(
+      activity_level,
+      names(activity_levels),
+      sprintf("%s (%s edits)", names(activity_levels), activity_levels)
+    )
+  )
+
+ggplot(active_editors_by_activity, aes(x = date, y = editors)) +
+  geom_col(aes(fill = activity_level)) +
+  scale_x_date(date_labels = "%a, %d %b") +
+  scale_fill_brewer("Activity level", palette = "Set1") +
+  labs(
+    title = "Number of English Wikipedia article editors in January 2020",
+    subtitle = "Broken down by activity level (number of edits)"
+  ) +
+  theme_minimal() +
+  theme(legend.position = "bottom")
+```
+
+### By wiki
+
+Similarly, we can obtain the (monthly) totals for several Wikipedias. This time we're *not* breaking down by activity level (which is the default behavior for this function):
+
+```{r active_editors_by_wiki, cache=TRUE}
+wikis <- c(
+  "English" = "en.wikipedia",
+  "Russian" = "ru.wikipedia"
+)
+active_editors_by_wiki <- map_dfr(
+  wikis,
+  wx_active_editors,
+  editor_type = "user", page_type = "content",
+  start_date = "20150101", end_date = "20200301",
+  granularity = "monthly",
+  .id = "language"
+)
+```
+
+```{r}
+active_editors_by_wiki$date <- as.Date(active_editors_by_wiki$timestamp)
+
+ggplot(active_editors_by_wiki) +
+  geom_line(aes(x = date, color = language, y = editors)) +
+  scale_x_date(date_breaks = "1 year", minor_breaks = NULL, date_labels = "%b\n%Y") +
+  scale_y_continuous(minor_breaks = NULL) +
+  facet_wrap(~ language, ncol = 1, scales = "free_y") +
+  labs(
+    title = "Number of English & Russian Wikipedia article editors",
+    subtitle = "Monthly total since January 2018",
+    y = "Active editors per month"
+  ) +
+  theme_minimal() +
+  theme(legend.position = "bottom")
 ```

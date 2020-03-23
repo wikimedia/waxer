@@ -23,6 +23,7 @@ Imports:
     magrittr,
     zeallot
 Suggests:
+    ggplot2,
     readr,
     knitr,
     rmarkdown
