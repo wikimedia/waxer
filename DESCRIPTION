@@ -4,7 +4,7 @@ Version: 0.0.1.9000
 Date: 2020-03-20
 Authors@R: c(
     person("Mikhail", "Popov", email = "mikhail@wikimedia.org",
-           role = c("aut", "cre"), comment = "@bearloga on Twitter"),
+           role = c("aut", "cre")),
     person("Wikimedia Foundation", role = "cph")
     )
 Description: An API client for the 'Wikimedia API'
@@ -19,12 +19,14 @@ Imports:
     lubridate (>= 1.7.4),
     purrr (>= 0.3.3),
     ratelimitr (>= 0.4.1),
+    tidyr (>= 1.0.2),
     assertthat,
     magrittr,
     zeallot
 Suggests:
-    tidyr,
-    readr
+    readr,
+    knitr,
+    rmarkdown
 URL: https://github.com/bearloga/waxer
 BugReports: https://github.com/bearloga/waxer/issues
 License: MIT + file LICENSE
@@ -32,3 +34,4 @@ Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.1.0
+VignetteBuilder: knitr

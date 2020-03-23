@@ -76,7 +76,7 @@ wx_top_editors <- function(
 #'
 #' Frustratingly, `start_date = "20191201"` and `end_date = "20191231"` does
 #' **_not_** yield 2019-12 monthly total. Use `end_date = "20200101"` for that.
-#' @seealso [wikitech\:Analytics/AQS/Wikistats 2#Editors](https://wikitech.wikimedia.org/wiki/Analytics/AQS/Wikistats_2#Editors)
+#' @seealso [wikitech:Analytics/AQS/Wikistats 2#Editors](https://wikitech.wikimedia.org/wiki/Analytics/AQS/Wikistats_2#Editors)
 #' @export
 wx_active_editors <- function(
   project = "mediawiki",

@@ -2,8 +2,8 @@
 % Please edit documentation in R/waxer.R
 \docType{package}
 \name{waxer-package}
-\alias{waxer-package}
 \alias{waxer}
+\alias{waxer-package}
 \title{waxer: Wikimedia Analytics Query Service (AQS) API}
 \description{
 This is an R wrapper for the
@@ -40,3 +40,21 @@ This dataset was generated from the
 }
 }
 
+\seealso{
+Useful links:
+\itemize{
+  \item \url{https://github.com/bearloga/waxer}
+  \item Report bugs at \url{https://github.com/bearloga/waxer/issues}
+}
+
+}
+\author{
+\strong{Maintainer}: Mikhail Popov \email{mikhail@wikimedia.org}
+
+Other contributors:
+\itemize{
+  \item Wikimedia Foundation [copyright holder]
+}
+
+}
+\keyword{internal}

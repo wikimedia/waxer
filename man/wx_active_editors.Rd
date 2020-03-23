@@ -66,5 +66,5 @@ Frustratingly, \code{start_date = "20191201"} and \code{end_date = "20191231"} d
 }
 
 \seealso{
-\href{https://wikitech.wikimedia.org/wiki/Analytics/AQS/Wikistats_2#Editors}{wikitech\:Analytics/AQS/Wikistats 2#Editors}
+\href{https://wikitech.wikimedia.org/wiki/Analytics/AQS/Wikistats_2#Editors}{wikitech:Analytics/AQS/Wikistats 2#Editors}
 }

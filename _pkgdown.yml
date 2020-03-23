@@ -1,0 +1,30 @@
+url: https://bearloga.github.io/waxer
+destination: docs
+
+authors:
+  Mikhail Popov:
+    href: https://mpopov.com
+
+template:
+  params:
+    bootswatch: paper
+
+navbar:
+  structure:
+    left:  [home]
+    right: [intro, reference, articles, tutorials, news, github]
+  components:
+    home: ~
+
+reference:
+  - title: "Editors"
+    desc: >
+      Functions for metrics related to editors
+    contents:
+      - wx_active_editors
+      - wx_top_editors
+  - title: "Utilities"
+    desc: >
+      Utility functions primarily for internal use
+    contents:
+      - wx_query_api

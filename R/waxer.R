@@ -29,9 +29,7 @@
 #'   \item{[wx_active_editors]}{Number of active editors}
 #'   \item{[wx_top_editors]}{Top 100 editors per day by number of edits}
 #' }
-#' @aliases waxer
-#' @docType package
-#' @name waxer-package
+#' @keywords internal
 #' @importFrom magrittr %>%
 #' @importFrom zeallot %<-%
-NULL
+"_PACKAGE"
