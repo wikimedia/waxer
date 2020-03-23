@@ -1,0 +1,34 @@
+Package: waxer
+Title: API Client Library for 'Wikimedia Analytics Query Service (AQS)'
+Version: 0.0.1.9000
+Date: 2020-03-20
+Authors@R: c(
+    person("Mikhail", "Popov", email = "mikhail@wikimedia.org",
+           role = c("aut", "cre"), comment = "@bearloga on Twitter"),
+    person("Wikimedia Foundation", role = "cph")
+    )
+Description: An API client for the 'Wikimedia API'
+    <https://wikimedia.org/api/rest_v1/>.
+Depends:
+    R (>= 3.2)
+Imports:
+    httr (>= 1.4.1),
+    dplyr (>= 0.8.5),
+    glue (>= 1.3.2),
+    jsonlite (>= 1.2),
+    lubridate (>= 1.7.4),
+    purrr (>= 0.3.3),
+    ratelimitr (>= 0.4.1),
+    assertthat,
+    magrittr,
+    zeallot
+Suggests:
+    tidyr,
+    readr
+URL: https://github.com/bearloga/waxer
+BugReports: https://github.com/bearloga/waxer/issues
+License: MIT + file LICENSE
+Encoding: UTF-8
+LazyData: true
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.1.0
