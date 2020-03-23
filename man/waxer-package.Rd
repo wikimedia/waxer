@@ -36,6 +36,7 @@ This dataset was generated from the
 
 \describe{
 \item{\link{wx_active_editors}}{Number of active editors}
+\item{\link{wx_top_editors}}{Top 100 editors per day by number of edits}
 }
 }
 

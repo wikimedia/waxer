@@ -14,7 +14,7 @@ wx_query_api <- function(reqs_per_second = 200) {
     if (httr::http_type(response) == "application/json") {
       result <- jsonlite::fromJSON(httr::content(response, as = "text", encoding = "UTF-8"), simplifyVector = FALSE)
     }
-    data_frame <- purrr::map_dfr(result$items[[1]]$results, as.data.frame, stringsAsFactors = FALSE)
+    data_frame <- purrr::map_dfr(result$items[[1]]$results, tibble::as_tibble)
     if ("timestamp" %in% names(data_frame)) {
       data_frame$timestamp <- lubridate::ymd_hms(data_frame$timestamp)
     }
