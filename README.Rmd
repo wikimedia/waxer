@@ -1,5 +1,5 @@
 ---
-title: "waxer: Wikimedia Analytics Query Service (AQS) API in R"
+title: "Wikimedia Analytics Query Service (AQS) API in R"
 output:
   github_document:
     toc: true
@@ -10,7 +10,7 @@ output:
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-This is an R wrapper for the [Wikimedia Analytics Query Service (AQS)](https://www.mediawiki.org/wiki/Wikidata_query_service). The [REST API](https://wikimedia.org/api/rest_v1/) provides cacheable and straightforward access to Wikimedia content and data, in machine-readable formats. This particular wrapper is for the `/metrics` endpoint.
+{waxer} is an R wrapper for the [Wikimedia Analytics Query Service (AQS)](https://www.mediawiki.org/wiki/Wikidata_query_service). The [REST API](https://wikimedia.org/api/rest_v1/) provides cacheable and straightforward access to Wikimedia content and data, in machine-readable formats. This particular wrapper is for the `/metrics` endpoint.
 
 __Author:__ Mikhail Popov (Wikimedia Foundation)<br/>
 __License:__ [MIT](http://opensource.org/licenses/MIT)<br/>
@@ -29,10 +29,11 @@ remotes::install_github("bearloga/waxer")
 
 ```{r load, eval=FALSE}
 library(waxer)
-
 ?waxer
 ```
 
 ## Additional Information
 
 Please note that this project is released with a [Contributor Code of Conduct](https://github.com/bearloga/WikidataQueryServiceR/blob/master/CONDUCT.md). By participating in this project you agree to abide by its terms.
+
+**Why "waxer"?** Well, I was looking at the initialism "WAQSR" (Wikimedia Analytics Query Service in R) and just really not liking how awkward it looked.

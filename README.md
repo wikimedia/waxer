@@ -1,11 +1,11 @@
-waxer: Wikimedia Analytics Query Service (AQS) API in R
+Wikimedia Analytics Query Service (AQS) API in R
 ================
 
   - [Installation](#installation)
   - [Usage](#usage)
   - [Additional Information](#additional-information)
 
-This is an R wrapper for the [Wikimedia Analytics Query Service
+{waxer} is an R wrapper for the [Wikimedia Analytics Query Service
 (AQS)](https://www.mediawiki.org/wiki/Wikidata_query_service). The [REST
 API](https://wikimedia.org/api/rest_v1/) provides cacheable and
 straightforward access to Wikimedia content and data, in
@@ -29,7 +29,6 @@ remotes::install_github("bearloga/waxer")
 
 ``` r
 library(waxer)
-
 ?waxer
 ```
 
@@ -38,3 +37,7 @@ library(waxer)
 Please note that this project is released with a [Contributor Code of
 Conduct](https://github.com/bearloga/WikidataQueryServiceR/blob/master/CONDUCT.md).
 By participating in this project you agree to abide by its terms.
+
+**Why “waxer”?** Well, I was looking at the initialism “WAQSR”
+(Wikimedia Analytics Query Service in R) and just really not liking how
+awkward it looked.

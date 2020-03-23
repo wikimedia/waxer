@@ -1,7 +1,6 @@
 Package: waxer
 Title: API Client Library for 'Wikimedia Analytics Query Service (AQS)'
 Version: 0.0.1.9000
-Date: 2020-03-20
 Authors@R: c(
     person("Mikhail", "Popov", email = "mikhail@wikimedia.org",
            role = c("aut", "cre")),
