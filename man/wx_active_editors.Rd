@@ -48,6 +48,9 @@ Can also be a \code{Date} or a \code{POSIXt} object, which will be auto-formatte
 \item{end_date}{The date of the last day to include, in YYYYMMDD format.
 Can also be a \code{Date} or a \code{POSIXt} object, which will be auto-formatted.}
 }
+\value{
+A tibble data frame with columns \code{date} and \code{editors}.
+}
 \description{
 Number of active editors. \strong{Caution}: This metric measures
 editors' activity, therefore it includes edits on redirects.

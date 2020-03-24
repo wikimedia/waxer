@@ -5,12 +5,12 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Getting started with {waxer} • waxer</title>
+<title>Introduction to {waxer} • waxer</title>
 <!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script><!-- Bootstrap --><link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.3.7/paper/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/all.min.css" integrity="sha256-nAmazAk6vS34Xqo0BSrTb+abbtFlgsFK7NKSi6o7Y78=" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/v4-shims.min.css" integrity="sha256-6qHlizsOWFskGlwVOKuns+D1nB6ssZrHQrNj1wGplHc=" crossorigin="anonymous">
 <!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/headroom.min.js" integrity="sha256-DJFC1kqIhelURkuza0AvYal5RxMtpzLjFhsnVIeuk+U=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
-<script src="../pkgdown.js"></script><meta property="og:title" content="Getting started with {waxer}">
+<script src="../pkgdown.js"></script><meta property="og:title" content="Introduction to {waxer}">
 <meta property="og:description" content="">
 <meta name="twitter:card" content="summary">
 <!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
@@ -39,7 +39,7 @@
       <ul class="nav navbar-nav"></ul>
 <ul class="nav navbar-nav navbar-right">
 <li>
-  <a href="../articles/waxer.html">Get started</a>
+  <a href="../articles/waxer.html">Intro</a>
 </li>
 <li>
   <a href="../reference/index.html">Reference</a>
@@ -66,7 +66,7 @@
       </header><script src="waxer_files/header-attrs-2.1/header-attrs.js"></script><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
-      <h1>Getting started with {waxer}</h1>
+      <h1>Introduction to {waxer}</h1>
             
       
       <small class="dont-index">Source: <a href="https://github.com/bearloga/waxer/blob/master/vignettes/waxer.Rmd"><code>vignettes/waxer.Rmd</code></a></small>
@@ -76,98 +76,182 @@
 
     
     
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(waxer)</span></code></pre></div>
-<div id="active-editors" class="section level2">
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(waxer)</span>
+<span id="cb1-2"><a href="#cb1-2"></a></span>
+<span id="cb1-3"><a href="#cb1-3"></a><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(dplyr)</span>
+<span id="cb1-4"><a href="#cb1-4"></a><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(purrr)</span>
+<span id="cb1-5"><a href="#cb1-5"></a><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(ggplot2)</span></code></pre></div>
+<p><a href="https://purrr.tidyverse.org/">{purrr}</a> makes it very easy to run multiple {waxer} queries programmatically, and <a href="https://dplyr.tidyverse.org/">{dplyr}</a> makes it easy to manipulate the obtained data for visualization with <a href="https://ggplot2.tidyverse.org/">{ggplot2}</a>. In some of these examples we will use <a href="https://purrr.tidyverse.org/reference/map.html"><code><a href="https://purrr.tidyverse.org/reference/map.html">purrr::map</a></code></a> to apply a {waxer} function to a set of values we’re interested in while keeping all the other parameters constant. For example:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a>fun &lt;-<span class="st"> </span><span class="cf">function</span>(a, b) {</span>
+<span id="cb2-2"><a href="#cb2-2"></a>  <span class="kw"><a href="https://rdrr.io/r/base/function.html">return</a></span>(a <span class="op">+</span><span class="st"> </span>b)</span>
+<span id="cb2-3"><a href="#cb2-3"></a>}</span>
+<span id="cb2-4"><a href="#cb2-4"></a><span class="kw"><a href="https://purrr.tidyverse.org/reference/map.html">map</a></span>(<span class="op">-</span><span class="dv">1</span><span class="op">:</span><span class="dv">1</span>, fun, <span class="dt">b =</span> <span class="dv">2</span>)</span>
+<span id="cb2-5"><a href="#cb2-5"></a><span class="co">#&gt; [[1]]</span></span>
+<span id="cb2-6"><a href="#cb2-6"></a><span class="co">#&gt; [1] 1</span></span>
+<span id="cb2-7"><a href="#cb2-7"></a><span class="co">#&gt; </span></span>
+<span id="cb2-8"><a href="#cb2-8"></a><span class="co">#&gt; [[2]]</span></span>
+<span id="cb2-9"><a href="#cb2-9"></a><span class="co">#&gt; [1] 2</span></span>
+<span id="cb2-10"><a href="#cb2-10"></a><span class="co">#&gt; </span></span>
+<span id="cb2-11"><a href="#cb2-11"></a><span class="co">#&gt; [[3]]</span></span>
+<span id="cb2-12"><a href="#cb2-12"></a><span class="co">#&gt; [1] 3</span></span></code></pre></div>
+<p>Notice that the output is a <code>list</code>, which is <code>map</code>’s default behavior. We can also specify the output type by using the different flavors of <code>map</code>:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a><span class="kw"><a href="https://purrr.tidyverse.org/reference/map.html">map_dbl</a></span>(<span class="op">-</span><span class="dv">1</span><span class="op">:</span><span class="dv">1</span>, fun, <span class="dt">b =</span> <span class="dv">2</span>)</span>
+<span id="cb3-2"><a href="#cb3-2"></a><span class="co">#&gt; [1] 1 2 3</span></span>
+<span id="cb3-3"><a href="#cb3-3"></a><span class="kw"><a href="https://purrr.tidyverse.org/reference/map.html">map_chr</a></span>(<span class="op">-</span><span class="dv">1</span><span class="op">:</span><span class="dv">1</span>, fun, <span class="dt">b =</span> <span class="dv">2</span>)</span>
+<span id="cb3-4"><a href="#cb3-4"></a><span class="co">#&gt; [1] "1.000000" "2.000000" "3.000000"</span></span></code></pre></div>
+<p>Since the output of {waxer}’s API-querying functions is always a <a href="https://tibble.tidyverse.org/"><code>tibble</code></a> (an extension of a <code>data.frame</code>), we will mostly be using the <code>map_dfr</code> function which stitches several tibbles into a one (using <a href="https://dplyr.tidyverse.org/reference/bind.html"><code><a href="https://dplyr.tidyverse.org/reference/bind.html">dplyr::bind_rows</a></code></a>).</p>
+<div id="traffic-based-data" class="section level1">
+<h1 class="hasAnchor">
+<a href="#traffic-based-data" class="anchor"></a>Traffic-based data</h1>
+<div id="top-viewed-articles" class="section level2">
 <h2 class="hasAnchor">
-<a href="#active-editors" class="anchor"></a>Active editors</h2>
-<p>Suppose we wanted to get the daily number of non-bot active editors of content pages on English Wikipedia in January 2020. This is easy with {waxer}’s <code>wx_active_editors</code> function:</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a>active_editors &lt;-<span class="st"> </span><span class="kw"><a href="../reference/wx_active_editors.html">wx_active_editors</a></span>(</span>
-<span id="cb2-2"><a href="#cb2-2"></a>  <span class="dt">project =</span> <span class="st">"en.wikipedia"</span>, <span class="dt">editor_type =</span> <span class="st">"user"</span>, <span class="dt">page_type =</span> <span class="st">"content"</span>,</span>
-<span id="cb2-3"><a href="#cb2-3"></a>  <span class="dt">start_date =</span> <span class="st">"20200101"</span>, <span class="dt">end_date =</span> <span class="st">"20200131"</span></span>
-<span id="cb2-4"><a href="#cb2-4"></a>)</span></code></pre></div>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a><span class="kw"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(active_editors)</span>
-<span id="cb3-2"><a href="#cb3-2"></a><span class="co">#&gt; # A tibble: 6 x 2</span></span>
-<span id="cb3-3"><a href="#cb3-3"></a><span class="co">#&gt;   timestamp           editors</span></span>
-<span id="cb3-4"><a href="#cb3-4"></a><span class="co">#&gt;   &lt;dttm&gt;                &lt;int&gt;</span></span>
-<span id="cb3-5"><a href="#cb3-5"></a><span class="co">#&gt; 1 2020-01-01 00:00:00    9072</span></span>
-<span id="cb3-6"><a href="#cb3-6"></a><span class="co">#&gt; 2 2020-01-02 00:00:00   10522</span></span>
-<span id="cb3-7"><a href="#cb3-7"></a><span class="co">#&gt; 3 2020-01-03 00:00:00   10475</span></span>
-<span id="cb3-8"><a href="#cb3-8"></a><span class="co">#&gt; 4 2020-01-04 00:00:00    9880</span></span>
-<span id="cb3-9"><a href="#cb3-9"></a><span class="co">#&gt; 5 2020-01-05 00:00:00    9941</span></span>
-<span id="cb3-10"><a href="#cb3-10"></a><span class="co">#&gt; 6 2020-01-06 00:00:00   10834</span></span></code></pre></div>
-<div id="by-activity-level" class="section level3">
-<h3 class="hasAnchor">
-<a href="#by-activity-level" class="anchor"></a>By activity level</h3>
-<p>Suppose we wanted to visualize these daily counts broken down by activity level. {purrr} makes it very easy to programmatically obtain various metrics. For this example we will use <a href="https://purrr.tidyverse.org/reference/map.html"><code><a href="https://purrr.tidyverse.org/reference/map.html">purrr::map_dfr</a></code></a> to use the function with each activity level we’re interested in, keeping all the other parameters constant:</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1"></a><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(dplyr)</span>
-<span id="cb4-2"><a href="#cb4-2"></a><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(purrr)</span>
-<span id="cb4-3"><a href="#cb4-3"></a><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(ggplot2)</span></code></pre></div>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a>activity_levels &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(</span>
-<span id="cb5-2"><a href="#cb5-2"></a>  <span class="st">"low"</span> =<span class="st"> "1-4"</span>,</span>
-<span id="cb5-3"><a href="#cb5-3"></a>  <span class="st">"medium"</span> =<span class="st"> "5-24"</span>,</span>
-<span id="cb5-4"><a href="#cb5-4"></a>  <span class="st">"high"</span> =<span class="st"> "25-99"</span>,</span>
-<span id="cb5-5"><a href="#cb5-5"></a>  <span class="st">"very high"</span> =<span class="st"> "100+"</span></span>
-<span id="cb5-6"><a href="#cb5-6"></a>)</span>
-<span id="cb5-7"><a href="#cb5-7"></a>active_editors_by_activity &lt;-<span class="st"> </span><span class="kw"><a href="https://purrr.tidyverse.org/reference/map.html">map_dfr</a></span>(</span>
-<span id="cb5-8"><a href="#cb5-8"></a>  activity_levels,</span>
-<span id="cb5-9"><a href="#cb5-9"></a>  wx_active_editors,</span>
-<span id="cb5-10"><a href="#cb5-10"></a>  <span class="dt">project =</span> <span class="st">"en.wikipedia"</span>, <span class="dt">editor_type =</span> <span class="st">"user"</span>, <span class="dt">page_type =</span> <span class="st">"content"</span>,</span>
-<span id="cb5-11"><a href="#cb5-11"></a>  <span class="dt">start_date =</span> <span class="st">"20200101"</span>, <span class="dt">end_date =</span> <span class="st">"20200131"</span>,</span>
-<span id="cb5-12"><a href="#cb5-12"></a>  <span class="dt">.id =</span> <span class="st">"activity_level"</span></span>
-<span id="cb5-13"><a href="#cb5-13"></a>)</span></code></pre></div>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1"></a>active_editors_by_activity &lt;-<span class="st"> </span>active_editors_by_activity <span class="op">%&gt;%</span></span>
-<span id="cb6-2"><a href="#cb6-2"></a><span class="st">  </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span>(</span>
-<span id="cb6-3"><a href="#cb6-3"></a>    <span class="dt">date =</span> <span class="kw"><a href="https://rdrr.io/r/base/as.Date.html">as.Date</a></span>(timestamp),</span>
-<span id="cb6-4"><a href="#cb6-4"></a>    <span class="dt">activity_level =</span> <span class="kw"><a href="https://rdrr.io/r/base/factor.html">factor</a></span>(</span>
-<span id="cb6-5"><a href="#cb6-5"></a>      activity_level,</span>
-<span id="cb6-6"><a href="#cb6-6"></a>      <span class="kw"><a href="https://rdrr.io/r/base/names.html">names</a></span>(activity_levels),</span>
-<span id="cb6-7"><a href="#cb6-7"></a>      <span class="kw"><a href="https://rdrr.io/r/base/sprintf.html">sprintf</a></span>(<span class="st">"%s (%s edits)"</span>, <span class="kw"><a href="https://rdrr.io/r/base/names.html">names</a></span>(activity_levels), activity_levels)</span>
-<span id="cb6-8"><a href="#cb6-8"></a>    )</span>
-<span id="cb6-9"><a href="#cb6-9"></a>  )</span>
-<span id="cb6-10"><a href="#cb6-10"></a></span>
-<span id="cb6-11"><a href="#cb6-11"></a><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span>(active_editors_by_activity, <span class="kw"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span>(<span class="dt">x =</span> date, <span class="dt">y =</span> editors)) <span class="op">+</span></span>
-<span id="cb6-12"><a href="#cb6-12"></a><span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/geom_bar.html">geom_col</a></span>(<span class="kw"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span>(<span class="dt">fill =</span> activity_level)) <span class="op">+</span></span>
-<span id="cb6-13"><a href="#cb6-13"></a><span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/scale_date.html">scale_x_date</a></span>(<span class="dt">date_labels =</span> <span class="st">"%a, %d %b"</span>) <span class="op">+</span></span>
-<span id="cb6-14"><a href="#cb6-14"></a><span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/scale_brewer.html">scale_fill_brewer</a></span>(<span class="st">"Activity level"</span>, <span class="dt">palette =</span> <span class="st">"Set1"</span>) <span class="op">+</span></span>
-<span id="cb6-15"><a href="#cb6-15"></a><span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span>(</span>
-<span id="cb6-16"><a href="#cb6-16"></a>    <span class="dt">title =</span> <span class="st">"Number of English Wikipedia article editors in January 2020"</span>,</span>
-<span id="cb6-17"><a href="#cb6-17"></a>    <span class="dt">subtitle =</span> <span class="st">"Broken down by activity level (number of edits)"</span></span>
-<span id="cb6-18"><a href="#cb6-18"></a>  ) <span class="op">+</span></span>
-<span id="cb6-19"><a href="#cb6-19"></a><span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_minimal</a></span>() <span class="op">+</span></span>
-<span id="cb6-20"><a href="#cb6-20"></a><span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span>(<span class="dt">legend.position =</span> <span class="st">"bottom"</span>)</span></code></pre></div>
-<p><img src="waxer_files/figure-html/unnamed-chunk-4-1.png" width="700" height="500"></p>
+<a href="#top-viewed-articles" class="anchor"></a>Top viewed articles</h2>
+<p>Top 1000 viewed articles each month from Jan 2019 to March 2019 on English Wikipedia:</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1"></a>top_viewed &lt;-<span class="st"> </span><span class="kw"><a href="../reference/wx_top_viewed_articles.html">wx_top_viewed_articles</a></span>(</span>
+<span id="cb4-2"><a href="#cb4-2"></a>  <span class="dt">project =</span> <span class="st">"en.wikipedia"</span>,</span>
+<span id="cb4-3"><a href="#cb4-3"></a>  <span class="dt">granularity =</span> <span class="st">"monthly"</span>,</span>
+<span id="cb4-4"><a href="#cb4-4"></a>  <span class="dt">start_date =</span> <span class="st">"20190101"</span>,</span>
+<span id="cb4-5"><a href="#cb4-5"></a>  <span class="dt">end_date =</span> <span class="st">"20190301"</span></span>
+<span id="cb4-6"><a href="#cb4-6"></a>)</span></code></pre></div>
+<p>Top 3 articles from each month:</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a>top_viewed <span class="op">%&gt;%</span></span>
+<span id="cb5-2"><a href="#cb5-2"></a><span class="st">  </span><span class="co"># Exclude main page and other non-article pages:</span></span>
+<span id="cb5-3"><a href="#cb5-3"></a><span class="st">  </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span>(article <span class="op">!=</span><span class="st"> "Main_Page"</span>, <span class="op">!</span><span class="kw"><a href="https://rdrr.io/r/base/grep.html">grepl</a></span>(<span class="st">"^(Special|Wikipedia)</span><span class="ch">\\</span><span class="st">:.*"</span>, article)) <span class="op">%&gt;%</span></span>
+<span id="cb5-4"><a href="#cb5-4"></a><span class="st">  </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span>(date) <span class="op">%&gt;%</span></span>
+<span id="cb5-5"><a href="#cb5-5"></a><span class="st">  </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/top_n.html">top_n</a></span>(<span class="dv">3</span>, views)</span>
+<span id="cb5-6"><a href="#cb5-6"></a><span class="co">#&gt; # A tibble: 9 x 4</span></span>
+<span id="cb5-7"><a href="#cb5-7"></a><span class="co">#&gt; # Groups:   date [3]</span></span>
+<span id="cb5-8"><a href="#cb5-8"></a><span class="co">#&gt;   date       article                 views  rank</span></span>
+<span id="cb5-9"><a href="#cb5-9"></a><span class="co">#&gt;   &lt;date&gt;     &lt;chr&gt;                   &lt;int&gt; &lt;int&gt;</span></span>
+<span id="cb5-10"><a href="#cb5-10"></a><span class="co">#&gt; 1 2019-01-01 Ted_Bundy             7293874     3</span></span>
+<span id="cb5-11"><a href="#cb5-11"></a><span class="co">#&gt; 2 2019-01-01 Louis_Tomlinson       5231127     4</span></span>
+<span id="cb5-12"><a href="#cb5-12"></a><span class="co">#&gt; 3 2019-01-01 XHamster              4039614     6</span></span>
+<span id="cb5-13"><a href="#cb5-13"></a><span class="co">#&gt; 4 2019-02-01 Freddie_Mercury       6464633     3</span></span>
+<span id="cb5-14"><a href="#cb5-14"></a><span class="co">#&gt; 5 2019-02-01 Louis_Tomlinson       5497023     4</span></span>
+<span id="cb5-15"><a href="#cb5-15"></a><span class="co">#&gt; 6 2019-02-01 Grover                4975383     5</span></span>
+<span id="cb5-16"><a href="#cb5-16"></a><span class="co">#&gt; 7 2019-03-01 Captain_Marvel_(film) 7070703     3</span></span>
+<span id="cb5-17"><a href="#cb5-17"></a><span class="co">#&gt; 8 2019-03-01 Luke_Perry            6362644     4</span></span>
+<span id="cb5-18"><a href="#cb5-18"></a><span class="co">#&gt; 9 2019-03-01 Us_(2019_film)        4590483     6</span></span></code></pre></div>
 </div>
-<div id="by-wiki" class="section level3">
-<h3 class="hasAnchor">
-<a href="#by-wiki" class="anchor"></a>By wiki</h3>
-<p>Similarly, we can obtain the (monthly) totals for several Wikipedias. This time we’re <em>not</em> breaking down by activity level (which is the default behavior for this function):</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1"></a>wikis &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(</span>
-<span id="cb7-2"><a href="#cb7-2"></a>  <span class="st">"English"</span> =<span class="st"> "en.wikipedia"</span>,</span>
-<span id="cb7-3"><a href="#cb7-3"></a>  <span class="st">"Russian"</span> =<span class="st"> "ru.wikipedia"</span></span>
-<span id="cb7-4"><a href="#cb7-4"></a>)</span>
-<span id="cb7-5"><a href="#cb7-5"></a>active_editors_by_wiki &lt;-<span class="st"> </span><span class="kw"><a href="https://purrr.tidyverse.org/reference/map.html">map_dfr</a></span>(</span>
-<span id="cb7-6"><a href="#cb7-6"></a>  wikis,</span>
-<span id="cb7-7"><a href="#cb7-7"></a>  wx_active_editors,</span>
-<span id="cb7-8"><a href="#cb7-8"></a>  <span class="dt">editor_type =</span> <span class="st">"user"</span>, <span class="dt">page_type =</span> <span class="st">"content"</span>,</span>
-<span id="cb7-9"><a href="#cb7-9"></a>  <span class="dt">start_date =</span> <span class="st">"20150101"</span>, <span class="dt">end_date =</span> <span class="st">"20200301"</span>,</span>
-<span id="cb7-10"><a href="#cb7-10"></a>  <span class="dt">granularity =</span> <span class="st">"monthly"</span>,</span>
-<span id="cb7-11"><a href="#cb7-11"></a>  <span class="dt">.id =</span> <span class="st">"language"</span></span>
-<span id="cb7-12"><a href="#cb7-12"></a>)</span></code></pre></div>
-<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1"></a>active_editors_by_wiki<span class="op">$</span>date &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/as.Date.html">as.Date</a></span>(active_editors_by_wiki<span class="op">$</span>timestamp)</span>
-<span id="cb8-2"><a href="#cb8-2"></a></span>
-<span id="cb8-3"><a href="#cb8-3"></a><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span>(active_editors_by_wiki) <span class="op">+</span></span>
-<span id="cb8-4"><a href="#cb8-4"></a><span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html">geom_line</a></span>(<span class="kw"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span>(<span class="dt">x =</span> date, <span class="dt">color =</span> language, <span class="dt">y =</span> editors)) <span class="op">+</span></span>
-<span id="cb8-5"><a href="#cb8-5"></a><span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/scale_date.html">scale_x_date</a></span>(<span class="dt">date_breaks =</span> <span class="st">"1 year"</span>, <span class="dt">minor_breaks =</span> <span class="ot">NULL</span>, <span class="dt">date_labels =</span> <span class="st">"%b</span><span class="ch">\n</span><span class="st">%Y"</span>) <span class="op">+</span></span>
-<span id="cb8-6"><a href="#cb8-6"></a><span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html">scale_y_continuous</a></span>(<span class="dt">minor_breaks =</span> <span class="ot">NULL</span>) <span class="op">+</span></span>
-<span id="cb8-7"><a href="#cb8-7"></a><span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/facet_wrap.html">facet_wrap</a></span>(<span class="op">~</span><span class="st"> </span>language, <span class="dt">ncol =</span> <span class="dv">1</span>, <span class="dt">scales =</span> <span class="st">"free_y"</span>) <span class="op">+</span></span>
-<span id="cb8-8"><a href="#cb8-8"></a><span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span>(</span>
-<span id="cb8-9"><a href="#cb8-9"></a>    <span class="dt">title =</span> <span class="st">"Number of English &amp; Russian Wikipedia article editors"</span>,</span>
-<span id="cb8-10"><a href="#cb8-10"></a>    <span class="dt">subtitle =</span> <span class="st">"Monthly total since January 2018"</span>,</span>
-<span id="cb8-11"><a href="#cb8-11"></a>    <span class="dt">y =</span> <span class="st">"Active editors per month"</span></span>
-<span id="cb8-12"><a href="#cb8-12"></a>  ) <span class="op">+</span></span>
-<span id="cb8-13"><a href="#cb8-13"></a><span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_minimal</a></span>() <span class="op">+</span></span>
-<span id="cb8-14"><a href="#cb8-14"></a><span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span>(<span class="dt">legend.position =</span> <span class="st">"bottom"</span>)</span></code></pre></div>
+<div id="unique-devices" class="section level2">
+<h2 class="hasAnchor">
+<a href="#unique-devices" class="anchor"></a>Unique devices</h2>
+<p>To obtain the monthly estimated number of unique devices that visited German Wikivoyage from Jan 2018 to Feb 2020:</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1"></a>unique_devices &lt;-<span class="st"> </span><span class="kw"><a href="../reference/wx_unique_devices.html">wx_unique_devices</a></span>(</span>
+<span id="cb6-2"><a href="#cb6-2"></a>  <span class="dt">project =</span> <span class="st">"de.wikivoyage"</span>,</span>
+<span id="cb6-3"><a href="#cb6-3"></a>  <span class="dt">granularity =</span> <span class="st">"monthly"</span>,</span>
+<span id="cb6-4"><a href="#cb6-4"></a>  <span class="dt">access_method =</span> <span class="st">"all"</span>,</span>
+<span id="cb6-5"><a href="#cb6-5"></a>  <span class="dt">start_date =</span> <span class="st">"20180101"</span>,</span>
+<span id="cb6-6"><a href="#cb6-6"></a>  <span class="dt">end_date =</span> <span class="st">"20200228"</span></span>
+<span id="cb6-7"><a href="#cb6-7"></a>)</span></code></pre></div>
+<p>Which we can visualize with a periodicity plot:</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1"></a><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(lubridate)</span>
+<span id="cb7-2"><a href="#cb7-2"></a>unique_devices<span class="op">$</span>year &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/factor.html">factor</a></span>(<span class="kw"><a href="http://lubridate.tidyverse.org/reference/year.html">year</a></span>(unique_devices<span class="op">$</span>date))</span>
+<span id="cb7-3"><a href="#cb7-3"></a><span class="kw"><a href="http://lubridate.tidyverse.org/reference/year.html">year</a></span>(unique_devices<span class="op">$</span>date) &lt;-<span class="st"> </span><span class="dv">2018</span></span>
+<span id="cb7-4"><a href="#cb7-4"></a></span>
+<span id="cb7-5"><a href="#cb7-5"></a><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span>(unique_devices) <span class="op">+</span></span>
+<span id="cb7-6"><a href="#cb7-6"></a><span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html">geom_line</a></span>(<span class="kw"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span>(<span class="dt">x =</span> date, <span class="dt">y =</span> devices, <span class="dt">color =</span> year), <span class="dt">size =</span> <span class="fl">0.8</span>) <span class="op">+</span></span>
+<span id="cb7-7"><a href="#cb7-7"></a><span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html">scale_y_continuous</a></span>(<span class="dt">minor_breaks =</span> <span class="ot">NULL</span>, <span class="dt">labels =</span> scales<span class="op">::</span><span class="kw"><a href="https://scales.r-lib.org//reference/label_number.html">label_number</a></span>(<span class="dt">scale =</span> <span class="fl">1e-6</span>, <span class="dt">suffix =</span> <span class="st">"M"</span>)) <span class="op">+</span></span>
+<span id="cb7-8"><a href="#cb7-8"></a><span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/scale_date.html">scale_x_date</a></span>(<span class="dt">date_labels =</span> <span class="st">"%b"</span>, <span class="dt">date_breaks =</span> <span class="st">"1 month"</span>, <span class="dt">minor_breaks =</span> <span class="ot">NULL</span>) <span class="op">+</span></span>
+<span id="cb7-9"><a href="#cb7-9"></a><span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span>(</span>
+<span id="cb7-10"><a href="#cb7-10"></a>    <span class="dt">title =</span> <span class="st">"YoY daily unique devices to German Wikivoyage"</span>,</span>
+<span id="cb7-11"><a href="#cb7-11"></a>    <span class="dt">subtitle =</span> <span class="st">"To desktop and mobile website"</span>,</span>
+<span id="cb7-12"><a href="#cb7-12"></a>    <span class="dt">x =</span> <span class="st">"Month"</span>, <span class="dt">y =</span> <span class="st">"Unique devices"</span>, <span class="dt">color =</span> <span class="st">"Year"</span></span>
+<span id="cb7-13"><a href="#cb7-13"></a>  ) <span class="op">+</span></span>
+<span id="cb7-14"><a href="#cb7-14"></a><span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_minimal</a></span>() <span class="op">+</span></span>
+<span id="cb7-15"><a href="#cb7-15"></a><span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span>(</span>
+<span id="cb7-16"><a href="#cb7-16"></a>    <span class="dt">panel.grid.major.x =</span> <span class="kw"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_line</a></span>(<span class="dt">color =</span> <span class="st">"gray90"</span>, <span class="dt">size =</span> <span class="fl">0.2</span>),</span>
+<span id="cb7-17"><a href="#cb7-17"></a>    <span class="dt">panel.grid.major.y =</span> <span class="kw"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_line</a></span>(<span class="dt">color =</span> <span class="st">"gray70"</span>, <span class="dt">size =</span> <span class="fl">0.5</span>),</span>
+<span id="cb7-18"><a href="#cb7-18"></a>    <span class="dt">legend.position =</span> <span class="st">"bottom"</span></span>
+<span id="cb7-19"><a href="#cb7-19"></a>  )</span></code></pre></div>
 <p><img src="waxer_files/figure-html/unnamed-chunk-5-1.png" width="700" height="500"></p>
+</div>
+</div>
+<div id="active-editors" class="section level1">
+<h1 class="hasAnchor">
+<a href="#active-editors" class="anchor"></a>Active editors</h1>
+<p>Suppose we wanted to get the daily number of non-bot active editors of content pages on English Wikipedia in January 2020. This is easy with {waxer}’s <code>wx_active_editors</code> function:</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1"></a>active_editors &lt;-<span class="st"> </span><span class="kw"><a href="../reference/wx_active_editors.html">wx_active_editors</a></span>(</span>
+<span id="cb8-2"><a href="#cb8-2"></a>  <span class="dt">project =</span> <span class="st">"en.wikipedia"</span>, <span class="dt">editor_type =</span> <span class="st">"user"</span>, <span class="dt">page_type =</span> <span class="st">"content"</span>,</span>
+<span id="cb8-3"><a href="#cb8-3"></a>  <span class="dt">start_date =</span> <span class="st">"20200101"</span>, <span class="dt">end_date =</span> <span class="st">"20200131"</span></span>
+<span id="cb8-4"><a href="#cb8-4"></a>)</span></code></pre></div>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1"></a><span class="kw"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(active_editors)</span>
+<span id="cb9-2"><a href="#cb9-2"></a><span class="co">#&gt; # A tibble: 6 x 2</span></span>
+<span id="cb9-3"><a href="#cb9-3"></a><span class="co">#&gt;   date       editors</span></span>
+<span id="cb9-4"><a href="#cb9-4"></a><span class="co">#&gt;   &lt;date&gt;       &lt;int&gt;</span></span>
+<span id="cb9-5"><a href="#cb9-5"></a><span class="co">#&gt; 1 2020-01-01    9072</span></span>
+<span id="cb9-6"><a href="#cb9-6"></a><span class="co">#&gt; 2 2020-01-02   10522</span></span>
+<span id="cb9-7"><a href="#cb9-7"></a><span class="co">#&gt; 3 2020-01-03   10475</span></span>
+<span id="cb9-8"><a href="#cb9-8"></a><span class="co">#&gt; 4 2020-01-04    9880</span></span>
+<span id="cb9-9"><a href="#cb9-9"></a><span class="co">#&gt; 5 2020-01-05    9941</span></span>
+<span id="cb9-10"><a href="#cb9-10"></a><span class="co">#&gt; 6 2020-01-06   10834</span></span></code></pre></div>
+<div id="by-activity-level" class="section level2">
+<h2 class="hasAnchor">
+<a href="#by-activity-level" class="anchor"></a>By activity level</h2>
+<p>Suppose we wanted to visualize these daily counts broken down by activity level:</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1"></a>activity_levels &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(</span>
+<span id="cb10-2"><a href="#cb10-2"></a>  <span class="st">"low"</span> =<span class="st"> "1-4"</span>,</span>
+<span id="cb10-3"><a href="#cb10-3"></a>  <span class="st">"medium"</span> =<span class="st"> "5-24"</span>,</span>
+<span id="cb10-4"><a href="#cb10-4"></a>  <span class="st">"high"</span> =<span class="st"> "25-99"</span>,</span>
+<span id="cb10-5"><a href="#cb10-5"></a>  <span class="st">"very high"</span> =<span class="st"> "100+"</span></span>
+<span id="cb10-6"><a href="#cb10-6"></a>)</span>
+<span id="cb10-7"><a href="#cb10-7"></a>active_editors_by_activity &lt;-<span class="st"> </span><span class="kw"><a href="https://purrr.tidyverse.org/reference/map.html">map_dfr</a></span>(</span>
+<span id="cb10-8"><a href="#cb10-8"></a>  activity_levels,</span>
+<span id="cb10-9"><a href="#cb10-9"></a>  wx_active_editors,</span>
+<span id="cb10-10"><a href="#cb10-10"></a>  <span class="dt">project =</span> <span class="st">"en.wikipedia"</span>, <span class="dt">editor_type =</span> <span class="st">"user"</span>, <span class="dt">page_type =</span> <span class="st">"content"</span>,</span>
+<span id="cb10-11"><a href="#cb10-11"></a>  <span class="dt">start_date =</span> <span class="st">"20200101"</span>, <span class="dt">end_date =</span> <span class="st">"20200131"</span>,</span>
+<span id="cb10-12"><a href="#cb10-12"></a>  <span class="dt">.id =</span> <span class="st">"activity_level"</span></span>
+<span id="cb10-13"><a href="#cb10-13"></a>)</span></code></pre></div>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1"></a>active_editors_by_activity &lt;-<span class="st"> </span>active_editors_by_activity <span class="op">%&gt;%</span></span>
+<span id="cb11-2"><a href="#cb11-2"></a><span class="st">  </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span>(</span>
+<span id="cb11-3"><a href="#cb11-3"></a>    <span class="dt">activity_level =</span> <span class="kw"><a href="https://rdrr.io/r/base/factor.html">factor</a></span>(</span>
+<span id="cb11-4"><a href="#cb11-4"></a>      activity_level,</span>
+<span id="cb11-5"><a href="#cb11-5"></a>      <span class="kw"><a href="https://rdrr.io/r/base/names.html">names</a></span>(activity_levels),</span>
+<span id="cb11-6"><a href="#cb11-6"></a>      <span class="kw"><a href="https://rdrr.io/r/base/sprintf.html">sprintf</a></span>(<span class="st">"%s (%s edits)"</span>, <span class="kw"><a href="https://rdrr.io/r/base/names.html">names</a></span>(activity_levels), activity_levels)</span>
+<span id="cb11-7"><a href="#cb11-7"></a>    )</span>
+<span id="cb11-8"><a href="#cb11-8"></a>  )</span>
+<span id="cb11-9"><a href="#cb11-9"></a></span>
+<span id="cb11-10"><a href="#cb11-10"></a><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span>(active_editors_by_activity, <span class="kw"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span>(<span class="dt">x =</span> date, <span class="dt">y =</span> editors)) <span class="op">+</span></span>
+<span id="cb11-11"><a href="#cb11-11"></a><span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/geom_bar.html">geom_col</a></span>(<span class="kw"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span>(<span class="dt">fill =</span> activity_level)) <span class="op">+</span></span>
+<span id="cb11-12"><a href="#cb11-12"></a><span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/scale_date.html">scale_x_date</a></span>(<span class="dt">date_labels =</span> <span class="st">"%a, %d %b"</span>) <span class="op">+</span></span>
+<span id="cb11-13"><a href="#cb11-13"></a><span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/scale_brewer.html">scale_fill_brewer</a></span>(<span class="st">"Activity level"</span>, <span class="dt">palette =</span> <span class="st">"Set1"</span>) <span class="op">+</span></span>
+<span id="cb11-14"><a href="#cb11-14"></a><span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span>(</span>
+<span id="cb11-15"><a href="#cb11-15"></a>    <span class="dt">title =</span> <span class="st">"Number of English Wikipedia article editors in January 2020"</span>,</span>
+<span id="cb11-16"><a href="#cb11-16"></a>    <span class="dt">subtitle =</span> <span class="st">"Broken down by activity level (number of edits)"</span></span>
+<span id="cb11-17"><a href="#cb11-17"></a>  ) <span class="op">+</span></span>
+<span id="cb11-18"><a href="#cb11-18"></a><span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_minimal</a></span>() <span class="op">+</span></span>
+<span id="cb11-19"><a href="#cb11-19"></a><span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span>(<span class="dt">legend.position =</span> <span class="st">"bottom"</span>)</span></code></pre></div>
+<p><img src="waxer_files/figure-html/unnamed-chunk-7-1.png" width="700" height="500"></p>
+</div>
+<div id="by-wiki" class="section level2">
+<h2 class="hasAnchor">
+<a href="#by-wiki" class="anchor"></a>By wiki</h2>
+<p>Similarly, we can obtain the (monthly) totals for several Wikipedias. This time we’re <em>not</em> breaking down by activity level (which is the default behavior for this function):</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1"></a>wikis &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(</span>
+<span id="cb12-2"><a href="#cb12-2"></a>  <span class="st">"English"</span> =<span class="st"> "en.wikipedia"</span>,</span>
+<span id="cb12-3"><a href="#cb12-3"></a>  <span class="st">"Russian"</span> =<span class="st"> "ru.wikipedia"</span></span>
+<span id="cb12-4"><a href="#cb12-4"></a>)</span>
+<span id="cb12-5"><a href="#cb12-5"></a>active_editors_by_wiki &lt;-<span class="st"> </span><span class="kw"><a href="https://purrr.tidyverse.org/reference/map.html">map_dfr</a></span>(</span>
+<span id="cb12-6"><a href="#cb12-6"></a>  wikis,</span>
+<span id="cb12-7"><a href="#cb12-7"></a>  wx_active_editors,</span>
+<span id="cb12-8"><a href="#cb12-8"></a>  <span class="dt">editor_type =</span> <span class="st">"user"</span>, <span class="dt">page_type =</span> <span class="st">"content"</span>,</span>
+<span id="cb12-9"><a href="#cb12-9"></a>  <span class="dt">start_date =</span> <span class="st">"20150101"</span>, <span class="dt">end_date =</span> <span class="st">"20200301"</span>,</span>
+<span id="cb12-10"><a href="#cb12-10"></a>  <span class="dt">granularity =</span> <span class="st">"monthly"</span>,</span>
+<span id="cb12-11"><a href="#cb12-11"></a>  <span class="dt">.id =</span> <span class="st">"language"</span></span>
+<span id="cb12-12"><a href="#cb12-12"></a>)</span></code></pre></div>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1"></a><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span>(active_editors_by_wiki) <span class="op">+</span></span>
+<span id="cb13-2"><a href="#cb13-2"></a><span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html">geom_line</a></span>(<span class="kw"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span>(<span class="dt">x =</span> date, <span class="dt">color =</span> language, <span class="dt">y =</span> editors)) <span class="op">+</span></span>
+<span id="cb13-3"><a href="#cb13-3"></a><span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/scale_date.html">scale_x_date</a></span>(<span class="dt">date_breaks =</span> <span class="st">"1 year"</span>, <span class="dt">minor_breaks =</span> <span class="ot">NULL</span>, <span class="dt">date_labels =</span> <span class="st">"%b</span><span class="ch">\n</span><span class="st">%Y"</span>) <span class="op">+</span></span>
+<span id="cb13-4"><a href="#cb13-4"></a><span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html">scale_y_continuous</a></span>(<span class="dt">minor_breaks =</span> <span class="ot">NULL</span>) <span class="op">+</span></span>
+<span id="cb13-5"><a href="#cb13-5"></a><span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/facet_wrap.html">facet_wrap</a></span>(<span class="op">~</span><span class="st"> </span>language, <span class="dt">ncol =</span> <span class="dv">1</span>, <span class="dt">scales =</span> <span class="st">"free_y"</span>) <span class="op">+</span></span>
+<span id="cb13-6"><a href="#cb13-6"></a><span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span>(</span>
+<span id="cb13-7"><a href="#cb13-7"></a>    <span class="dt">title =</span> <span class="st">"Number of English &amp; Russian Wikipedia article editors"</span>,</span>
+<span id="cb13-8"><a href="#cb13-8"></a>    <span class="dt">subtitle =</span> <span class="st">"Monthly total since January 2018"</span>,</span>
+<span id="cb13-9"><a href="#cb13-9"></a>    <span class="dt">y =</span> <span class="st">"Active editors per month"</span></span>
+<span id="cb13-10"><a href="#cb13-10"></a>  ) <span class="op">+</span></span>
+<span id="cb13-11"><a href="#cb13-11"></a><span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_minimal</a></span>() <span class="op">+</span></span>
+<span id="cb13-12"><a href="#cb13-12"></a><span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span>(<span class="dt">legend.position =</span> <span class="st">"bottom"</span>)</span></code></pre></div>
+<p><img src="waxer_files/figure-html/unnamed-chunk-8-1.png" width="700" height="500"></p>
 </div>
 </div>
   </div>
@@ -178,7 +262,20 @@
       <h2 class="hasAnchor">
 <a href="#tocnav" class="anchor"></a>Contents</h2>
       <ul class="nav nav-pills nav-stacked">
-<li><a href="#active-editors">Active editors</a></li>
+<li>
+<a href="#traffic-based-data">Traffic-based data</a>
+      <ul class="nav nav-pills nav-stacked">
+<li><a href="#top-viewed-articles">Top viewed articles</a></li>
+      <li><a href="#unique-devices">Unique devices</a></li>
+      </ul>
+</li>
+      <li>
+<a href="#active-editors">Active editors</a>
+      <ul class="nav nav-pills nav-stacked">
+<li><a href="#by-activity-level">By activity level</a></li>
+      <li><a href="#by-wiki">By wiki</a></li>
+      </ul>
+</li>
       </ul>
 </div>
       </div>

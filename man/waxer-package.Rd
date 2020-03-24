@@ -34,9 +34,20 @@ This dataset was generated from the
 
 \section{Metrics}{
 
+\subsection{Traffic}{
+
+\describe{
+\item{\link{wx_top_viewed_articles}}{Top 1000 viewed articles}
+\item{\link{wx_unique_device}}{Unique devices}
+}
+}
+
+\subsection{Editors}{
+
 \describe{
 \item{\link{wx_active_editors}}{Number of active editors}
 \item{\link{wx_top_editors}}{Top 100 editors per day by number of edits}
+}
 }
 }
 

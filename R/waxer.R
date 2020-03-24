@@ -25,6 +25,12 @@
 #' This dataset was generated from the
 #' [Wikimedia site matrix](https://www.mediawiki.org/wiki/Special:SiteMatrix).
 #' @section Metrics:
+#' ## Traffic
+#' \describe{
+#'   \item{[wx_top_viewed_articles]}{Top 1000 viewed articles}
+#'   \item{[wx_unique_device]}{Unique devices}
+#' }
+#' ## Editors
 #' \describe{
 #'   \item{[wx_active_editors]}{Number of active editors}
 #'   \item{[wx_top_editors]}{Top 100 editors per day by number of edits}

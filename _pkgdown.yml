@@ -15,11 +15,20 @@ navbar:
     right: [intro, reference, articles, tutorials, news, github]
   components:
     home: ~
+    intro:
+      text: Intro
+      href: articles/waxer.html
 
 reference:
+  - title: "Traffic"
+    desc: >
+      Functions for metrics and data related to traffic
+    contents:
+      - wx_top_viewed_articles
+      - wx_unique_devices
   - title: "Editors"
     desc: >
-      Functions for metrics related to editors
+      Functions for metrics and data related to editors
     contents:
       - wx_active_editors
       - wx_top_editors

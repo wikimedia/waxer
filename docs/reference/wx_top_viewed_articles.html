@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Function reference • waxer</title>
+<title>Top viewed articles — wx_top_viewed_articles • waxer</title>
 
 
 <!-- jquery -->
@@ -35,7 +35,10 @@
 
 
 
-<meta property="og:title" content="Function reference" />
+<meta property="og:title" content="Top viewed articles — wx_top_viewed_articles" />
+<meta property="og:description" content="Lists the 1000 most viewed articles for a given project and
+timespan (month or day)." />
+<meta name="twitter:card" content="summary" />
 
 
 
@@ -54,7 +57,7 @@
   </head>
 
   <body>
-    <div class="container template-reference-index">
+    <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -102,84 +105,84 @@
       </header>
 
 <div class="row">
-  <div class="contents col-md-9">
+  <div class="col-md-9 contents">
     <div class="page-header">
-      <h1>Reference</h1>
+    <h1>Top viewed articles</h1>
+    <small class="dont-index">Source: <a href='https://github.com/bearloga/waxer/blob/master/R/traffic.R'><code>R/traffic.R</code></a></small>
+    <div class="hidden name"><code>wx_top_viewed_articles.Rd</code></div>
     </div>
 
-    <table class="ref-index">
+    <div class="ref-description">
+    <p>Lists the 1000 most viewed articles for a given project and
+timespan (month or day).</p>
+    </div>
 
-    <colgroup>
-      
-      <col class="alias" />
-      <col class="title" />
-    </colgroup>
+    <pre class="usage"><span class='fu'>wx_top_viewed_articles</span>(
+  <span class='kw'>project</span> <span class='kw'>=</span> <span class='st'>"mediawiki"</span>,
+  <span class='kw'>access_method</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"all"</span>, <span class='st'>"desktop"</span>, <span class='st'>"mobile web"</span>, <span class='st'>"mobile app"</span>),
+  <span class='kw'>granularity</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"daily"</span>, <span class='st'>"monthly"</span>),
+  <span class='kw'>start_date</span> <span class='kw'>=</span> <span class='st'>"20191231"</span>,
+  <span class='kw'>end_date</span> <span class='kw'>=</span> <span class='st'>"20200101"</span>
+)</pre>
 
-    <tbody>
-      <tr>
-        <th colspan="2">
-          <h2 id="section-traffic" class="hasAnchor"><a href="#section-traffic" class="anchor"></a>Traffic</h2>
-          <p class="section-desc"><p>Functions for metrics and data related to traffic</p></p>
-        </th>
-      </tr>
-      <tr>
-        
-        <td>
-          <p><code><a href="wx_top_viewed_articles.html">wx_top_viewed_articles()</a></code> </p>
-        </td>
-        <td><p>Top viewed articles</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="wx_unique_devices.html">wx_unique_devices()</a></code> </p>
-        </td>
-        <td><p>Unique devices</p></td>
-      </tr>
-    </tbody><tbody>
-      <tr>
-        <th colspan="2">
-          <h2 id="section-editors" class="hasAnchor"><a href="#section-editors" class="anchor"></a>Editors</h2>
-          <p class="section-desc"><p>Functions for metrics and data related to editors</p></p>
-        </th>
-      </tr>
-      <tr>
-        
-        <td>
-          <p><code><a href="wx_active_editors.html">wx_active_editors()</a></code> </p>
-        </td>
-        <td><p>Active editors</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="wx_top_editors.html">wx_top_editors()</a></code> </p>
-        </td>
-        <td><p>Top editors by edits</p></td>
-      </tr>
-    </tbody><tbody>
-      <tr>
-        <th colspan="2">
-          <h2 id="section-utilities" class="hasAnchor"><a href="#section-utilities" class="anchor"></a>Utilities</h2>
-          <p class="section-desc"><p>Utility functions primarily for internal use</p></p>
-        </th>
-      </tr>
-      <tr>
-        
-        <td>
-          <p><code><a href="wx_query_api.html">wx_query_api()</a></code> </p>
-        </td>
-        <td><p>Make HTTP request and process response</p></td>
-      </tr>
-    </tbody>
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
+    <table class="ref-arguments">
+    <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>project</th>
+      <td><p>The name of any Wikimedia project formatted like
+<code>{language code}.{project name}</code>, for example en.wikipedia. You may pass
+en.wikipedia.org and the .org will be stripped off. For projects like
+Wikimedia Commons (without language codes), use commons.wikimedia. For
+projects like www.mediawiki.org, you can use that full string, or just use
+mediawiki or mediawiki.org.</p></td>
+    </tr>
+    <tr>
+      <th>access_method</th>
+      <td><p>If you want to filter by access method, use one of:
+"desktop", "mobile app", or "mobile web". If you are interested in
+pageviews regardless of access method, use "all" (default).</p></td>
+    </tr>
+    <tr>
+      <th>granularity</th>
+      <td><p>The time unit for the response data; "daily" by default
+but if you want to get the top articles of a whole month use "monthly".</p></td>
+    </tr>
+    <tr>
+      <th>start_date</th>
+      <td><p>The date of the first day to include, in YYYYMMDD format.
+Can also be a <code>Date</code> or a <code>POSIXt</code> object, which will be auto-formatted.</p></td>
+    </tr>
+    <tr>
+      <th>end_date</th>
+      <td><p>The date of the last day to include, in YYYYMMDD format.
+Can also be a <code>Date</code> or a <code>POSIXt</code> object, which will be auto-formatted.</p></td>
+    </tr>
     </table>
-  </div>
 
+    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
+
+    <p>A tibble data frame with the following columns:</p><dl class='dl-horizontal'>
+<dt><code>date</code></dt><dd><p><code>Date</code>; beginning of each month if <code>granularity = "monthly"</code></p></dd>
+<dt><code>article</code></dt><dd><p>article name; <strong>NOTE</strong>: in wikitext, the first letter
+of the target page is automatically capitalized and spaces are
+represented as underscores</p></dd>
+<dt><code>views</code></dt><dd><p>number of page-views (see
+<a href='https://meta.wikimedia.org/wiki/Research:Page_view'>meta:Research:Page view</a>
+for more information on what is considered a page-view)</p></dd>
+<dt><code>rank</code></dt><dd><p><code>views</code>-based ranking</p></dd>
+
+</dl>
+
+
+  </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
-      <li><a href="#section-traffic">Traffic</a></li>
-      <li><a href="#section-editors">Editors</a></li>
-      <li><a href="#section-utilities">Utilities</a></li>
+      <li><a href="#arguments">Arguments</a></li>
+      <li><a href="#value">Value</a></li>
     </ul>
+
   </div>
 </div>
 

@@ -21,6 +21,13 @@
 #'   Can also be a `Date` or a `POSIXt` object, which will be auto-formatted.
 #' @param end_date The date of the last day to include, in YYYYMMDD format.
 #'   Can also be a `Date` or a `POSIXt` object, which will be auto-formatted.
+#' @return A tibble data frame with the following columns:
+#' \describe{
+#'   \item{`date`}{`Date`}
+#'   \item{`user_text`}{the editor's username; `NA` if anonymous (instead of IP address)}
+#'   \item{`edits`}{number of edits the user made on `date`}
+#'   \item{`rank`}{the rank based on `edits`}
+#' }
 #' @export
 wx_top_editors <- function(
   project = "mediawiki",
@@ -51,7 +58,16 @@ wx_top_editors <- function(
       sep = "/"
     )
     result <- query(path)
-    return(result)
+    # Tidy up results:
+    data_frame <- result$items[[1]]$results %>%
+      purrr::map_dfr(dplyr::as_tibble) %>%
+      dplyr::mutate(
+        timestamp = lubridate::ymd_hms(timestamp),
+        date = as.Date(timestamp)
+      ) %>%
+      dplyr::select(-timestamp) %>%
+      dplyr::select(date, dplyr::everything())
+    return(data_frame)
   })
   return(tidyr::unnest_wider(results, top))
 }
@@ -76,6 +92,7 @@ wx_top_editors <- function(
 #'
 #' Frustratingly, `start_date = "20191201"` and `end_date = "20191231"` does
 #' **_not_** yield 2019-12 monthly total. Use `end_date = "20200101"` for that.
+#' @return A tibble data frame with columns `date` and `editors`.
 #' @seealso [wikitech:Analytics/AQS/Wikistats 2#Editors](https://wikitech.wikimedia.org/wiki/Analytics/AQS/Wikistats_2#Editors)
 #' @export
 wx_active_editors <- function(
@@ -105,6 +122,15 @@ wx_active_editors <- function(
     granularity, start_date, end_date,
     sep = "/"
   )
-  results <- wx_query_api(reqs_per_second = 25)(path)
-  return(results)
+  result <- wx_query_api(reqs_per_second = 25)(path)
+  # Tidy up results:
+  data_frame <- result$items[[1]]$results %>%
+    purrr::map_dfr(dplyr::as_tibble) %>%
+    dplyr::mutate(
+      timestamp = lubridate::ymd_hms(timestamp),
+      date = as.Date(timestamp)
+    ) %>%
+    dplyr::select(-timestamp) %>%
+    dplyr::select(date, dplyr::everything())
+  return(data_frame)
 }

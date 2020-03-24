@@ -38,6 +38,15 @@ Can also be a \code{Date} or a \code{POSIXt} object, which will be auto-formatte
 \item{end_date}{The date of the last day to include, in YYYYMMDD format.
 Can also be a \code{Date} or a \code{POSIXt} object, which will be auto-formatted.}
 }
+\value{
+A tibble data frame with the following columns:
+\describe{
+\item{\code{date}}{\code{Date}}
+\item{\code{user_text}}{the editor's username; \code{NA} if anonymous (instead of IP address)}
+\item{\code{edits}}{number of edits the user made on \code{date}}
+\item{\code{rank}}{the rank based on \code{edits}}
+}
+}
 \description{
 Top 100 editors per day by number of edits. \strong{Caution}:
 anonymous editors IPs are replaced by \code{NA}.

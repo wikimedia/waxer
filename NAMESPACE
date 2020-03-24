@@ -2,6 +2,8 @@
 
 export(wx_active_editors)
 export(wx_top_editors)
+export(wx_top_viewed_articles)
+export(wx_unique_devices)
 import(ratelimitr)
 importFrom(magrittr,"%>%")
 importFrom(zeallot,"%<-%")

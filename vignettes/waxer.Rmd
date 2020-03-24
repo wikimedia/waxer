@@ -1,5 +1,5 @@
 ---
-title: "Getting started with {waxer}"
+title: "Introduction to {waxer}"
 output:
   rmarkdown::html_vignette:
     df_print: kable
@@ -16,13 +16,99 @@ knitr::opts_chunk$set(
   fig.height = 5, fig.width = 7, dpi = 200,
   out.height = 500, out.width = 700
 )
+options(tibble.print_max = 10)
 ```
 
-```{r setup}
+```{r setup, warning=FALSE, message=FALSE}
 library(waxer)
+
+library(dplyr)
+library(purrr)
+library(ggplot2)
 ```
 
-## Active editors
+[{purrr}](https://purrr.tidyverse.org/) makes it very easy to run multiple {waxer} queries programmatically, and [{dplyr}](https://dplyr.tidyverse.org/) makes it easy to manipulate the obtained data for visualization with [{ggplot2}](https://ggplot2.tidyverse.org/). In some of these examples we will use [`purrr::map`](https://purrr.tidyverse.org/reference/map.html) to apply a {waxer} function to a set of values we're interested in while keeping all the other parameters constant. For example:
+
+```{r}
+fun <- function(a, b) {
+  return(a + b)
+}
+map(-1:1, fun, b = 2)
+```
+
+Notice that the output is a `list`, which is `map`'s default behavior. We can also specify the output type by using the different flavors of `map`:
+
+```{r}
+map_dbl(-1:1, fun, b = 2)
+map_chr(-1:1, fun, b = 2)
+```
+
+Since the output of {waxer}'s API-querying functions is always a [`tibble`](https://tibble.tidyverse.org/) (an extension of a `data.frame`), we will mostly be using the `map_dfr` function which stitches several tibbles into a one (using [`dplyr::bind_rows`](https://dplyr.tidyverse.org/reference/bind.html)).
+
+# Traffic-based data
+
+## Top viewed articles
+
+Top 1000 viewed articles each month from Jan 2019 to March 2019 on English Wikipedia:
+
+```{r top_viewed, cache=TRUE}
+top_viewed <- wx_top_viewed_articles(
+  project = "en.wikipedia",
+  granularity = "monthly",
+  start_date = "20190101",
+  end_date = "20190301"
+)
+```
+
+Top 3 articles from each month:
+
+```{r}
+top_viewed %>%
+  # Exclude main page and other non-article pages:
+  filter(article != "Main_Page", !grepl("^(Special|Wikipedia)\\:.*", article)) %>%
+  group_by(date) %>%
+  top_n(3, views)
+```
+
+## Unique devices
+
+To obtain the monthly estimated number of unique devices that visited German Wikivoyage from Jan 2018 to Feb 2020:
+
+```{r unique_devices, cache=TRUE}
+unique_devices <- wx_unique_devices(
+  project = "de.wikivoyage",
+  granularity = "monthly",
+  access_method = "all",
+  start_date = "20180101",
+  end_date = "20200228"
+)
+```
+
+Which we can visualize with a periodicity plot:
+
+```{r, message=FALSE, warning=FALSE}
+library(lubridate)
+unique_devices$year <- factor(year(unique_devices$date))
+year(unique_devices$date) <- 2018
+
+ggplot(unique_devices) +
+  geom_line(aes(x = date, y = devices, color = year), size = 0.8) +
+  scale_y_continuous(minor_breaks = NULL, labels = scales::label_number(scale = 1e-6, suffix = "M")) +
+  scale_x_date(date_labels = "%b", date_breaks = "1 month", minor_breaks = NULL) +
+  labs(
+    title = "YoY daily unique devices to German Wikivoyage",
+    subtitle = "To desktop and mobile website",
+    x = "Month", y = "Unique devices", color = "Year"
+  ) +
+  theme_minimal() +
+  theme(
+    panel.grid.major.x = element_line(color = "gray90", size = 0.2),
+    panel.grid.major.y = element_line(color = "gray70", size = 0.5),
+    legend.position = "bottom"
+  )
+```
+
+# Active editors
 
 Suppose we wanted to get the daily number of non-bot active editors of content pages on English Wikipedia in January 2020. This is easy with {waxer}'s `wx_active_editors` function:
 
@@ -36,15 +122,9 @@ active_editors <- wx_active_editors(
 head(active_editors)
 ```
 
-### By activity level
+## By activity level
 
-Suppose we wanted to visualize these daily counts broken down by activity level. {purrr} makes it very easy to programmatically obtain various metrics. For this example we will use [`purrr::map_dfr`](https://purrr.tidyverse.org/reference/map.html) to use the function with each activity level we're interested in, keeping all the other parameters constant:
-
-```{r warning=FALSE, message=FALSE}
-library(dplyr)
-library(purrr)
-library(ggplot2)
-```
+Suppose we wanted to visualize these daily counts broken down by activity level:
 
 ```{r active_editors_by_activity, cache=TRUE}
 activity_levels <- c(
@@ -65,7 +145,6 @@ active_editors_by_activity <- map_dfr(
 ```{r}
 active_editors_by_activity <- active_editors_by_activity %>%
   mutate(
-    date = as.Date(timestamp),
     activity_level = factor(
       activity_level,
       names(activity_levels),
@@ -85,7 +164,7 @@ ggplot(active_editors_by_activity, aes(x = date, y = editors)) +
   theme(legend.position = "bottom")
 ```
 
-### By wiki
+## By wiki
 
 Similarly, we can obtain the (monthly) totals for several Wikipedias. This time we're *not* breaking down by activity level (which is the default behavior for this function):
 
@@ -105,8 +184,6 @@ active_editors_by_wiki <- map_dfr(
 ```
 
 ```{r}
-active_editors_by_wiki$date <- as.Date(active_editors_by_wiki$timestamp)
-
 ggplot(active_editors_by_wiki) +
   geom_line(aes(x = date, color = language, y = editors)) +
   scale_x_date(date_breaks = "1 year", minor_breaks = NULL, date_labels = "%b\n%Y") +
