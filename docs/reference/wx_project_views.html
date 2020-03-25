@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Active editors — wx_active_editors • waxer</title>
+<title>Project page-views — wx_project_views • waxer</title>
 
 
 <!-- jquery -->
@@ -35,9 +35,8 @@
 
 
 
-<meta property="og:title" content="Active editors — wx_active_editors" />
-<meta property="og:description" content="Number of active editors. Caution: This metric measures
-editors' activity, therefore it includes edits on redirects." />
+<meta property="og:title" content="Project page-views — wx_project_views" />
+<meta property="og:description" content="Project page-views" />
 <meta name="twitter:card" content="summary" />
 
 
@@ -107,24 +106,22 @@ editors' activity, therefore it includes edits on redirects." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Active editors</h1>
-    <small class="dont-index">Source: <a href='https://github.com/bearloga/waxer/blob/master/R/editors.R'><code>R/editors.R</code></a></small>
-    <div class="hidden name"><code>wx_active_editors.Rd</code></div>
+    <h1>Project page-views</h1>
+    <small class="dont-index">Source: <a href='https://github.com/bearloga/waxer/blob/master/R/traffic.R'><code>R/traffic.R</code></a></small>
+    <div class="hidden name"><code>wx_project_views.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Number of active editors. <strong>Caution</strong>: This metric measures
-editors' activity, therefore it includes edits on redirects.</p>
+    <p>Project page-views</p>
     </div>
 
-    <pre class="usage"><span class='fu'>wx_active_editors</span>(
+    <pre class="usage"><span class='fu'>wx_project_views</span>(
   <span class='no'>project</span>,
-  <span class='kw'>editor_type</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"all-editor-types"</span>, <span class='st'>"anonymous"</span>, <span class='st'>"user"</span>, <span class='st'>"name-bot"</span>, <span class='st'>"group-bot"</span>),
-  <span class='kw'>page_type</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"all-page-types"</span>, <span class='st'>"content"</span>, <span class='st'>"non-content"</span>),
-  <span class='kw'>activity_level</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"all-activity-levels"</span>, <span class='st'>"1-4"</span>, <span class='st'>"5-24"</span>, <span class='st'>"25-99"</span>, <span class='st'>"100+"</span>),
+  <span class='kw'>access_method</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"all"</span>, <span class='st'>"desktop"</span>, <span class='st'>"mobile web"</span>, <span class='st'>"mobile app"</span>),
+  <span class='kw'>agent_type</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"all"</span>, <span class='st'>"user"</span>, <span class='st'>"bot"</span>),
   <span class='kw'>granularity</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"daily"</span>, <span class='st'>"monthly"</span>),
-  <span class='kw'>start_date</span> <span class='kw'>=</span> <span class='st'>"20191101"</span>,
-  <span class='kw'>end_date</span> <span class='kw'>=</span> <span class='st'>"20191231"</span>
+  <span class='kw'>start_date</span> <span class='kw'>=</span> <span class='st'>"20191231"</span>,
+  <span class='kw'>end_date</span> <span class='kw'>=</span> <span class='st'>"20200101"</span>
 )</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -140,32 +137,21 @@ projects like www.mediawiki.org, you can use that full string, or just use
 mediawiki or mediawiki.org.</p></td>
     </tr>
     <tr>
-      <th>editor_type</th>
-      <td><p>If you want to filter by editor-type, use one of
-"anonymous", "group-bot" (registered accounts belonging to the bot group),
-"name-bot" (registered accounts not belonging to the bot group but having
-bot-like names) or "user" (registered account not in bot group nor having
-bot-like name). If you are interested in edits regardless of their editor
-type, use "all-editor-types" (default).</p></td>
+      <th>access_method</th>
+      <td><p>If you want to filter by access method, use one of:
+"desktop", "mobile app", or "mobile web". If you are interested in
+pageviews regardless of access method, use "all" (default).</p></td>
     </tr>
     <tr>
-      <th>page_type</th>
-      <td><p>If you want to filter by page-type, use one of: "content"
-(edits made in content namespaces) or "non-content" (edits made in
-non-content namespaces). If you are interested in editors regardless of
-their page type, use "all-page-types" (default).</p></td>
-    </tr>
-    <tr>
-      <th>activity_level</th>
-      <td><p>If you want to filter by activity-level (number of
-edits), use one of: "1-4", "5-24", "25-99", or "100+" edits. If you are
-interested in editors regardless of their activity-level, use
-"all-activity-levels" (default).</p></td>
+      <th>agent_type</th>
+      <td><p>If you want to filter by agent type, use "user" or "bot".
+If you are interested in pageviews regardless of agent type, use "all"
+(default).</p></td>
     </tr>
     <tr>
       <th>granularity</th>
-      <td><p>The time unit for the response data. As of today,
-supported values are daily and monthly.</p></td>
+      <td><p>The time unit for the response data; "daily" by default
+but if you want to get the top articles of a whole month use "monthly".</p></td>
     </tr>
     <tr>
       <th>start_date</th>
@@ -181,30 +167,33 @@ Can also be a <code>Date</code> or a <code>POSIXt</code> object, which will be a
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>A tibble data frame with columns <code>date</code> and <code>editors</code>.</p>
-    <h2 class="hasAnchor" id="granularity-and-dates"><a class="anchor" href="#granularity-and-dates"></a>Granularity and dates</h2>
+    <p>A tibble data frame with the following columns:</p><dl class='dl-horizontal'>
+<dt><code>date</code></dt><dd><p><code>Date</code>; beginning of each month if <code>granularity = "monthly"</code></p></dd>
+<dt><code>views</code></dt><dd><p>total number of page-views for the project</p></dd>
 
-    
+</dl>
 
-<p>For "monthly" <code>granularity</code>, the <code>start_date</code> and <code>end_date</code> need to contain
-the full month.</p>
-<p>For example, <code>start_date = "20191101"</code> and
-<code>end_date = "20191231"</code> would only give the monthly total for 2019-11. To
-include 2019-12, use <code>end_date = "20200101"</code>.</p>
-<p>Frustratingly, <code>start_date = "20191201"</code> and <code>end_date = "20191231"</code> does
-<strong><em>not</em></strong> yield 2019-12 monthly total. Use <code>end_date = "20200101"</code> for that.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p><a href='https://wikitech.wikimedia.org/wiki/Analytics/AQS/Wikistats_2#Editors'>wikitech:Analytics/AQS/Wikistats 2#Editors</a></p></div>
+    <div class='dont-index'>
+<ul>
+<li><p><a href='https://meta.wikimedia.org/wiki/Research:Page_view'>meta:Reseach:Page view</a></p></li>
+<li><p><a href='https://wikitech.wikimedia.org/wiki/Analytics/AQS/Pageviews'>wikitech:Analytics/AQS/Pageviews</a></p></li>
+</ul>
+</div>
 
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'><span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
+<span class='fu'>wx_project_views</span>(<span class='st'>"en.wikipedia"</span>)
+}</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
       <li><a href="#value">Value</a></li>
-      <li><a href="#granularity-and-dates">Granularity and dates</a></li>
       <li><a href="#see-also">See also</a></li>
+      <li><a href="#examples">Examples</a></li>
     </ul>
 
   </div>

@@ -37,6 +37,8 @@ This dataset was generated from the
 \subsection{Traffic}{
 
 \describe{
+\item{\link{wx_project_views}}{Project page-views}
+\item{\link{wx_page_views}}{Article page-views}
 \item{\link{wx_top_viewed_articles}}{Top 1000 viewed articles}
 \item{\link{wx_unique_device}}{Unique devices}
 }

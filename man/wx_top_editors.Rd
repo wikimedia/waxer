@@ -5,7 +5,7 @@
 \title{Top editors by edits}
 \usage{
 wx_top_editors(
-  project = "mediawiki",
+  project,
   editor_type = c("all-editor-types", "anonymous", "user", "name-bot", "group-bot"),
   page_type = c("all-page-types", "content", "non-content"),
   start_date = "20191231",

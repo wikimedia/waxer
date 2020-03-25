@@ -30,24 +30,21 @@
 #' }
 #' @export
 wx_top_editors <- function(
-  project = "mediawiki",
+  project,
   editor_type = c("all-editor-types", "anonymous", "user", "name-bot", "group-bot"),
   page_type = c("all-page-types", "content", "non-content"),
   start_date = "20191231",
   end_date = "20200101"
 ) {
+  project <- project[1] # force 1 project per call
   # Validate "one of" arguments:
   args <- formals()
   c(editor_type, page_type) %<-% wx_check_args(
     list("editor_type" = editor_type, "page_type" = page_type),
     args[c("editor_type", "page_type")]
   )
-  c(start_date, end_date) %<-% list(wx_format_date(start_date), wx_format_date(end_date))
+  c(start_date, end_date) %<-% wx_format_dates(start_date, end_date)
   c(start_date, end_date) %<-% as.Date(c(start_date, end_date), "%Y%m%d")
-  assertthat::assert_that(
-    end_date >= start_date,
-    msg = "[User error] end_date must be same as or later than start_date"
-  )
   dates <- seq(start_date, end_date, by = "day")
   query <- wx_query_api(reqs_per_second = 25)
   results <- purrr::map_dfr(dates, function(date) {
@@ -96,7 +93,7 @@ wx_top_editors <- function(
 #' @seealso [wikitech:Analytics/AQS/Wikistats 2#Editors](https://wikitech.wikimedia.org/wiki/Analytics/AQS/Wikistats_2#Editors)
 #' @export
 wx_active_editors <- function(
-  project = "mediawiki",
+  project,
   editor_type = c("all-editor-types", "anonymous", "user", "name-bot", "group-bot"),
   page_type = c("all-page-types", "content", "non-content"),
   activity_level = c("all-activity-levels", "1-4", "5-24", "25-99", "100+"),
@@ -104,13 +101,14 @@ wx_active_editors <- function(
   start_date = "20191101",
   end_date = "20191231"
 ) {
+  project <- project[1] # force 1 project per call
   # Validate "one of" arguments:
   args <- formals()
   c(editor_type, page_type, activity_level, granularity) %<-% wx_check_args(
     list("editor_type" = editor_type, "page_type" = page_type, "activity_level" = activity_level, "granularity" = granularity),
     args[c("editor_type", "page_type", "activity_level", "granularity")]
   )
-  c(start_date, end_date) %<-% list(wx_format_date(start_date), wx_format_date(end_date))
+  c(start_date, end_date) %<-% wx_format_dates(start_date, end_date)
   activity_levels <- c(
     "all-activity-levels" = "all-activity-levels",
     "1-4" = "1..4-edits", "5-24" = "5..24-edits",

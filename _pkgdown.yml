@@ -24,6 +24,8 @@ reference:
     desc: >
       Functions for metrics and data related to traffic
     contents:
+      - wx_project_views
+      - wx_page_views
       - wx_top_viewed_articles
       - wx_unique_devices
   - title: "Editors"

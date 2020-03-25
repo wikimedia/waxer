@@ -19,15 +19,18 @@ knitr::opts_chunk$set(
 options(tibble.print_max = 10)
 ```
 
+{waxer} makes the [Wikimedia Analytics Query Service (AQS)](https://wikitech.wikimedia.org/wiki/Analytics/Systems/AQS) [REST API](https://wikimedia.org/api/rest_v1/) available and easy to use in R. With a consistent interface and output, {waxer} facilitates working with metrics & data available in AQS, especially when combined with modern data science frameworks like [tidyverse](https://www.tidyverse.org/) for data wrangling.
+
 ```{r setup, warning=FALSE, message=FALSE}
 library(waxer)
 
 library(dplyr)
 library(purrr)
 library(ggplot2)
+library(lubridate)
 ```
 
-[{purrr}](https://purrr.tidyverse.org/) makes it very easy to run multiple {waxer} queries programmatically, and [{dplyr}](https://dplyr.tidyverse.org/) makes it easy to manipulate the obtained data for visualization with [{ggplot2}](https://ggplot2.tidyverse.org/). In some of these examples we will use [`purrr::map`](https://purrr.tidyverse.org/reference/map.html) to apply a {waxer} function to a set of values we're interested in while keeping all the other parameters constant. For example:
+**Brief explanation of packages used**: [{purrr}](https://purrr.tidyverse.org/) makes it very easy to run multiple {waxer} queries programmatically, [{dplyr}](https://dplyr.tidyverse.org/) makes it easy to manipulate the obtained data, [{lubridate}](https://lubridate.tidyverse.org/) aids working with dates & times, and we use [{ggplot2}](https://ggplot2.tidyverse.org/) for visualization. In some of these examples we will use [`purrr::map`](https://purrr.tidyverse.org/reference/map.html) to apply a {waxer} function to a set of values we're interested in while keeping all the other parameters constant. Here's how `map` works:
 
 ```{r}
 fun <- function(a, b) {
@@ -43,9 +46,134 @@ map_dbl(-1:1, fun, b = 2)
 map_chr(-1:1, fun, b = 2)
 ```
 
-Since the output of {waxer}'s API-querying functions is always a [`tibble`](https://tibble.tidyverse.org/) (an extension of a `data.frame`), we will mostly be using the `map_dfr` function which stitches several tibbles into a one (using [`dplyr::bind_rows`](https://dplyr.tidyverse.org/reference/bind.html)).
+Since the output of {waxer}'s API-querying functions is always a [`tibble`](https://tibble.tidyverse.org/) (an extension of a `data.frame`), we will mostly be using the `map_dfr` function which stitches several tibbles into one (via [`dplyr::bind_rows`](https://dplyr.tidyverse.org/reference/bind.html)).
 
 # Traffic-based data
+
+## Pageviews
+
+This package uses the same API endpoint as the [{pageviews}](https://cran.r-project.org/package=pageviews) package for page view data. Similar to {pageviews}, the caveat is that the traffic data is only available from 1 August 2015. For legacy view counts, refer to [{wikipediatrend}](https://cran.r-project.org/package=wikipediatrend) package.
+
+In this example we fetch the page-views for the *New Year's Eve* and *New Year's Day* articles on English Wikipedia. Specifically, we're interested in user traffic, which excludes known spiders/bots.
+
+```{r pageviews}
+pageviews <- wx_page_views(
+  project = "en.wikipedia",
+  page_name = c("New Year's Eve", "New Year's Day"),
+  access_method = "all",
+  agent_type = "user",
+  start_date = "20191231",
+  end_date = "20200101"
+)
+```
+```{r}
+pageviews
+```
+
+In this case, the *New Year's Eve* article was viewed much more on New Year's Eve (December 31st) than on New Year's Day. Similarly, the *New Year's Day* article was viewed much more on New Year's Day (January 1st) than on New Year's Eve.
+
+### Work smarter, not harder
+
+Now, suppose we wanted to see if this pattern is consistent across the years (starting with 2015/2016, since the API for pageviews starts from 2015-08-01). One way to do this would be to create `start_date`-`end_date` pairs across the years and use `map2_dfr` (not `map_dfr`) to iterate through the pairs:
+
+```{r new_years_dates}
+new_years_dates <- tibble(
+  start_date = as.Date("2015-12-31") + years(0:4),
+  end_date = as.Date("2016-01-01") + years(0:4)
+)
+new_years_dates
+```
+
+Notice that those are Dates, not "YYYYMMDD" strings. All of the `start_date` and `end_date` parameters in {waxer}'s functions accept either. This way we don't have to use `as.Date` when we're querying once and don't have to use `as.character` on dates in situations like this.
+
+```{r new_years_views, cache=TRUE}
+new_years_views <- map2_dfr(
+  new_years_dates$start_date,
+  new_years_dates$end_date,
+  wx_page_views,
+  project = "en.wikipedia",
+  page_name = c("New Year's Eve", "New Year's Day"),
+  access_method = "all",
+  agent_type = "user",
+  granularity = "daily",
+  .id = "pair"
+)
+```
+```{r}
+head(new_years_views)
+```
+
+```{r plot_new_years_views, fig.height=4, fig.width=8, out.width=700, out.height=350}
+new_years_views <- new_years_views %>%
+  mutate(
+    pair = factor(
+      new_years_views$pair, 1:5,
+      paste(2015:2019, 2016:2020, sep = "/")
+    ),
+    day = case_when(
+      month(date) == 12 & mday(date) == 31 ~ "New Year's Eve",
+      month(date) == 1 & mday(date) == 1 ~ "New Year's Day"
+    ),
+    day = factor(day, c("New Year's Eve", "New Year's Day"), c("Eve", "Day"))
+  )
+head(new_years_views)
+
+ggplot(new_years_views, aes(x = day, y = views)) +
+  geom_line(aes(color = page_name, group = page_name), size = 1) +
+  scale_y_continuous(
+    minor_breaks = NULL,
+    labels = scales::label_number(scale = 1e-3, suffix = "K")
+  ) +
+  facet_wrap(~ pair, nrow = 1) +
+  labs(
+    title = "User (non-bot) traffic to New Year's Eve/Day articles",
+    color = "Article", x = "New Year's", y = "Pageviews"
+  ) +
+  theme_bw() +
+  theme(legend.position = "bottom")
+```
+
+### Project views
+
+For consistency, the `project` parameter in every {waxer} function can only accept 1 value -- unlike the `page_name` parameter in `wx_page_views()`. So if we want to get project views (the total number of page-views across all pages of a wiki), we can use the `map_dfr` to iterate through a named vector of projects, keeping all the other parameters the same:
+
+```{r projectviews}
+projects <- c(
+  "French" = "fr.wikipedia",
+  "Italian" = "it.wikipedia",
+  "Spanish" = "es.wikipedia"
+)
+project_views <- map_dfr(
+  projects, wx_project_views,
+  access_method = "desktop", agent_type = "user",
+  granularity = "monthly", start_date = "20160101", end_date = "20200201",
+  .id = "language"
+)
+```
+```{r}
+head(project_views)
+```
+
+```{r plot_project_views}
+ggplot(project_views) +
+  geom_line(aes(x = date, y = views, color = language), size = 0.8) +
+  scale_y_continuous(
+    minor_breaks = NULL,
+    labels = scales::label_number(scale = 1e-6, suffix = "M")
+  ) +
+  scale_x_date(date_labels = "%b\n%Y", date_breaks = "3 month", minor_breaks = NULL) +
+  labs(
+    title = "Monthly Wikipedia user (non-bot) traffic, by language",
+    subtitle = "To desktop website",
+    x = "Month", y = "Pageviews", color = "Language"
+  ) +
+  theme_minimal() +
+  theme(
+    panel.grid.major.x = element_line(color = "gray90", size = 0.2),
+    panel.grid.major.y = element_line(color = "gray70", size = 0.5),
+    legend.position = "bottom"
+  )
+```
 
 ## Top viewed articles
 
@@ -83,17 +211,22 @@ unique_devices <- wx_unique_devices(
   end_date = "20200228"
 )
 ```
+```{r}
+head(unique_devices)
+```
 
 Which we can visualize with a periodicity plot:
 
-```{r, message=FALSE, warning=FALSE}
-library(lubridate)
+```{r plot_unique_devices, message=FALSE, warning=FALSE}
 unique_devices$year <- factor(year(unique_devices$date))
 year(unique_devices$date) <- 2018
 
 ggplot(unique_devices) +
   geom_line(aes(x = date, y = devices, color = year), size = 0.8) +
-  scale_y_continuous(minor_breaks = NULL, labels = scales::label_number(scale = 1e-6, suffix = "M")) +
+  scale_y_continuous(
+    minor_breaks = NULL,
+    labels = scales::label_number(scale = 1e-3, suffix = "K")
+  ) +
   scale_x_date(date_labels = "%b", date_breaks = "1 month", minor_breaks = NULL) +
   labs(
     title = "YoY daily unique devices to German Wikivoyage",
@@ -141,8 +274,11 @@ active_editors_by_activity <- map_dfr(
   .id = "activity_level"
 )
 ```
-
 ```{r}
+head(active_editors_by_activity)
+```
+
+```{r plot_active_editors_by_activity}
 active_editors_by_activity <- active_editors_by_activity %>%
   mutate(
     activity_level = factor(
@@ -169,12 +305,8 @@ ggplot(active_editors_by_activity, aes(x = date, y = editors)) +
 Similarly, we can obtain the (monthly) totals for several Wikipedias. This time we're *not* breaking down by activity level (which is the default behavior for this function):
 
 ```{r active_editors_by_wiki, cache=TRUE}
-wikis <- c(
-  "English" = "en.wikipedia",
-  "Russian" = "ru.wikipedia"
-)
 active_editors_by_wiki <- map_dfr(
-  wikis,
+  projects,
   wx_active_editors,
   editor_type = "user", page_type = "content",
   start_date = "20150101", end_date = "20200301",
@@ -182,15 +314,18 @@ active_editors_by_wiki <- map_dfr(
   .id = "language"
 )
 ```
-
 ```{r}
+head(active_editors_by_wiki)
+```
+
+```{r plot_active_editors_by_wiki}
 ggplot(active_editors_by_wiki) +
   geom_line(aes(x = date, color = language, y = editors)) +
   scale_x_date(date_breaks = "1 year", minor_breaks = NULL, date_labels = "%b\n%Y") +
   scale_y_continuous(minor_breaks = NULL) +
   facet_wrap(~ language, ncol = 1, scales = "free_y") +
   labs(
-    title = "Number of English & Russian Wikipedia article editors",
+    title = "Number of Wikipedia article editors, by language",
     subtitle = "Monthly total since January 2018",
     y = "Active editors per month"
   ) +

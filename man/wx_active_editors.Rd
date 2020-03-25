@@ -5,7 +5,7 @@
 \title{Active editors}
 \usage{
 wx_active_editors(
-  project = "mediawiki",
+  project,
   editor_type = c("all-editor-types", "anonymous", "user", "name-bot", "group-bot"),
   page_type = c("all-page-types", "content", "non-content"),
   activity_level = c("all-activity-levels", "1-4", "5-24", "25-99", "100+"),

@@ -27,6 +27,8 @@
 #' @section Metrics:
 #' ## Traffic
 #' \describe{
+#'   \item{[wx_project_views]}{Project page-views}
+#'   \item{[wx_page_views]}{Article page-views}
 #'   \item{[wx_top_viewed_articles]}{Top 1000 viewed articles}
 #'   \item{[wx_unique_device]}{Unique devices}
 #' }

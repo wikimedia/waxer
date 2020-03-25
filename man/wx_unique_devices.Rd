@@ -5,7 +5,7 @@
 \title{Unique devices}
 \usage{
 wx_unique_devices(
-  project = "mediawiki",
+  project,
   access_method = c("all", "desktop", "mobile web"),
   granularity = c("daily", "monthly"),
   start_date = "20191231",
@@ -21,7 +21,7 @@ projects like www.mediawiki.org, you can use that full string, or just use
 mediawiki or mediawiki.org.}
 
 \item{access_method}{If you want to filter by accessed site, use "desktop"
-or "mobile". If you are interested in unique devices regardless of
+or "mobile web". If you are interested in unique devices regardless of
 accessed site, use "all" (default).}
 
 \item{granularity}{The time unit for the response data; "daily" by default
@@ -55,8 +55,7 @@ fingerprint or otherwise track users.
 \section{Access method}{
 
 A couple of notes about \code{access_method}. First, mobile apps are \strong{\emph{NOT}}
-included in this dataset. \code{access_method = "mobile"} refers only to number
-of unique devices which accessed the mobile website (\verb{*.m.*} domains).
+included in this dataset.
 
 Second, desktop devices can (and \emph{do}) access the mobile website, usually
 because the user clicked on a link shared by a user from a mobile device.
@@ -65,6 +64,11 @@ To learn more about how mobile traffic is handled by Wikimedia, refer to
 \href{https://www.mediawiki.org/wiki/Reading/Web/Mobile}{mw:Reading/Web/Mobile}.
 }
 
+\examples{
+\dontrun{
+wx_unique_devices("en.wikipedia")
+}
+}
 \seealso{
 \itemize{
 \item \href{https://meta.wikimedia.org/wiki/Research:Unique_devices}{wikitech:Research:Unique devices}

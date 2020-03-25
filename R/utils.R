@@ -1,3 +1,8 @@
+wx_encode_page_name <- function(x) {
+  encoded <- magrittr::set_names(urltools::url_encode(gsub(" ", "_", x, fixed = TRUE)), x)
+  return(encoded)
+}
+
 wx_extract_ymd <- function(x) {
   y <- lubridate::year(x)
   m <- lubridate::month(x)
@@ -29,6 +34,15 @@ wx_format_date <- function(x) {
     stop("'date' (", x, ") is not valid")
   }
   return(formatted_date)
+}
+wx_format_dates <- function(start_date, end_date) {
+  start_date <- wx_format_date(start_date)
+  end_date <- wx_format_date(end_date)
+  assertthat::assert_that(
+    end_date >= start_date,
+    msg = "[User error] end_date must be same as or later than start_date"
+  )
+  return(list(start_date, end_date))
 }
 
 wx_param_mismatch_error_msg <- function(val, opts, name) {
