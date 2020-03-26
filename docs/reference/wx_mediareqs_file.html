@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>New pages counts — wx_new_pages • waxer</title>
+<title>Mediarequest counts for a media file — wx_mediareqs_file • waxer</title>
 
 
 <!-- jquery -->
@@ -39,8 +39,9 @@
 
 
 
-<meta property="og:title" content="New pages counts — wx_new_pages" />
-<meta property="og:description" content="Number of new pages for a given project and timespan." />
+<meta property="og:title" content="Mediarequest counts for a media file — wx_mediareqs_file" />
+<meta property="og:description" content="Daily and monthly counts of mediarequests for each media file
+stored in the wiki servers (as long as the count is higher than one)." />
 
 
 
@@ -109,21 +110,23 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>New pages counts</h1>
-    <small class="dont-index">Source: <a href='https://github.com/bearloga/waxer/blob/master/R/content.R'><code>R/content.R</code></a></small>
-    <div class="hidden name"><code>wx_new_pages.Rd</code></div>
+    <h1>Mediarequest counts for a media file</h1>
+    <small class="dont-index">Source: <a href='https://github.com/bearloga/waxer/blob/master/R/mediareqs.R'><code>R/mediareqs.R</code></a></small>
+    <div class="hidden name"><code>wx_mediareqs_file.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Number of new pages for a given project and timespan.</p>
+    <p>Daily and monthly counts of mediarequests for each media file
+stored in the wiki servers (as long as the count is higher than one).</p>
     </div>
 
-    <pre class="usage"><span class='fu'>wx_new_pages</span>(
-  <span class='no'>project</span>,
-  <span class='kw'>editor_type</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"all"</span>, <span class='st'>"anonymous"</span>, <span class='st'>"user"</span>, <span class='st'>"bot"</span>, <span class='st'>"bot group"</span>),
-  <span class='kw'>page_type</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"all"</span>, <span class='st'>"content"</span>, <span class='st'>"non-content"</span>),
+    <pre class="usage"><span class='fu'>wx_mediareqs_file</span>(
+  <span class='no'>file_path</span>,
+  <span class='no'>referer</span>,
+  <span class='kw'>media_type</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"all"</span>, <span class='st'>"image"</span>, <span class='st'>"video"</span>, <span class='st'>"audio"</span>, <span class='st'>"document"</span>, <span class='st'>"other"</span>),
+  <span class='kw'>agent_type</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"all"</span>, <span class='st'>"user"</span>, <span class='st'>"bot"</span>),
   <span class='kw'>granularity</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"daily"</span>, <span class='st'>"monthly"</span>),
-  <span class='kw'>start_date</span> <span class='kw'>=</span> <span class='st'>"20191101"</span>,
+  <span class='kw'>start_date</span> <span class='kw'>=</span> <span class='st'>"20191201"</span>,
   <span class='kw'>end_date</span> <span class='kw'>=</span> <span class='st'>"20200101"</span>
 )</pre>
 
@@ -131,29 +134,27 @@
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>project</th>
-      <td><p>The name of any Wikimedia project formatted like
-<code>{language code}.{project name}</code>, for example en.wikipedia. You may pass
-en.wikipedia.org and the .org will be stripped off. For projects like
-Wikimedia Commons (without language codes), use commons.wikimedia. For
-projects like www.mediawiki.org, you can use that full string, or just use
-mediawiki or mediawiki.org.</p></td>
+      <th>file_path</th>
+      <td><p>One or more paths to the file on <code>upload.wikimedia.org</code>,
+which is the file storage for all media in any wiki.</p></td>
     </tr>
     <tr>
-      <th>editor_type</th>
-      <td><p>If you want to filter by editor-type, use one of
-"anonymous", "group-bot" (registered accounts belonging to the bot group),
-"name-bot" (registered accounts not belonging to the bot group but having
-bot-like names) or "user" (registered account not in bot group nor having
-bot-like name). If you are interested in edits regardless of their editor
-type, use "all-editor-types" (default).</p></td>
+      <th>referer</th>
+      <td><p>The place that the request was made from. It can be any
+Wikimedia project (e.g. de.wikipedia), "all", "internal", "external",
+"search-engine", "unknown" or "none".</p></td>
     </tr>
     <tr>
-      <th>page_type</th>
-      <td><p>If you want to filter by page-type, use one of: "content"
-(edits made in content namespaces) or "non-content" (edits made in
-non-content namespaces). If you are interested in editors regardless of
-their page type, use "all" (default).</p></td>
+      <th>media_type</th>
+      <td><p>The media type that each file belongs to. It can be
+image, audio, video, document, or other. Default is "all" media types.
+See Media section below.</p></td>
+    </tr>
+    <tr>
+      <th>agent_type</th>
+      <td><p>If you want to filter by agent type, use "user" or "bot".
+If you are interested in pageviews regardless of agent type, use "all"
+(default).</p></td>
     </tr>
     <tr>
       <th>granularity</th>
@@ -172,17 +173,45 @@ Can also be a <code>Date</code> or a <code>POSIXt</code> object, which will be a
     </tr>
     </table>
 
-    <h2 class="hasAnchor" id="granularity"><a class="anchor" href="#granularity"></a>Granularity</h2>
+    <h2 class="hasAnchor" id="example-usage"><a class="anchor" href="#example-usage"></a>Example usage</h2>
 
     
 
-<p>For "monthly" <code>granularity</code>, the <code>start_date</code> and <code>end_date</code> need to contain
-the full month.</p>
-<p>For example, <code>start_date = "20191101"</code> and
-<code>end_date = "20191231"</code> would only give the monthly total for 2019-11. To
-include 2019-12, use <code>end_date = "20200101"</code>.</p>
-<p>Frustratingly, <code>start_date = "20191201"</code> and <code>end_date = "20191231"</code> does
-<strong><em>not</em></strong> yield 2019-12 monthly total. Use <code>end_date = "20200101"</code> for that.</p>
+<p>The example below retrieves the request counts for
+<a href='https://commons.wikimedia.org/wiki/File:Hadley-wickham2016-02-04.jpg'>File:Hadley-wickham2016-02-04.jpg</a>
+which is used on the English Wikipedia article
+<a href='https://en.wikipedia.org/wiki/Hadley_Wickham'><em>Hadley Wickham</em></a>
+as the main image in the infobox.</p>
+    <h2 class="hasAnchor" id="media"><a class="anchor" href="#media"></a>Media</h2>
+
+    
+
+<p>File types are obtained by parsing the file extension, and then classified
+according to the following table:</p><table class='table'>
+<tr><td>Extensions</td><td>Media type</td></tr>
+<tr><td>svg, png, tiff, tiff, jpeg, jpeg, gif, xcf, webp, bmp</td><td>image</td></tr>
+<tr><td>mp3, ogg, oga, flac, wav, midi, midi</td><td>audio</td></tr>
+<tr><td>webm, ogv</td><td>video</td></tr>
+<tr><td>pdf, djvu, srt, txt</td><td>document</td></tr>
+<tr><td>(all other extensions)</td><td>other</td></tr>
+</table>
+
+
+    <h2 class="hasAnchor" id="limitations"><a class="anchor" href="#limitations"></a>Limitations</h2>
+
+    
+
+<ul>
+<li><p>The ability of splitting and filtering by referrer is limited to data
+from May 2019 onward. Before that, referrer is only split in internal,
+external, and unknown.</p></li>
+<li><p>The beginning of mediarequest data is the 1st of January 2015.</p></li>
+<li><p>The ability of splitting and filtering by agent type (user, spider) is
+limited to data from May 2019 onward.</p></li>
+<li><p>About 0.7% of mediarequests are prefetches coming from Media Viewer
+(more details in <a href='https://wikitech.wikimedia.org/wiki/Analytics/AQS/Media_metrics'>wikitech:Analytics/AQS/Media_metrics</a>)</p></li>
+</ul>
+
     <h2 class="hasAnchor" id="license"><a class="anchor" href="#license"></a>License</h2>
 
     
@@ -191,12 +220,15 @@ include 2019-12, use <code>end_date = "20200101"</code>.</p>
 <a href='https://creativecommons.org/publicdomain/zero/1.0/'>CC0 1.0 license</a>.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'># Monthly new articles on French Wiktionary:</span>
-<span class='fu'>wx_new_pages</span>(<span class='st'>"fr.wiktionary"</span>, <span class='kw'>granularity</span> <span class='kw'>=</span> <span class='st'>"monthly"</span>, <span class='kw'>page_type</span> <span class='kw'>=</span> <span class='st'>"content"</span>)</div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 2 x 2</span><span>
-#&gt;   date       new_pages
-#&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;date&gt;</span><span>         </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span>
-#&gt; </span><span style='color: #555555;'>1</span><span> 2019-11-01     </span><span style='text-decoration: underline;'>19</span><span>916
-#&gt; </span><span style='color: #555555;'>2</span><span> 2019-12-01     </span><span style='text-decoration: underline;'>16</span><span>579</div></span></pre>
+    <pre class="examples"><div class='input'><span class='fu'>wx_mediareqs_file</span>(
+  <span class='st'>"/wikipedia/commons/f/fa/Hadley-wickham2016-02-04.jpg"</span>, <span class='st'>"en.wikipedia"</span>,
+  <span class='kw'>agent_type</span> <span class='kw'>=</span> <span class='st'>"user"</span>, <span class='kw'>granularity</span> <span class='kw'>=</span> <span class='st'>"monthly"</span>,
+  <span class='kw'>start_date</span> <span class='kw'>=</span> <span class='st'>"20200101"</span>, <span class='kw'>end_date</span> <span class='kw'>=</span> <span class='st'>"20200301"</span>
+)</div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 2 x 3</span><span>
+#&gt;   file_name                                            date       requests
+#&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>                                                </span><span style='color: #555555;font-style: italic;'>&lt;date&gt;</span><span>        </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span>
+#&gt; </span><span style='color: #555555;'>1</span><span> /wikipedia/commons/f/fa/Hadley-wickham2016-02-04.jpg 2020-01-01     </span><span style='text-decoration: underline;'>4</span><span>521
+#&gt; </span><span style='color: #555555;'>2</span><span> /wikipedia/commons/f/fa/Hadley-wickham2016-02-04.jpg 2020-02-01     </span><span style='text-decoration: underline;'>4</span><span>220</div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

@@ -1,3 +1,10 @@
+# waxer 0.9.2
+
+* Adds mediarequest endpoints ([issue 1](https://github.com/bearloga/waxer/issues/1)):
+  - Mediarequest counts per referer (`wx_mediareqs_referer`)
+  - Mediarequest counts for a media file (`wx_mediareqs_file`)
+  - Most requested files for a referer (`wx_most_requested_files`)
+
 # waxer 0.9.1
 
 This is the first, early release of waxer. In this release it has metrics & data for:

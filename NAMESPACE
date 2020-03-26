@@ -2,6 +2,9 @@
 
 export(wx_active_editors)
 export(wx_edited_pages)
+export(wx_mediareqs_file)
+export(wx_mediareqs_referer)
+export(wx_most_requested_files)
 export(wx_new_pages)
 export(wx_newly_registered_users)
 export(wx_page_edits)

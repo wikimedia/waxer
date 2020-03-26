@@ -24,6 +24,9 @@ wx_types <- function(...) {
   if ("agent" %in% names(args)) {
     args$agent <- wx_agent_type(args$agent)
   }
+  if ("media" %in% names(args)) {
+    args$media <- wx_media_type(args$media)
+  }
   return(args)
 }
 wx_agent_type <- function(x) {
@@ -55,6 +58,13 @@ wx_activity_level <- function(x) {
     "25-99" = "25..99-edits", "100+" = "100..-edits"
   )
   return(activity_levels[x])
+}
+wx_media_type <- function(x) {
+  media_types <- c(
+    "all" = "all-media-types", "image" = "image", "video" = "video",
+    "audio" = "audio", "document" = "document", "other" = "other"
+  )
+  return(media_types[x])
 }
 
 wx_extract_ymd <- function(x) {
