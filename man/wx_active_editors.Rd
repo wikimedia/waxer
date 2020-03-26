@@ -75,5 +75,5 @@ Data retrieved from the API endpoint is available under the
 }
 
 \seealso{
-\href{https://wikitech.wikimedia.org/wiki/Analytics/AQS/Wikistats_2#Editors}{wikitech:Analytics/AQS/Wikistats 2#Editors}
+\href{https://wikitech.wikimedia.org/wiki/Analytics/AQS/Wikistats_2}{wikitech:Analytics/AQS/Wikistats 2}
 }

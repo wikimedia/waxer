@@ -70,5 +70,5 @@ Data retrieved from the API endpoint is available under the
 }
 
 \seealso{
-\href{https://wikitech.wikimedia.org/wiki/Analytics/AQS/Wikistats_2#Newly_Registered_Users}{wikitech:Analytics/AQS/Wikistats 2#Newly Registered Users}
+\href{https://wikitech.wikimedia.org/wiki/Analytics/AQS/Wikistats_2}{wikitech:Analytics/AQS/Wikistats 2}
 }

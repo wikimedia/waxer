@@ -72,7 +72,7 @@ wx_top_editors <- function(
 #' **_not_** yield 2019-12 monthly total. Use `end_date = "20200101"` for that.
 #' @inheritSection wx_query_api License
 #' @return A tibble data frame with columns `date` and `editors`.
-#' @seealso [wikitech:Analytics/AQS/Wikistats 2#Editors](https://wikitech.wikimedia.org/wiki/Analytics/AQS/Wikistats_2#Editors)
+#' @seealso [wikitech:Analytics/AQS/Wikistats 2](https://wikitech.wikimedia.org/wiki/Analytics/AQS/Wikistats_2)
 #' @export
 wx_active_editors <- function(
   project,
@@ -136,7 +136,7 @@ wx_active_editors <- function(
 #' **_not_** yield 2019-12 monthly total. Use `end_date = "20200101"` for that.
 #' @inheritSection wx_query_api License
 #' @return A tibble data frame with columns `date` and `new_registered_users`.
-#' @seealso [wikitech:Analytics/AQS/Wikistats 2#Newly Registered Users](https://wikitech.wikimedia.org/wiki/Analytics/AQS/Wikistats_2#Newly_Registered_Users)
+#' @seealso [wikitech:Analytics/AQS/Wikistats 2](https://wikitech.wikimedia.org/wiki/Analytics/AQS/Wikistats_2)
 #' @export
 wx_newly_registered_users <- function(
   project,

@@ -39,10 +39,8 @@ A tibble data frame with the following columns:
 \describe{
 \item{\code{date}}{\code{Date}; beginning of each month if \code{granularity = "monthly"}}
 \item{\code{devices}}{Estimated number of unique devices.}
-\item{\code{offset}}{The number added to \code{underestimate} to produce \verb{devices estimate. For more information, refer to the [Nocookie Offset section](https://wikitech.wikimedia.org/wiki/Analytics/Data_Lake/Traffic/Unique_Devices/Last_access_solution#Nocookie_Offset)\} \\item\{}underestimate`}{The count produced by
-\href{https://wikitech.wikimedia.org/wiki/Analytics/Data_Lake/Traffic/Unique_Devices/Last_access_solution#Technicalities}{WMF-Last-Access cookie counting}
-which, by definition, underreports users as we will not be counting
-users with a fresh session or users browsing without cookies.}
+\item{\code{offset}}{The number added to \code{underestimate} to produce \code{devices} estimate.}
+\item{\code{underestimate}}{The count produced by WMF-Last-Access cookie counting, which, by definition, underreports users as we will not be counting users with a fresh session or users browsing without cookies.}
 }
 }
 \description{

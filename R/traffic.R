@@ -108,13 +108,8 @@ wx_top_viewed_pages <- function(
 #' \describe{
 #'   \item{`date`}{`Date`; beginning of each month if `granularity = "monthly"`}
 #'   \item{`devices`}{Estimated number of unique devices.}
-#'   \item{`offset`}{The number added to `underestimate` to produce `devices
-#'     estimate. For more information, refer to the
-#'     [Nocookie Offset section](https://wikitech.wikimedia.org/wiki/Analytics/Data_Lake/Traffic/Unique_Devices/Last_access_solution#Nocookie_Offset)}
-#'   \item{`underestimate`}{The count produced by
-#'     [WMF-Last-Access cookie counting](https://wikitech.wikimedia.org/wiki/Analytics/Data_Lake/Traffic/Unique_Devices/Last_access_solution#Technicalities)
-#'     which, by definition, underreports users as we will not be counting
-#'     users with a fresh session or users browsing without cookies.}
+#'   \item{`offset`}{The number added to `underestimate` to produce `devices` estimate.}
+#'   \item{`underestimate`}{The count produced by WMF-Last-Access cookie counting, which, by definition, underreports users as we will not be counting users with a fresh session or users browsing without cookies.}
 #' }
 #' @examples \dontrun{
 #' wx_unique_devices("en.wikipedia")
