@@ -79,4 +79,9 @@ wx_newly_registered_users(
 }
 \seealso{
 \href{https://wikitech.wikimedia.org/wiki/Analytics/AQS/Wikistats_2}{wikitech:Analytics/AQS/Wikistats 2}
+
+Other {data & metrics on users}: 
+\code{\link{wx_active_editors}()},
+\code{\link{wx_top_editors}()}
 }
+\concept{{data & metrics on users}}

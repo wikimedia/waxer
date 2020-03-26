@@ -30,6 +30,15 @@ Can also be a \code{Date} or a \code{POSIXt} object, which will be auto-formatte
 \item{end_date}{The date of the last day to include, in YYYYMMDD format.
 Can also be a \code{Date} or a \code{POSIXt} object, which will be auto-formatted.}
 }
+\value{
+A tibble data frame with the following columns:
+\describe{
+\item{\code{date}}{\code{Date}; beginning of each month if \code{granularity = "monthly"}}
+\item{\code{file_path}}{the media file's path on upload.wikimedia.org}
+\item{\code{requests}}{number of requests}
+\item{\code{rank}}{\code{requests}-based ranking}
+}
+}
 \description{
 The most requested media files per referer and per media type.
 }
@@ -69,3 +78,20 @@ Data retrieved from the API endpoint is available under the
 \examples{
 wx_most_requested_files("en.wikipedia", media_type = "video", granularity = "monthly")
 }
+\seealso{
+Other {content data & metrics}: 
+\code{\link{wx_edited_pages}()},
+\code{\link{wx_mediareqs_file}()},
+\code{\link{wx_mediareqs_referer}()},
+\code{\link{wx_new_pages}()},
+\code{\link{wx_page_edits}()},
+\code{\link{wx_project_edits}()},
+\code{\link{wx_top_edited_pages}()},
+\code{\link{wx_total_pages}()}
+
+Other {mediarequests data & metrics}: 
+\code{\link{wx_mediareqs_file}()},
+\code{\link{wx_mediareqs_referer}()}
+}
+\concept{{content data & metrics}}
+\concept{{mediarequests data & metrics}}

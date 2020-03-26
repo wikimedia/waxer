@@ -72,4 +72,10 @@ wx_project_views(
 \item \href{https://meta.wikimedia.org/wiki/Research:Page_view}{meta:Reseach:Page view}
 \item \href{https://wikitech.wikimedia.org/wiki/Analytics/AQS/Pageviews}{wikitech:Analytics/AQS/Pageviews}
 }
+
+Other {traffic data & metrics}: 
+\code{\link{wx_page_views}()},
+\code{\link{wx_top_viewed_pages}()},
+\code{\link{wx_unique_devices}()}
 }
+\concept{{traffic data & metrics}}

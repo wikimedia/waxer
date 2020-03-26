@@ -56,7 +56,12 @@ Data retrieved from the API endpoint is available under the
 }
 
 \examples{
-\dontrun{
 wx_top_viewed_pages("en.wikipedia")
 }
+\seealso{
+Other {traffic data & metrics}: 
+\code{\link{wx_page_views}()},
+\code{\link{wx_project_views}()},
+\code{\link{wx_unique_devices}()}
 }
+\concept{{traffic data & metrics}}

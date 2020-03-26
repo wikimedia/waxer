@@ -80,3 +80,15 @@ wx_page_edits(
 )
 }
 }
+\seealso{
+Other {content data & metrics}: 
+\code{\link{wx_edited_pages}()},
+\code{\link{wx_mediareqs_file}()},
+\code{\link{wx_mediareqs_referer}()},
+\code{\link{wx_most_requested_files}()},
+\code{\link{wx_new_pages}()},
+\code{\link{wx_project_edits}()},
+\code{\link{wx_top_edited_pages}()},
+\code{\link{wx_total_pages}()}
+}
+\concept{{content data & metrics}}

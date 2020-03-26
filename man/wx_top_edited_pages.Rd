@@ -42,6 +42,16 @@ Can also be a \code{Date} or a \code{POSIXt} object, which will be auto-formatte
 \item{end_date}{The date of the last day to include, in YYYYMMDD format.
 Can also be a \code{Date} or a \code{POSIXt} object, which will be auto-formatted.}
 }
+\value{
+A tibble data frame with the following columns:
+\describe{
+\item{\code{date}}{\code{Date}; beginning of each month if \code{granularity = "monthly"}}
+\item{\code{page_name}}{page name; \strong{NOTE}: in wikitext, the first letter
+of the target page is automatically capitalized}
+\item{\code{edits}}{number of edits}
+\item{\code{rank}}{\code{edits}-based ranking}
+}
+}
 \description{
 Lists the 100 most edited pages for a given project.
 }
@@ -55,3 +65,17 @@ Data retrieved from the API endpoint is available under the
 # Top edited articles on German Wikivoyage:
 wx_top_edited_pages("de.wikivoyage", page_type = "content")
 }
+\seealso{
+\link{wx_top_viewed_pages}
+
+Other {content data & metrics}: 
+\code{\link{wx_edited_pages}()},
+\code{\link{wx_mediareqs_file}()},
+\code{\link{wx_mediareqs_referer}()},
+\code{\link{wx_most_requested_files}()},
+\code{\link{wx_new_pages}()},
+\code{\link{wx_page_edits}()},
+\code{\link{wx_project_edits}()},
+\code{\link{wx_total_pages}()}
+}
+\concept{{content data & metrics}}

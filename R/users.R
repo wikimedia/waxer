@@ -19,6 +19,7 @@
 #'   end_date = "20191031"
 #' )
 #' }
+#' @family {data & metrics on users}
 #' @export
 wx_top_editors <- function(
   project,
@@ -92,6 +93,7 @@ wx_top_editors <- function(
 #'   start_date = "20200101",
 #'   end_date = "20200301"
 #' )
+#' @family {data & metrics on users}
 #' @export
 wx_active_editors <- function(
   project,
@@ -163,6 +165,7 @@ wx_active_editors <- function(
 #'   start_date = "20190401",
 #'   end_date = "20191001"
 #' )
+#' @family {data & metrics on users}
 #' @export
 wx_newly_registered_users <- function(
   project,

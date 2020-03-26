@@ -172,12 +172,35 @@ Can also be a <code>Date</code> or a <code>POSIXt</code> object, which will be a
     </tr>
     </table>
 
+    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
+
+    <p>A tibble data frame with the following columns:</p><dl'>
+<dt><code>date</code></dt><dd><p><code>Date</code>; beginning of each month if <code>granularity = "monthly"</code></p></dd>
+<dt><code>page_name</code></dt><dd><p>page name; <strong>NOTE</strong>: in wikitext, the first letter
+of the target page is automatically capitalized</p></dd>
+<dt><code>edits</code></dt><dd><p>number of edits</p></dd>
+<dt><code>rank</code></dt><dd><p><code>edits</code>-based ranking</p></dd>
+
+</dl>
+
     <h2 class="hasAnchor" id="license"><a class="anchor" href="#license"></a>License</h2>
 
     
 
 <p>Data retrieved from the API endpoint is available under the
 <a href='https://creativecommons.org/publicdomain/zero/1.0/'>CC0 1.0 license</a>.</p>
+    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
+
+    <div class='dont-index'><p><a href='wx_top_viewed_pages.html'>wx_top_viewed_pages</a></p>
+<p>Other content data &amp; metrics: 
+<code><a href='wx_edited_pages.html'>wx_edited_pages</a>()</code>,
+<code><a href='wx_mediareqs_file.html'>wx_mediareqs_file</a>()</code>,
+<code><a href='wx_mediareqs_referer.html'>wx_mediareqs_referer</a>()</code>,
+<code><a href='wx_most_requested_files.html'>wx_most_requested_files</a>()</code>,
+<code><a href='wx_new_pages.html'>wx_new_pages</a>()</code>,
+<code><a href='wx_page_edits.html'>wx_page_edits</a>()</code>,
+<code><a href='wx_project_edits.html'>wx_project_edits</a>()</code>,
+<code><a href='wx_total_pages.html'>wx_total_pages</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># Top edited articles on German Wikivoyage:</span>

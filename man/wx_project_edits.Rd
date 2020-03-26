@@ -55,3 +55,15 @@ Data retrieved from the API endpoint is available under the
 # Monthly article edits on Arabic Wikipedia:
 wx_project_edits("ar.wikipedia", page_type = "content", granularity = "monthly")
 }
+\seealso{
+Other {content data & metrics}: 
+\code{\link{wx_edited_pages}()},
+\code{\link{wx_mediareqs_file}()},
+\code{\link{wx_mediareqs_referer}()},
+\code{\link{wx_most_requested_files}()},
+\code{\link{wx_new_pages}()},
+\code{\link{wx_page_edits}()},
+\code{\link{wx_top_edited_pages}()},
+\code{\link{wx_total_pages}()}
+}
+\concept{{content data & metrics}}

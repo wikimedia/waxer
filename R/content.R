@@ -23,9 +23,19 @@
 #' @param end_date The date of the last day to include, in YYYYMMDD format.
 #'   Can also be a `Date` or a `POSIXt` object, which will be auto-formatted.
 #' @inheritSection wx_query_api License
+#' @return A tibble data frame with the following columns:
+#' \describe{
+#'   \item{`date`}{`Date`; beginning of each month if `granularity = "monthly"`}
+#'   \item{`page_name`}{page name; **NOTE**: in wikitext, the first letter
+#'     of the target page is automatically capitalized}
+#'  \item{`edits`}{number of edits}
+#'  \item{`rank`}{`edits`-based ranking}
+#' }
 #' @examples
 #' # Top edited articles on German Wikivoyage:
 #' wx_top_edited_pages("de.wikivoyage", page_type = "content")
+#' @seealso [wx_top_viewed_pages]
+#' @family {content data & metrics}
 #' @export
 wx_top_edited_pages <- function(
   project,
@@ -92,6 +102,7 @@ wx_top_edited_pages <- function(
 #' @examples
 #' # Monthly new articles on French Wiktionary:
 #' wx_new_pages("fr.wiktionary", granularity = "monthly", page_type = "content")
+#' @family {content data & metrics}
 #' @export
 wx_new_pages <- function(
   project,
@@ -142,6 +153,7 @@ wx_new_pages <- function(
 #' @examples \dontrun{
 #' wx_total_pages("en.wikipedia")
 #' }
+#' @family {content data & metrics}
 #' @export
 wx_total_pages <- function(
   project,
@@ -172,6 +184,7 @@ wx_total_pages <- function(
 #' @examples
 #' # Monthly edited pages on Hindi Wikipedia:
 #' wx_edited_pages("hi.wikipedia", page_type = "content", granularity = "monthly")
+#' @family {content data & metrics}
 #' @export
 wx_edited_pages <- function(
   project,
@@ -211,6 +224,7 @@ wx_edited_pages <- function(
 #' @examples
 #' # Monthly article edits on Arabic Wikipedia:
 #' wx_project_edits("ar.wikipedia", page_type = "content", granularity = "monthly")
+#' @family {content data & metrics}
 #' @export
 wx_project_edits <- function(
   project,
@@ -265,6 +279,7 @@ wx_project_edits <- function(
 #'   end_date = "20191231"
 #' )
 #' }
+#' @family {content data & metrics}
 #' @export
 wx_page_edits <- function(
   project, page_name,

@@ -35,6 +35,13 @@
 #' wx_mediareqs_referer("de.wikipedia", granularity = "monthly")
 #' @seealso
 #' - [wikitech:Analytics/AQS/Mediarequests](https://wikitech.wikimedia.org/wiki/Analytics/AQS/Mediarequests)
+#' @return A tibble data frame with the following columns:
+#' \describe{
+#'   \item{`date`}{`Date`; beginning of each month if `granularity = "monthly"`}
+#'   \item{`requests`}{number of media file requests}
+#' }
+#' @family {content data & metrics}
+#' @family {mediarequests data & metrics}
 #' @export
 wx_mediareqs_referer <- function(
   referer,
@@ -86,6 +93,14 @@ wx_mediareqs_referer <- function(
 #'   agent_type = "user", granularity = "monthly",
 #'   start_date = "20200101", end_date = "20200301"
 #' )
+#' @return A tibble data frame with the following columns:
+#' \describe{
+#'   \item{`file_path`}{media file path provided by the user}
+#'   \item{`date`}{`Date`; beginning of each month if `granularity = "monthly"`}
+#'   \item{`requests`}{number of requests}
+#' }
+#' @family {content data & metrics}
+#' @family {mediarequests data & metrics}
 #' @export
 wx_mediareqs_file <- function(
   file_path, referer,
@@ -114,7 +129,7 @@ wx_mediareqs_file <- function(
       dplyr::mutate(date = as.Date(timestamp, "%Y%m%d00")) %>%
       dplyr::select(date, requests)
     return(data_frame)
-  }, .id = "file_name")
+  }, .id = "file_path")
   return(results)
 }
 
@@ -126,8 +141,17 @@ wx_mediareqs_file <- function(
 #' @inheritSection wx_mediareqs_referer Media
 #' @inheritSection wx_mediareqs_referer Limitations
 #' @inheritSection wx_query_api License
+#' @return A tibble data frame with the following columns:
+#' \describe{
+#'   \item{`date`}{`Date`; beginning of each month if `granularity = "monthly"`}
+#'   \item{`file_path`}{the media file's path on upload.wikimedia.org}
+#'   \item{`requests`}{number of requests}
+#'   \item{`rank`}{`requests`-based ranking}
+#' }
 #' @examples
 #' wx_most_requested_files("en.wikipedia", media_type = "video", granularity = "monthly")
+#' @family {content data & metrics}
+#' @family {mediarequests data & metrics}
 #' @export
 wx_most_requested_files <- function(
   referer,

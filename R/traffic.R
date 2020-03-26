@@ -6,9 +6,8 @@
 #'   "desktop", "mobile app", or "mobile web". If you are interested in
 #'   pageviews regardless of access method, use "all" (default).
 #' @inheritSection wx_query_api License
-#' @examples \dontrun{
+#' @examples
 #' wx_top_viewed_pages("en.wikipedia")
-#' }
 #' @return A tibble data frame with the following columns:
 #' \describe{
 #'   \item{`date`}{`Date`; beginning of each month if `granularity = "monthly"`}
@@ -19,6 +18,7 @@
 #'    for more information on what is considered a page-view)}
 #'  \item{`rank`}{`views`-based ranking}
 #' }
+#' @family {traffic data & metrics}
 #' @export
 wx_top_viewed_pages <- function(
   project,
@@ -118,6 +118,7 @@ wx_top_viewed_pages <- function(
 #' - [wikitech:Analytics/AQS/Unique Devices](https://wikitech.wikimedia.org/wiki/Analytics/AQS/Unique_Devices)
 #' - [Introducing the unique devices dataset: a new way to estimate reach on Wikimedia projects](https://blog.wikimedia.org/2016/03/30/unique-devices-dataset/)
 #' - [wikitech:Analytics/Data Lake/Traffic/Unique Devices/Last access solution](https://wikitech.wikimedia.org/wiki/Analytics/Data_Lake/Traffic/Unique_Devices/Last_access_solution)
+#' @family {traffic data & metrics}
 #' @export
 wx_unique_devices <- function(
   project,
@@ -177,6 +178,7 @@ wx_unique_devices <- function(
 #'   start_date = "20191001",
 #'   end_date = "20200229"
 #' )
+#' @family {traffic data & metrics}
 #' @export
 wx_project_views <- function(
   project,
@@ -246,6 +248,7 @@ wx_project_views <- function(
 #' @seealso
 #' - [meta:Reseach:Page view](https://meta.wikimedia.org/wiki/Research:Page_view)
 #' - [wikitech:Analytics/AQS/Pageviews](https://wikitech.wikimedia.org/wiki/Analytics/AQS/Pageviews)
+#' @family {traffic data & metrics}
 #' @export
 wx_page_views <- function(
   project, page_name,

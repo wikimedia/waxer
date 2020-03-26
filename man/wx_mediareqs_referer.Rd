@@ -35,6 +35,13 @@ Can also be a \code{Date} or a \code{POSIXt} object, which will be auto-formatte
 \item{end_date}{The date of the last day to include, in YYYYMMDD format.
 Can also be a \code{Date} or a \code{POSIXt} object, which will be auto-formatted.}
 }
+\value{
+A tibble data frame with the following columns:
+\describe{
+\item{\code{date}}{\code{Date}; beginning of each month if \code{granularity = "monthly"}}
+\item{\code{requests}}{number of media file requests}
+}
+}
 \description{
 Daily and monthly aggregation of hits to media files, split by
 the referrer Referrer means either external, internal, unknown, or any
@@ -80,4 +87,20 @@ wx_mediareqs_referer("de.wikipedia", granularity = "monthly")
 \itemize{
 \item \href{https://wikitech.wikimedia.org/wiki/Analytics/AQS/Mediarequests}{wikitech:Analytics/AQS/Mediarequests}
 }
+
+Other {content data & metrics}: 
+\code{\link{wx_edited_pages}()},
+\code{\link{wx_mediareqs_file}()},
+\code{\link{wx_most_requested_files}()},
+\code{\link{wx_new_pages}()},
+\code{\link{wx_page_edits}()},
+\code{\link{wx_project_edits}()},
+\code{\link{wx_top_edited_pages}()},
+\code{\link{wx_total_pages}()}
+
+Other {mediarequests data & metrics}: 
+\code{\link{wx_mediareqs_file}()},
+\code{\link{wx_most_requested_files}()}
 }
+\concept{{content data & metrics}}
+\concept{{mediarequests data & metrics}}

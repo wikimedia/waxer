@@ -68,3 +68,9 @@ wx_top_editors(
 )
 }
 }
+\seealso{
+Other {data & metrics on users}: 
+\code{\link{wx_active_editors}()},
+\code{\link{wx_newly_registered_users}()}
+}
+\concept{{data & metrics on users}}

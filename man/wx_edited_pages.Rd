@@ -61,3 +61,15 @@ Data retrieved from the API endpoint is available under the
 # Monthly edited pages on Hindi Wikipedia:
 wx_edited_pages("hi.wikipedia", page_type = "content", granularity = "monthly")
 }
+\seealso{
+Other {content data & metrics}: 
+\code{\link{wx_mediareqs_file}()},
+\code{\link{wx_mediareqs_referer}()},
+\code{\link{wx_most_requested_files}()},
+\code{\link{wx_new_pages}()},
+\code{\link{wx_page_edits}()},
+\code{\link{wx_project_edits}()},
+\code{\link{wx_top_edited_pages}()},
+\code{\link{wx_total_pages}()}
+}
+\concept{{content data & metrics}}

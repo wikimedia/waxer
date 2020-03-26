@@ -77,4 +77,10 @@ wx_unique_devices("en.wikipedia", access_site = "mobile", granularity = "monthly
 \item \href{https://blog.wikimedia.org/2016/03/30/unique-devices-dataset/}{Introducing the unique devices dataset: a new way to estimate reach on Wikimedia projects}
 \item \href{https://wikitech.wikimedia.org/wiki/Analytics/Data_Lake/Traffic/Unique_Devices/Last_access_solution}{wikitech:Analytics/Data Lake/Traffic/Unique Devices/Last access solution}
 }
+
+Other {traffic data & metrics}: 
+\code{\link{wx_page_views}()},
+\code{\link{wx_project_views}()},
+\code{\link{wx_top_viewed_pages}()}
 }
+\concept{{traffic data & metrics}}

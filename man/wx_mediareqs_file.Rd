@@ -39,6 +39,14 @@ Can also be a \code{Date} or a \code{POSIXt} object, which will be auto-formatte
 \item{end_date}{The date of the last day to include, in YYYYMMDD format.
 Can also be a \code{Date} or a \code{POSIXt} object, which will be auto-formatted.}
 }
+\value{
+A tibble data frame with the following columns:
+\describe{
+\item{\code{file_path}}{media file path provided by the user}
+\item{\code{date}}{\code{Date}; beginning of each month if \code{granularity = "monthly"}}
+\item{\code{requests}}{number of requests}
+}
+}
 \description{
 Daily and monthly counts of mediarequests for each media file
 stored in the wiki servers (as long as the count is higher than one).
@@ -92,3 +100,20 @@ wx_mediareqs_file(
   start_date = "20200101", end_date = "20200301"
 )
 }
+\seealso{
+Other {content data & metrics}: 
+\code{\link{wx_edited_pages}()},
+\code{\link{wx_mediareqs_referer}()},
+\code{\link{wx_most_requested_files}()},
+\code{\link{wx_new_pages}()},
+\code{\link{wx_page_edits}()},
+\code{\link{wx_project_edits}()},
+\code{\link{wx_top_edited_pages}()},
+\code{\link{wx_total_pages}()}
+
+Other {mediarequests data & metrics}: 
+\code{\link{wx_mediareqs_referer}()},
+\code{\link{wx_most_requested_files}()}
+}
+\concept{{content data & metrics}}
+\concept{{mediarequests data & metrics}}
