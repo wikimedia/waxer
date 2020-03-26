@@ -51,3 +51,7 @@ Data retrieved from the API endpoint is available under the
 \href{https://creativecommons.org/publicdomain/zero/1.0/}{CC0 1.0 license}.
 }
 
+\examples{
+# Top edited articles on German Wikivoyage:
+wx_top_edited_pages("de.wikivoyage", page_type = "content")
+}

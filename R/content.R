@@ -23,6 +23,9 @@
 #' @param end_date The date of the last day to include, in YYYYMMDD format.
 #'   Can also be a `Date` or a `POSIXt` object, which will be auto-formatted.
 #' @inheritSection wx_query_api License
+#' @examples
+#' # Top edited articles on German Wikivoyage:
+#' wx_top_edited_pages("de.wikivoyage", page_type = "content")
 #' @export
 wx_top_edited_pages <- function(
   project,
@@ -86,6 +89,9 @@ wx_top_edited_pages <- function(
 #' @inheritParams wx_top_edited_pages
 #' @inheritSection wx_newly_registered_users Granularity
 #' @inheritSection wx_query_api License
+#' @examples
+#' # Monthly new articles on French Wiktionary:
+#' wx_new_pages("fr.wiktionary", granularity = "monthly", page_type = "content")
 #' @export
 wx_new_pages <- function(
   project,
@@ -133,6 +139,9 @@ wx_new_pages <- function(
 #'   \item{`date`}{`Date`}
 #'   \item{`total_pages`}{Number of pages at every `date`}
 #' }
+#' @examples \dontrun{
+#' wx_total_pages("en.wikipedia")
+#' }
 #' @export
 wx_total_pages <- function(
   project,
@@ -160,6 +169,9 @@ wx_total_pages <- function(
 #'   interested in pages regardless of their activity-level, use
 #'   "all" (default).
 #' @inheritSection wx_query_api License
+#' @examples
+#' # Monthly edited pages on Hindi Wikipedia:
+#' wx_edited_pages("hi.wikipedia", page_type = "content", granularity = "monthly")
 #' @export
 wx_edited_pages <- function(
   project,
@@ -196,6 +208,9 @@ wx_edited_pages <- function(
 #' @description Number of edits for a given project and timespan.
 #' @inheritParams wx_top_edited_pages
 #' @inheritSection wx_query_api License
+#' @examples
+#' # Monthly article edits on Arabic Wikipedia:
+#' wx_project_edits("ar.wikipedia", page_type = "content", granularity = "monthly")
 #' @export
 wx_project_edits <- function(
   project,
@@ -241,6 +256,15 @@ wx_project_edits <- function(
 #'   page names at once as this function has been optimized for that use-case.
 #' @inheritSection wx_newly_registered_users Granularity
 #' @inheritSection wx_query_api License
+#' @examples \dontrun{
+#' wx_page_edits(
+#'   "en.wikipedia",
+#'   c("Animal Crossing: New Horizons", "Animal Crossing"),
+#'   granularity = "monthly",
+#'   start_date = "20190101",
+#'   end_date = "20191231"
+#' )
+#' }
 #' @export
 wx_page_edits <- function(
   project, page_name,

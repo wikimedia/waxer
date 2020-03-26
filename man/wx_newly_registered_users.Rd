@@ -69,6 +69,14 @@ Data retrieved from the API endpoint is available under the
 \href{https://creativecommons.org/publicdomain/zero/1.0/}{CC0 1.0 license}.
 }
 
+\examples{
+wx_newly_registered_users(
+  "mr.wikipedia", # Marathi
+  granularity = "monthly",
+  start_date = "20190401",
+  end_date = "20191001"
+)
+}
 \seealso{
 \href{https://wikitech.wikimedia.org/wiki/Analytics/AQS/Wikistats_2}{wikitech:Analytics/AQS/Wikistats 2}
 }

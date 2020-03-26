@@ -10,6 +10,15 @@
 #'   \item{`edits`}{number of edits the user made on `date`}
 #'   \item{`rank`}{the rank based on `edits`}
 #' }
+#' @examples \dontrun{
+#' wx_top_editors(
+#'   "commons.wikimedia",
+#'   editor_type = "bot",
+#'   page_type = "content",
+#'   start_date = "20191001",
+#'   end_date = "20191031"
+#' )
+#' }
 #' @export
 wx_top_editors <- function(
   project,
@@ -73,6 +82,16 @@ wx_top_editors <- function(
 #' @inheritSection wx_query_api License
 #' @return A tibble data frame with columns `date` and `editors`.
 #' @seealso [wikitech:Analytics/AQS/Wikistats 2](https://wikitech.wikimedia.org/wiki/Analytics/AQS/Wikistats_2)
+#' @examples
+#' wx_active_editors(
+#'   "commons.wikimedia",
+#'   editor_type = "bot",
+#'   page_type = "content",
+#'   activity_level = "100+",
+#'   granularity = "monthly",
+#'   start_date = "20200101",
+#'   end_date = "20200301"
+#' )
 #' @export
 wx_active_editors <- function(
   project,
@@ -137,6 +156,13 @@ wx_active_editors <- function(
 #' @inheritSection wx_query_api License
 #' @return A tibble data frame with columns `date` and `new_registered_users`.
 #' @seealso [wikitech:Analytics/AQS/Wikistats 2](https://wikitech.wikimedia.org/wiki/Analytics/AQS/Wikistats_2)
+#' @examples
+#' wx_newly_registered_users(
+#'   "mr.wikipedia", # Marathi
+#'   granularity = "monthly",
+#'   start_date = "20190401",
+#'   end_date = "20191001"
+#' )
 #' @export
 wx_newly_registered_users <- function(
   project,

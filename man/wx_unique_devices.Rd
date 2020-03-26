@@ -8,8 +8,8 @@ wx_unique_devices(
   project,
   access_site = c("all", "desktop", "mobile"),
   granularity = c("daily", "monthly"),
-  start_date = "20191231",
-  end_date = "20200101"
+  start_date = "20191101",
+  end_date = "20191231"
 )
 }
 \arguments{
@@ -68,9 +68,7 @@ Data retrieved from the API endpoint is available under the
 }
 
 \examples{
-\dontrun{
-wx_unique_devices("en.wikipedia")
-}
+wx_unique_devices("en.wikipedia", access_site = "mobile", granularity = "monthly")
 }
 \seealso{
 \itemize{

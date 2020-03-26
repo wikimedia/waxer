@@ -57,3 +57,7 @@ Data retrieved from the API endpoint is available under the
 \href{https://creativecommons.org/publicdomain/zero/1.0/}{CC0 1.0 license}.
 }
 
+\examples{
+# Monthly edited pages on Hindi Wikipedia:
+wx_edited_pages("hi.wikipedia", page_type = "content", granularity = "monthly")
+}

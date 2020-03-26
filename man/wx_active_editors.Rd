@@ -74,6 +74,17 @@ Data retrieved from the API endpoint is available under the
 \href{https://creativecommons.org/publicdomain/zero/1.0/}{CC0 1.0 license}.
 }
 
+\examples{
+wx_active_editors(
+  "commons.wikimedia",
+  editor_type = "bot",
+  page_type = "content",
+  activity_level = "100+",
+  granularity = "monthly",
+  start_date = "20200101",
+  end_date = "20200301"
+)
+}
 \seealso{
 \href{https://wikitech.wikimedia.org/wiki/Analytics/AQS/Wikistats_2}{wikitech:Analytics/AQS/Wikistats 2}
 }

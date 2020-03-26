@@ -51,3 +51,7 @@ Data retrieved from the API endpoint is available under the
 \href{https://creativecommons.org/publicdomain/zero/1.0/}{CC0 1.0 license}.
 }
 
+\examples{
+# Monthly article edits on Arabic Wikipedia:
+wx_project_edits("ar.wikipedia", page_type = "content", granularity = "monthly")
+}

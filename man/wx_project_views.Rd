@@ -59,9 +59,13 @@ Data retrieved from the API endpoint is available under the
 }
 
 \examples{
-\dontrun{
-wx_project_views("en.wikipedia")
-}
+# block from 2017-04-29 to 2020-01-15
+wx_project_views(
+  "tr.wikipedia", # Turkish
+  granularity = "monthly",
+  start_date = "20191001",
+  end_date = "20200229"
+)
 }
 \seealso{
 \itemize{

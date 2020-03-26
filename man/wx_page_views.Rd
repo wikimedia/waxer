@@ -10,8 +10,8 @@ wx_page_views(
   access_method = c("all", "desktop", "mobile web", "mobile app"),
   agent_type = c("all", "user", "bot"),
   granularity = c("daily", "monthly"),
-  start_date = "20191231",
-  end_date = "20200101"
+  start_date = "20191101",
+  end_date = "20191231"
 )
 }
 \arguments{
@@ -65,9 +65,12 @@ Data retrieved from the API endpoint is available under the
 }
 
 \examples{
-\dontrun{
-wx_page_views("en.wikipedia", c("New Year's Eve", "New Year's Day"))
-}
+wx_page_views(
+  "en.wikipedia",
+  c("New Year's Eve", "New Year's Day"),
+  start_date = "20191231",
+  end_date = "20200101"
+)
 }
 \seealso{
 \itemize{

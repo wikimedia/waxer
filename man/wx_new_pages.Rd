@@ -64,3 +64,7 @@ Data retrieved from the API endpoint is available under the
 \href{https://creativecommons.org/publicdomain/zero/1.0/}{CC0 1.0 license}.
 }
 
+\examples{
+# Monthly new articles on French Wiktionary:
+wx_new_pages("fr.wiktionary", granularity = "monthly", page_type = "content")
+}

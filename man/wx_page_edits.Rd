@@ -69,3 +69,14 @@ Data retrieved from the API endpoint is available under the
 \href{https://creativecommons.org/publicdomain/zero/1.0/}{CC0 1.0 license}.
 }
 
+\examples{
+\dontrun{
+wx_page_edits(
+  "en.wikipedia",
+  c("Animal Crossing: New Horizons", "Animal Crossing"),
+  granularity = "monthly",
+  start_date = "20190101",
+  end_date = "20191231"
+)
+}
+}

@@ -24,8 +24,8 @@ wx_top_viewed_pages <- function(
   project,
   access_method = c("all", "desktop", "mobile web", "mobile app"),
   granularity = c("daily", "monthly"),
-  start_date = "20191231",
-  end_date = "20200101"
+  start_date = "20191101",
+  end_date = "20191231"
 ) {
   project <- project[1] # force 1 project per call
   # Validate "one of" arguments:
@@ -111,9 +111,8 @@ wx_top_viewed_pages <- function(
 #'   \item{`offset`}{The number added to `underestimate` to produce `devices` estimate.}
 #'   \item{`underestimate`}{The count produced by WMF-Last-Access cookie counting, which, by definition, underreports users as we will not be counting users with a fresh session or users browsing without cookies.}
 #' }
-#' @examples \dontrun{
-#' wx_unique_devices("en.wikipedia")
-#' }
+#' @examples
+#' wx_unique_devices("en.wikipedia", access_site = "mobile", granularity = "monthly")
 #' @seealso
 #' - [wikitech:Research:Unique devices](https://meta.wikimedia.org/wiki/Research:Unique_devices)
 #' - [wikitech:Analytics/AQS/Unique Devices](https://wikitech.wikimedia.org/wiki/Analytics/AQS/Unique_Devices)
@@ -124,8 +123,8 @@ wx_unique_devices <- function(
   project,
   access_site = c("all", "desktop", "mobile"),
   granularity = c("daily", "monthly"),
-  start_date = "20191231",
-  end_date = "20200101"
+  start_date = "20191101",
+  end_date = "20191231"
 ) {
   project <- project[1] # force 1 project per call
   # Validate "one of" arguments:
@@ -135,7 +134,7 @@ wx_unique_devices <- function(
     args[c("granularity", "access_site")]
   )
   c(start_date, end_date) %<-% wx_format_dates(start_date, end_date)
-  access_sites <- c("all" = "all-sites", "desktop" = "desktop-site", "mobile web" = "mobile-site")
+  access_sites <- c("all" = "all-sites", "desktop" = "desktop-site", "mobile" = "mobile-site")
   path <- paste(
     "/unique-devices",
     project, access_sites[access_site], granularity, start_date, end_date,
@@ -170,9 +169,14 @@ wx_unique_devices <- function(
 #' @seealso
 #' - [meta:Reseach:Page view](https://meta.wikimedia.org/wiki/Research:Page_view)
 #' - [wikitech:Analytics/AQS/Pageviews](https://wikitech.wikimedia.org/wiki/Analytics/AQS/Pageviews)
-#' @examples \dontrun{
-#' wx_project_views("en.wikipedia")
-#' }
+#' @examples
+#' # block from 2017-04-29 to 2020-01-15
+#' wx_project_views(
+#'   "tr.wikipedia", # Turkish
+#'   granularity = "monthly",
+#'   start_date = "20191001",
+#'   end_date = "20200229"
+#' )
 #' @export
 wx_project_views <- function(
   project,
@@ -226,9 +230,13 @@ wx_project_views <- function(
 #' @inheritParams wx_project_views
 #' @inheritParams wx_page_edits
 #' @inheritSection wx_query_api License
-#' @examples \dontrun{
-#' wx_page_views("en.wikipedia", c("New Year's Eve", "New Year's Day"))
-#' }
+#' @examples
+#' wx_page_views(
+#'   "en.wikipedia",
+#'   c("New Year's Eve", "New Year's Day"),
+#'   start_date = "20191231",
+#'   end_date = "20200101"
+#' )
 #' @return A tibble data frame with the following columns:
 #' \describe{
 #'   \item{`page_name`}{the `page_name` provided by the user}
@@ -244,8 +252,8 @@ wx_page_views <- function(
   access_method = c("all", "desktop", "mobile web", "mobile app"),
   agent_type = c("all", "user", "bot"),
   granularity = c("daily", "monthly"),
-  start_date = "20191231",
-  end_date = "20200101"
+  start_date = "20191101",
+  end_date = "20191231"
 ) {
   project <- project[1] # force 1 project per call
   # Validate "one of" arguments:

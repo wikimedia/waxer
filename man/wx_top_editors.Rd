@@ -57,3 +57,14 @@ Data retrieved from the API endpoint is available under the
 \href{https://creativecommons.org/publicdomain/zero/1.0/}{CC0 1.0 license}.
 }
 
+\examples{
+\dontrun{
+wx_top_editors(
+  "commons.wikimedia",
+  editor_type = "bot",
+  page_type = "content",
+  start_date = "20191001",
+  end_date = "20191031"
+)
+}
+}

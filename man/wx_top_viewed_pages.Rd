@@ -8,8 +8,8 @@ wx_top_viewed_pages(
   project,
   access_method = c("all", "desktop", "mobile web", "mobile app"),
   granularity = c("daily", "monthly"),
-  start_date = "20191231",
-  end_date = "20200101"
+  start_date = "20191101",
+  end_date = "20191231"
 )
 }
 \arguments{
