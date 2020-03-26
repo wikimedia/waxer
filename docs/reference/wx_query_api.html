@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Make HTTP request and process response — wx_query_api • waxer</title>
+<title>Generate a rate-limited API caller — wx_query_api • waxer</title>
 
 
 <!-- jquery -->
@@ -35,9 +35,11 @@
 
 
 
-<meta property="og:title" content="Make HTTP request and process response — wx_query_api" />
-<meta property="og:description" content="Makes a request to
-wikimedia.org/api/rest_v1/." />
+<meta property="og:title" content="Generate a rate-limited API caller — wx_query_api" />
+<meta property="og:description" content="Generates a function which makes a request to
+wikimedia.org/api/rest_v1/. This
+generator is primarily intended for internal use, but can theoretically be
+used by others to write custom Wikimedia REST API queries." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -70,7 +72,7 @@ wikimedia.org/api/rest_v1/." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">waxer</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.1.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.9.0</span>
       </span>
     </div>
 
@@ -107,14 +109,16 @@ wikimedia.org/api/rest_v1/." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Make HTTP request and process response</h1>
+    <h1>Generate a rate-limited API caller</h1>
     <small class="dont-index">Source: <a href='https://github.com/bearloga/waxer/blob/master/R/http.R'><code>R/http.R</code></a></small>
     <div class="hidden name"><code>wx_query_api.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Makes a request to
-<a href='https://wikimedia.org/api/rest_v1/'>wikimedia.org/api/rest_v1/</a>.</p>
+    <p>Generates a function which makes a request to
+<a href='https://wikimedia.org/api/rest_v1/'>wikimedia.org/api/rest_v1/</a>. This
+generator is primarily intended for internal use, but can theoretically be
+used by others to write custom Wikimedia REST API queries.</p>
     </div>
 
     <pre class="usage"><span class='fu'>wx_query_api</span>(<span class='kw'>reqs_per_second</span> <span class='kw'>=</span> <span class='fl'>200</span>)</pre>
@@ -124,16 +128,34 @@ wikimedia.org/api/rest_v1/." />
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>reqs_per_second</th>
-      <td><p>Maximum requests allowed per second (default 200)</p></td>
+      <td><p>maximum requests allowed per second (default 200)</p></td>
     </tr>
     </table>
 
+    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
+
+    <p>A rate-limited function with parameters:</p><dl class='dl-horizontal'>
+<dt><code>path</code></dt><dd><p>path after endpoint; e.g.
+<code>/registered-users/new/{project}/{granularity}/{start}/{end}</code></p></dd>
+<dt><code>endpoint</code></dt><dd><p><code>/metrics</code> by default but can be changed to <code>/feed</code> (for example)</p></dd>
+
+</dl><p>The generated function, when run, processed the JSON response and returns a
+list. It is up to the user of this generator to turn the results into a data
+frame or another object.</p>
+    <h2 class="hasAnchor" id="license"><a class="anchor" href="#license"></a>License</h2>
+
+    
+
+<p>Data retrieved from the API endpoint is available under the
+<a href='https://creativecommons.org/publicdomain/zero/1.0/'>CC0 1.0 license</a>.</p>
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
+      <li><a href="#value">Value</a></li>
+      <li><a href="#license">License</a></li>
     </ul>
 
   </div>

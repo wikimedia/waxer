@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Unique devices — wx_unique_devices • waxer</title>
+<title>Unique device counts — wx_unique_devices • waxer</title>
 
 
 <!-- jquery -->
@@ -35,7 +35,7 @@
 
 
 
-<meta property="og:title" content="Unique devices — wx_unique_devices" />
+<meta property="og:title" content="Unique device counts — wx_unique_devices" />
 <meta property="og:description" content="Unique Devices dataset (v1) as developed and maintained by the
 Wikimedia Foundation since January 1st, 2016. This data set contains the
 number of unique devices having visited Wikipedia or its sisters project
@@ -74,7 +74,7 @@ fingerprint or otherwise track users." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">waxer</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.1.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.9.0</span>
       </span>
     </div>
 
@@ -111,7 +111,7 @@ fingerprint or otherwise track users." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Unique devices</h1>
+    <h1>Unique device counts</h1>
     <small class="dont-index">Source: <a href='https://github.com/bearloga/waxer/blob/master/R/traffic.R'><code>R/traffic.R</code></a></small>
     <div class="hidden name"><code>wx_unique_devices.Rd</code></div>
     </div>
@@ -127,7 +127,7 @@ fingerprint or otherwise track users.</p>
 
     <pre class="usage"><span class='fu'>wx_unique_devices</span>(
   <span class='no'>project</span>,
-  <span class='kw'>access_method</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"all"</span>, <span class='st'>"desktop"</span>, <span class='st'>"mobile web"</span>),
+  <span class='kw'>access_site</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"all"</span>, <span class='st'>"desktop"</span>, <span class='st'>"mobile"</span>),
   <span class='kw'>granularity</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"daily"</span>, <span class='st'>"monthly"</span>),
   <span class='kw'>start_date</span> <span class='kw'>=</span> <span class='st'>"20191231"</span>,
   <span class='kw'>end_date</span> <span class='kw'>=</span> <span class='st'>"20200101"</span>
@@ -146,15 +146,16 @@ projects like www.mediawiki.org, you can use that full string, or just use
 mediawiki or mediawiki.org.</p></td>
     </tr>
     <tr>
-      <th>access_method</th>
+      <th>access_site</th>
       <td><p>If you want to filter by accessed site, use "desktop"
-or "mobile web". If you are interested in unique devices regardless of
-accessed site, use "all" (default).</p></td>
+or "mobile". If you are interested in unique devices regardless of
+accessed site, use "all" (default). <strong><em>NOT</em></strong> to be confused with
+<code>access_method</code> parameter in other functions.</p></td>
     </tr>
     <tr>
       <th>granularity</th>
-      <td><p>The time unit for the response data; "daily" by default
-but if you want to get the top articles of a whole month use "monthly".</p></td>
+      <td><p>The time unit for the response data. As of today,
+supported values are daily (default) and monthly.</p></td>
     </tr>
     <tr>
       <th>start_date</th>
@@ -180,16 +181,21 @@ users with a fresh session or users browsing without cookies.
 
 </dl>
 
-    <h2 class="hasAnchor" id="access-method"><a class="anchor" href="#access-method"></a>Access method</h2>
+    <h2 class="hasAnchor" id="site"><a class="anchor" href="#site"></a>Site</h2>
 
     
 
-<p>A couple of notes about <code>access_method</code>. First, mobile apps are <strong><em>NOT</em></strong>
-included in this dataset.</p>
-<p>Second, desktop devices can (and <em>do</em>) access the mobile website, usually
-because the user clicked on a link shared by a user from a mobile device.</p>
+<p>Desktop devices can (and <em>do</em>) access the mobile website, usually because
+the user clicked on a link shared by a user from a mobile device. So do not
+use this metric as a proxy for mobile vs desktop devices.</p>
 <p>To learn more about how mobile traffic is handled by Wikimedia, refer to
 <a href='https://www.mediawiki.org/wiki/Reading/Web/Mobile'>mw:Reading/Web/Mobile</a>.</p>
+    <h2 class="hasAnchor" id="license"><a class="anchor" href="#license"></a>License</h2>
+
+    
+
+<p>Data retrieved from the API endpoint is available under the
+<a href='https://creativecommons.org/publicdomain/zero/1.0/'>CC0 1.0 license</a>.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'>
@@ -211,7 +217,8 @@ because the user clicked on a link shared by a user from a mobile device.</p>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
       <li><a href="#value">Value</a></li>
-      <li><a href="#access-method">Access method</a></li>
+      <li><a href="#site">Site</a></li>
+      <li><a href="#license">License</a></li>
       <li><a href="#see-also">See also</a></li>
       <li><a href="#examples">Examples</a></li>
     </ul>

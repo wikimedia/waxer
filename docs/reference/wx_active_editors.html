@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Active editors — wx_active_editors • waxer</title>
+<title>Active editors counts — wx_active_editors • waxer</title>
 
 
 <!-- jquery -->
@@ -35,7 +35,7 @@
 
 
 
-<meta property="og:title" content="Active editors — wx_active_editors" />
+<meta property="og:title" content="Active editors counts — wx_active_editors" />
 <meta property="og:description" content="Number of active editors. Caution: This metric measures
 editors' activity, therefore it includes edits on redirects." />
 <meta name="twitter:card" content="summary" />
@@ -70,7 +70,7 @@ editors' activity, therefore it includes edits on redirects." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">waxer</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.1.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.9.0</span>
       </span>
     </div>
 
@@ -107,8 +107,8 @@ editors' activity, therefore it includes edits on redirects." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Active editors</h1>
-    <small class="dont-index">Source: <a href='https://github.com/bearloga/waxer/blob/master/R/editors.R'><code>R/editors.R</code></a></small>
+    <h1>Active editors counts</h1>
+    <small class="dont-index">Source: <a href='https://github.com/bearloga/waxer/blob/master/R/users.R'><code>R/users.R</code></a></small>
     <div class="hidden name"><code>wx_active_editors.Rd</code></div>
     </div>
 
@@ -119,9 +119,9 @@ editors' activity, therefore it includes edits on redirects.</p>
 
     <pre class="usage"><span class='fu'>wx_active_editors</span>(
   <span class='no'>project</span>,
-  <span class='kw'>editor_type</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"all-editor-types"</span>, <span class='st'>"anonymous"</span>, <span class='st'>"user"</span>, <span class='st'>"name-bot"</span>, <span class='st'>"group-bot"</span>),
-  <span class='kw'>page_type</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"all-page-types"</span>, <span class='st'>"content"</span>, <span class='st'>"non-content"</span>),
-  <span class='kw'>activity_level</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"all-activity-levels"</span>, <span class='st'>"1-4"</span>, <span class='st'>"5-24"</span>, <span class='st'>"25-99"</span>, <span class='st'>"100+"</span>),
+  <span class='kw'>editor_type</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"all"</span>, <span class='st'>"anonymous"</span>, <span class='st'>"user"</span>, <span class='st'>"bot"</span>, <span class='st'>"bot group"</span>),
+  <span class='kw'>page_type</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"all"</span>, <span class='st'>"content"</span>, <span class='st'>"non-content"</span>),
+  <span class='kw'>activity_level</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"all"</span>, <span class='st'>"1-4"</span>, <span class='st'>"5-24"</span>, <span class='st'>"25-99"</span>, <span class='st'>"100+"</span>),
   <span class='kw'>granularity</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"daily"</span>, <span class='st'>"monthly"</span>),
   <span class='kw'>start_date</span> <span class='kw'>=</span> <span class='st'>"20191101"</span>,
   <span class='kw'>end_date</span> <span class='kw'>=</span> <span class='st'>"20191231"</span>
@@ -153,19 +153,19 @@ type, use "all-editor-types" (default).</p></td>
       <td><p>If you want to filter by page-type, use one of: "content"
 (edits made in content namespaces) or "non-content" (edits made in
 non-content namespaces). If you are interested in editors regardless of
-their page type, use "all-page-types" (default).</p></td>
+their page type, use "all" (default).</p></td>
     </tr>
     <tr>
       <th>activity_level</th>
       <td><p>If you want to filter by activity-level (number of
 edits), use one of: "1-4", "5-24", "25-99", or "100+" edits. If you are
 interested in editors regardless of their activity-level, use
-"all-activity-levels" (default).</p></td>
+"all" (default).</p></td>
     </tr>
     <tr>
       <th>granularity</th>
       <td><p>The time unit for the response data. As of today,
-supported values are daily and monthly.</p></td>
+supported values are daily (default) and monthly.</p></td>
     </tr>
     <tr>
       <th>start_date</th>
@@ -193,6 +193,12 @@ the full month.</p>
 include 2019-12, use <code>end_date = "20200101"</code>.</p>
 <p>Frustratingly, <code>start_date = "20191201"</code> and <code>end_date = "20191231"</code> does
 <strong><em>not</em></strong> yield 2019-12 monthly total. Use <code>end_date = "20200101"</code> for that.</p>
+    <h2 class="hasAnchor" id="license"><a class="anchor" href="#license"></a>License</h2>
+
+    
+
+<p>Data retrieved from the API endpoint is available under the
+<a href='https://creativecommons.org/publicdomain/zero/1.0/'>CC0 1.0 license</a>.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p><a href='https://wikitech.wikimedia.org/wiki/Analytics/AQS/Wikistats_2#Editors'>wikitech:Analytics/AQS/Wikistats 2#Editors</a></p></div>
@@ -204,6 +210,7 @@ include 2019-12, use <code>end_date = "20200101"</code>.</p>
       <li><a href="#arguments">Arguments</a></li>
       <li><a href="#value">Value</a></li>
       <li><a href="#granularity-and-dates">Granularity and dates</a></li>
+      <li><a href="#license">License</a></li>
       <li><a href="#see-also">See also</a></li>
     </ul>
 

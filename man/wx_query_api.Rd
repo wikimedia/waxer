@@ -2,14 +2,33 @@
 % Please edit documentation in R/http.R
 \name{wx_query_api}
 \alias{wx_query_api}
-\title{Make HTTP request and process response}
+\title{Generate a rate-limited API caller}
 \usage{
 wx_query_api(reqs_per_second = 200)
 }
 \arguments{
-\item{reqs_per_second}{Maximum requests allowed per second (default 200)}
+\item{reqs_per_second}{maximum requests allowed per second (default 200)}
+}
+\value{
+A rate-limited function with parameters:
+\describe{
+\item{\code{path}}{path after endpoint; e.g.
+\verb{/registered-users/new/\{project\}/\{granularity\}/\{start\}/\{end\}}}
+\item{\code{endpoint}}{\verb{/metrics} by default but can be changed to \verb{/feed} (for example)}
+}
+The generated function, when run, processed the JSON response and returns a
+list. It is up to the user of this generator to turn the results into a data
+frame or another object.
 }
 \description{
-Makes a request to
-\href{https://wikimedia.org/api/rest_v1/}{wikimedia.org/api/rest_v1/}.
+Generates a function which makes a request to
+\href{https://wikimedia.org/api/rest_v1/}{wikimedia.org/api/rest_v1/}. This
+generator is primarily intended for internal use, but can theoretically be
+used by others to write custom Wikimedia REST API queries.
 }
+\section{License}{
+
+Data retrieved from the API endpoint is available under the
+\href{https://creativecommons.org/publicdomain/zero/1.0/}{CC0 1.0 license}.
+}
+

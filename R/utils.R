@@ -2,6 +2,60 @@ wx_encode_page_name <- function(x) {
   encoded <- magrittr::set_names(urltools::url_encode(gsub(" ", "_", x, fixed = TRUE)), x)
   return(encoded)
 }
+wx_decode_page_name <- function(x) {
+  decoded <- gsub("_", " ", x, fixed = TRUE)
+  return(decoded)
+}
+
+wx_types <- function(...) {
+  args <- list(...)
+  if ("editor" %in% names(args)) {
+    args$editor <- wx_editor_type(args$editor)
+  }
+  if ("page" %in% names(args)) {
+    args$page <- wx_page_type(args$page)
+  }
+  if ("activity" %in% names(args)) {
+    args$activity <- wx_activity_level(args$activity)
+  }
+  if ("access" %in% names(args)) {
+    args$access <- wx_access_method(args$access)
+  }
+  if ("agent" %in% names(args)) {
+    args$agent <- wx_agent_type(args$agent)
+  }
+  return(args)
+}
+wx_agent_type <- function(x) {
+  agent_types <- c("all" = "all-agents", "user" = "user", "bot" = "spider")
+  return(agent_types[x])
+}
+wx_access_method <- function(x) {
+  access_methods <- c(
+    "all" = "all-access", "desktop" = "desktop",
+    "mobile app" = "mobile-app", "mobile web" = "mobile-web"
+  )
+  return(access_methods[x])
+}
+wx_editor_type <- function(x) {
+  editor_types <- c(
+    "all" = "all-editor-types", "anonymous" = "anonymous",
+    "user" = "user", "bot" = "name-bot", "bot group" = "group-bot"
+  )
+  return(editor_types[x])
+}
+wx_page_type <- function(x) {
+  page_types <- c("all" = "all-page-types", "content" = "content", "non-content" = "non-content")
+  return(page_types[x])
+}
+wx_activity_level <- function(x) {
+  activity_levels <- c(
+    "all" = "all-activity-levels",
+    "1-4" = "1..4-edits", "5-24" = "5..24-edits",
+    "25-99" = "25..99-edits", "100+" = "100..-edits"
+  )
+  return(activity_levels[x])
+}
 
 wx_extract_ymd <- function(x) {
   y <- lubridate::year(x)

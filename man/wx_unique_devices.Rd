@@ -2,11 +2,11 @@
 % Please edit documentation in R/traffic.R
 \name{wx_unique_devices}
 \alias{wx_unique_devices}
-\title{Unique devices}
+\title{Unique device counts}
 \usage{
 wx_unique_devices(
   project,
-  access_method = c("all", "desktop", "mobile web"),
+  access_site = c("all", "desktop", "mobile"),
   granularity = c("daily", "monthly"),
   start_date = "20191231",
   end_date = "20200101"
@@ -20,12 +20,13 @@ Wikimedia Commons (without language codes), use commons.wikimedia. For
 projects like www.mediawiki.org, you can use that full string, or just use
 mediawiki or mediawiki.org.}
 
-\item{access_method}{If you want to filter by accessed site, use "desktop"
-or "mobile web". If you are interested in unique devices regardless of
-accessed site, use "all" (default).}
+\item{access_site}{If you want to filter by accessed site, use "desktop"
+or "mobile". If you are interested in unique devices regardless of
+accessed site, use "all" (default). \strong{\emph{NOT}} to be confused with
+\code{access_method} parameter in other functions.}
 
-\item{granularity}{The time unit for the response data; "daily" by default
-but if you want to get the top articles of a whole month use "monthly".}
+\item{granularity}{The time unit for the response data. As of today,
+supported values are daily (default) and monthly.}
 
 \item{start_date}{The date of the first day to include, in YYYYMMDD format.
 Can also be a \code{Date} or a \code{POSIXt} object, which will be auto-formatted.}
@@ -52,16 +53,20 @@ over some period of time. The Analytics team counts unique devices per
 project per day and month in a way that does not uniquely identify,
 fingerprint or otherwise track users.
 }
-\section{Access method}{
+\section{Site}{
 
-A couple of notes about \code{access_method}. First, mobile apps are \strong{\emph{NOT}}
-included in this dataset.
-
-Second, desktop devices can (and \emph{do}) access the mobile website, usually
-because the user clicked on a link shared by a user from a mobile device.
+Desktop devices can (and \emph{do}) access the mobile website, usually because
+the user clicked on a link shared by a user from a mobile device. So do not
+use this metric as a proxy for mobile vs desktop devices.
 
 To learn more about how mobile traffic is handled by Wikimedia, refer to
 \href{https://www.mediawiki.org/wiki/Reading/Web/Mobile}{mw:Reading/Web/Mobile}.
+}
+
+\section{License}{
+
+Data retrieved from the API endpoint is available under the
+\href{https://creativecommons.org/publicdomain/zero/1.0/}{CC0 1.0 license}.
 }
 
 \examples{

@@ -26,14 +26,25 @@ reference:
     contents:
       - wx_project_views
       - wx_page_views
-      - wx_top_viewed_articles
+      - wx_top_viewed_pages
       - wx_unique_devices
-  - title: "Editors"
+  - title: "Users"
     desc: >
-      Functions for metrics and data related to editors
+      Functions for metrics and data related to users
     contents:
       - wx_active_editors
       - wx_top_editors
+      - wx_newly_registered_users
+  - title: "Content"
+    desc: >
+      Functions for metrics and data related to content
+    contents:
+      - wx_new_pages
+      - wx_total_pages
+      - wx_project_edits
+      - wx_page_edits
+      - wx_edited_pages
+      - wx_top_edited_pages
   - title: "Utilities"
     desc: >
       Utility functions primarily for internal use

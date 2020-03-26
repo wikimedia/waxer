@@ -4,6 +4,23 @@
 #'   The [REST API](https://wikimedia.org/api/rest_v1/) provides cacheable and
 #'   straightforward access to Wikimedia content and data, in machine-readable
 #'   formats. This particular wrapper is for the `/metrics` endpoint.
+#' @section Definitions:
+#' ## Editor type
+#' The `editor_type` parameter in functions allows you to filter the type of
+#' editors having performed the related action. Can be `anonymous` for users
+#' not logged in,` bot group` for logged in users that are part of the bot
+#' group, `bot` for logged in users whose name contains `bot` (high probability
+#' of being a bot, even if counter examples exists), and` user` for logged-in
+#' users not in `bot group` nor `bot` sets. Finally, you can use `all` to not
+#' filter by editor type.
+#' ## Page type
+#' The `page_type` parameter in functions allows you to filter for the type of
+#' page over which the action is performed. Can be `content` for pages
+#' belonging in content namespaces, also known as "main" namespaces. This page
+#' type is also referred to as articles, and for most wikis includes pages in
+#' namespace 0 only. Can also be `non-content` for pages in namespaces not
+#' considered content (talk pages, user pages etc). Finally, you can use `all`
+#' to not filter by page type.
 #' @section Wikimedia projects:
 #' The package comes bundled with a list of *active* Wikibooks, Wikinews,
 #' Wikipedia, Wikiquote, Wikisource, Wikiversity, Wikivoyage, and Wiktionary
@@ -24,19 +41,6 @@
 #'
 #' This dataset was generated from the
 #' [Wikimedia site matrix](https://www.mediawiki.org/wiki/Special:SiteMatrix).
-#' @section Metrics:
-#' ## Traffic
-#' \describe{
-#'   \item{[wx_project_views]}{Project page-views}
-#'   \item{[wx_page_views]}{Article page-views}
-#'   \item{[wx_top_viewed_articles]}{Top 1000 viewed articles}
-#'   \item{[wx_unique_device]}{Unique devices}
-#' }
-#' ## Editors
-#' \describe{
-#'   \item{[wx_active_editors]}{Number of active editors}
-#'   \item{[wx_top_editors]}{Top 100 editors per day by number of edits}
-#' }
 #' @keywords internal
 #' @importFrom magrittr %>%
 #' @importFrom zeallot %<-%

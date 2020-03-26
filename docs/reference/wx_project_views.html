@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Project page-views — wx_project_views • waxer</title>
+<title>Project page-view counts — wx_project_views • waxer</title>
 
 
 <!-- jquery -->
@@ -35,8 +35,8 @@
 
 
 
-<meta property="og:title" content="Project page-views — wx_project_views" />
-<meta property="og:description" content="Project page-views" />
+<meta property="og:title" content="Project page-view counts — wx_project_views" />
+<meta property="og:description" content="Project page-view counts" />
 <meta name="twitter:card" content="summary" />
 
 
@@ -69,7 +69,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">waxer</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.1.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.9.0</span>
       </span>
     </div>
 
@@ -106,20 +106,20 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Project page-views</h1>
+    <h1>Project page-view counts</h1>
     <small class="dont-index">Source: <a href='https://github.com/bearloga/waxer/blob/master/R/traffic.R'><code>R/traffic.R</code></a></small>
     <div class="hidden name"><code>wx_project_views.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Project page-views</p>
+    <p>Project page-view counts</p>
     </div>
 
     <pre class="usage"><span class='fu'>wx_project_views</span>(
   <span class='no'>project</span>,
   <span class='kw'>access_method</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"all"</span>, <span class='st'>"desktop"</span>, <span class='st'>"mobile web"</span>, <span class='st'>"mobile app"</span>),
   <span class='kw'>agent_type</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"all"</span>, <span class='st'>"user"</span>, <span class='st'>"bot"</span>),
-  <span class='kw'>granularity</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"daily"</span>, <span class='st'>"monthly"</span>),
+  <span class='kw'>granularity</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"daily"</span>, <span class='st'>"monthly"</span>, <span class='st'>"hourly"</span>),
   <span class='kw'>start_date</span> <span class='kw'>=</span> <span class='st'>"20191231"</span>,
   <span class='kw'>end_date</span> <span class='kw'>=</span> <span class='st'>"20200101"</span>
 )</pre>
@@ -150,8 +150,11 @@ If you are interested in pageviews regardless of agent type, use "all"
     </tr>
     <tr>
       <th>granularity</th>
-      <td><p>The time unit for the response data; "daily" by default
-but if you want to get the top articles of a whole month use "monthly".</p></td>
+      <td><p>The time unit for the response data. As of today,
+supported values are daily (default), monthly, and hourly. In case of
+hourly granularity, for simplicity, the function retrieves data from the
+very start of <code>start_date</code> (hour 00) to the very end of <code>end_date</code> (hour
+23).</p></td>
     </tr>
     <tr>
       <th>start_date</th>
@@ -168,11 +171,18 @@ Can also be a <code>Date</code> or a <code>POSIXt</code> object, which will be a
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>A tibble data frame with the following columns:</p><dl class='dl-horizontal'>
-<dt><code>date</code></dt><dd><p><code>Date</code>; beginning of each month if <code>granularity = "monthly"</code></p></dd>
+<dt><code>date</code> if daily or monthly granularity</dt><dd><p><code>Date</code>; beginning of each month if <code>granularity = "monthly"</code></p></dd>
+<dt><code>time</code> if hourly granularity</dt><dd><p><code>POSIXct</code>; all times are in UTC</p></dd>
 <dt><code>views</code></dt><dd><p>total number of page-views for the project</p></dd>
 
 </dl>
 
+    <h2 class="hasAnchor" id="license"><a class="anchor" href="#license"></a>License</h2>
+
+    
+
+<p>Data retrieved from the API endpoint is available under the
+<a href='https://creativecommons.org/publicdomain/zero/1.0/'>CC0 1.0 license</a>.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'>
@@ -192,6 +202,7 @@ Can also be a <code>Date</code> or a <code>POSIXt</code> object, which will be a
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
       <li><a href="#value">Value</a></li>
+      <li><a href="#license">License</a></li>
       <li><a href="#see-also">See also</a></li>
       <li><a href="#examples">Examples</a></li>
     </ul>

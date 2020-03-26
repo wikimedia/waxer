@@ -10,7 +10,22 @@
     <loc>https://bearloga.github.io/waxer/reference/wx_active_editors.html</loc>
   </url>
   <url>
+    <loc>https://bearloga.github.io/waxer/reference/wx_edited_pages.html</loc>
+  </url>
+  <url>
+    <loc>https://bearloga.github.io/waxer/reference/wx_new_pages.html</loc>
+  </url>
+  <url>
+    <loc>https://bearloga.github.io/waxer/reference/wx_newly_registered_users.html</loc>
+  </url>
+  <url>
+    <loc>https://bearloga.github.io/waxer/reference/wx_page_edits.html</loc>
+  </url>
+  <url>
     <loc>https://bearloga.github.io/waxer/reference/wx_page_views.html</loc>
+  </url>
+  <url>
+    <loc>https://bearloga.github.io/waxer/reference/wx_project_edits.html</loc>
   </url>
   <url>
     <loc>https://bearloga.github.io/waxer/reference/wx_project_views.html</loc>
@@ -19,10 +34,16 @@
     <loc>https://bearloga.github.io/waxer/reference/wx_query_api.html</loc>
   </url>
   <url>
+    <loc>https://bearloga.github.io/waxer/reference/wx_top_edited_pages.html</loc>
+  </url>
+  <url>
     <loc>https://bearloga.github.io/waxer/reference/wx_top_editors.html</loc>
   </url>
   <url>
-    <loc>https://bearloga.github.io/waxer/reference/wx_top_viewed_articles.html</loc>
+    <loc>https://bearloga.github.io/waxer/reference/wx_top_viewed_pages.html</loc>
+  </url>
+  <url>
+    <loc>https://bearloga.github.io/waxer/reference/wx_total_pages.html</loc>
   </url>
   <url>
     <loc>https://bearloga.github.io/waxer/reference/wx_unique_devices.html</loc>

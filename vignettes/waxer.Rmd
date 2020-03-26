@@ -48,15 +48,15 @@ map_chr(-1:1, fun, b = 2)
 
 Since the output of {waxer}'s API-querying functions is always a [`tibble`](https://tibble.tidyverse.org/) (an extension of a `data.frame`), we will mostly be using the `map_dfr` function which stitches several tibbles into one (via [`dplyr::bind_rows`](https://dplyr.tidyverse.org/reference/bind.html)).
 
-# Traffic-based data
+# Traffic-based data and metrics
 
 ## Pageviews
 
 This package uses the same API endpoint as the [{pageviews}](https://cran.r-project.org/package=pageviews) package for page view data. Similar to {pageviews}, the caveat is that the traffic data is only available from 1 August 2015. For legacy view counts, refer to [{wikipediatrend}](https://cran.r-project.org/package=wikipediatrend) package.
 
-In this example we fetch the page-views for the *New Year's Eve* and *New Year's Day* articles on English Wikipedia. Specifically, we're interested in user traffic, which excludes known spiders/bots.
+In this example we retrieve the page-views for the *New Year's Eve* and *New Year's Day* articles on English Wikipedia. Specifically, we're interested in user traffic, which excludes known spiders/bots.
 
-```{r pageviews}
+```{r pageviews, cache=TRUE}
 pageviews <- wx_page_views(
   project = "en.wikipedia",
   page_name = c("New Year's Eve", "New Year's Day"),
@@ -111,10 +111,10 @@ new_years_views <- new_years_views %>%
       paste(2015:2019, 2016:2020, sep = "/")
     ),
     day = case_when(
-      month(date) == 12 & mday(date) == 31 ~ "New Year's Eve",
-      month(date) == 1 & mday(date) == 1 ~ "New Year's Day"
+      month(date) == 12 & mday(date) == 31 ~ "Eve",
+      month(date) == 1 & mday(date) == 1 ~ "Day"
     ),
-    day = factor(day, c("New Year's Eve", "New Year's Day"), c("Eve", "Day"))
+    day = factor(day, c("Eve", "Day"))
   )
 head(new_years_views)
 
@@ -135,9 +135,9 @@ ggplot(new_years_views, aes(x = day, y = views)) +
 
 ### Project views
 
-For consistency, the `project` parameter in every {waxer} function can only accept 1 value -- unlike the `page_name` parameter in `wx_page_views()`. So if we want to get project views (the total number of page-views across all pages of a wiki), we can use the `map_dfr` to iterate through a named vector of projects, keeping all the other parameters the same:
+For consistency, the `project` parameter in every {waxer} function can only accept 1 value -- unlike the `page_name` parameter in `wx_page_views()`. So if we want to get multiple projects' views (the total number of page-views across all of the project's pages), we can use the `map_dfr` to iterate through a named vector of projects, keeping all the other parameters the same:
 
-```{r projectviews}
+```{r projectviews, cache=TRUE}
 projects <- c(
   "French" = "fr.wikipedia",
   "Italian" = "it.wikipedia",
@@ -175,12 +175,54 @@ ggplot(project_views) +
   )
 ```
 
+### Hourly project views
+
+We can also retrieve a project's pageviews at an hourly granularity. For example:
+
+```{r hourly_views, cache=TRUE}
+hourly_views <- wx_project_views(
+  "is.wikipedia",
+  agent_type = "user",
+  granularity = "hourly",
+  start_date = "20191230",
+  end_date = "20200102"
+)
+```
+```{r}
+head(hourly_views)
+```
+
+```{r plot_hourly_views, fig.width=10, out.height=350}
+ggplot(hourly_views) +
+  geom_line(aes(x = time, y = views)) +
+  geom_vline(
+    xintercept = lubridate::ymd(
+      c("20191230", "20191231", "20200101", "20200102", "20200103"),
+      tz = "UTC"
+    ),
+    linetype = "dashed"
+  ) +
+  scale_x_datetime(
+    name = "Time",
+    date_breaks = "6 hours", date_minor_breaks = "1 hour",
+    date_labels = "%H:00\n%d %b"
+  ) +
+  scale_y_continuous(breaks = NULL, minor_breaks = NULL) +
+  labs(
+    title = "User (non-bot) traffic to Icelandic Wikipedia", y = NULL,
+    subtitle = "Hourly pageviews around New Year's Eve 2019, New Year's Day 2020"
+  ) +
+  theme_minimal()
+```
+
+Compared to 11PM-12AM traffic on Dec 30th and January 1st, the 11PM-12AM traffic on Dec 31st is much lower. No surprises there since we would expect many Icelanders to be celebrating and partying around that time instead of reading/editing Wikipedia.
+
 ## Top viewed articles
 
 Top 1000 viewed articles each month from Jan 2019 to March 2019 on English Wikipedia:
 
 ```{r top_viewed, cache=TRUE}
-top_viewed <- wx_top_viewed_articles(
+top_viewed <- wx_top_viewed_pages(
   project = "en.wikipedia",
   granularity = "monthly",
   start_date = "20190101",
@@ -193,7 +235,7 @@ Top 3 articles from each month:
 ```{r}
 top_viewed %>%
   # Exclude main page and other non-article pages:
-  filter(article != "Main_Page", !grepl("^(Special|Wikipedia)\\:.*", article)) %>%
+  filter(page_name != "Main Page", !grepl("^(Special|Wikipedia)\\:.*", page_name)) %>%
   group_by(date) %>%
   top_n(3, views)
 ```
@@ -206,7 +248,7 @@ To obtain the monthly estimated number of unique devices that visited German Wik
 unique_devices <- wx_unique_devices(
   project = "de.wikivoyage",
   granularity = "monthly",
-  access_method = "all",
+  access_site = "all",
   start_date = "20180101",
   end_date = "20200228"
 )
@@ -241,7 +283,7 @@ ggplot(unique_devices) +
   )
 ```
 
-# Active editors
+# User-based data and metrics
 
 Suppose we wanted to get the daily number of non-bot active editors of content pages on English Wikipedia in January 2020. This is easy with {waxer}'s `wx_active_editors` function:
 
@@ -331,4 +373,167 @@ ggplot(active_editors_by_wiki) +
   ) +
   theme_minimal() +
   theme(legend.position = "bottom")
+```
+
+# Content-based data and metrics
+
+## Pages over time
+
+How many new articles were created each month by registered users on Russian Wikipedia in December 2019?
+
+```{r new_pages, cache=TRUE}
+new_pages <- wx_new_pages(
+  "ru.wikipedia",
+  editor_type = "user",
+  page_type = "content",
+  granularity = "monthly",
+  start_date = "20191201",
+  end_date = "20200101"
+)
+```
+```{r}
+new_pages
+```
+
+How has Russian Wikipedia grown over time since it started in May 2001?
+
+```{r total_pages, cache=TRUE}
+total_pages <- wx_total_pages(
+  "ru.wikipedia",
+  editor_type = "all",
+  page_type = "content", # focus on articles
+  granularity = "monthly",
+  start_date = "20010401",
+  end_date = "20200301"
+)
+```
+```{r}
+head(total_pages)
+```
+
+```{r plot_total_pages, fig.height=4, fig.width=8, out.height=350}
+ggplot(total_pages) +
+  geom_line(aes(x = date, y = total_pages)) +
+  scale_y_continuous(
+    minor_breaks = NULL,
+    labels = scales::label_number(scale = 1e-6, suffix = "M")
+  ) +
+  scale_x_date(date_labels = "%Y", date_breaks = "12 months", minor_breaks = NULL) +
+  labs(
+    title = "Growth of Russian Wikipedia",
+    x = "Time", y = "Articles"
+  ) +
+  theme_minimal() +
+  theme(
+    panel.grid.major.y = element_line(color = "gray90", size = 0.2),
+    panel.grid.major.x = element_line(color = "gray90", size = 0.5)
+  )
+```
+
+## Edits to a page
+
+```{r page_edits, cache=TRUE}
+page_edits <- wx_page_edits(
+  "en.wikipedia",
+  c("Coronavirus disease 2019", "Coronavirus outbreak"),
+  start_date = "20200101",
+  end_date = "20200320"
+)
+```
+```{r}
+head(page_edits)
+```
+
+```{r plot_page_edits}
+ggplot(page_edits) +
+  geom_line(aes(x = date, y = edits, color = page_name)) +
+  labs(
+    title = "Edits made to English Wikipedia articles on coronavirus",
+    x = "Date", y = "Edits per day", color = "Article"
+  ) +
+  theme_minimal() +
+  theme(legend.position = "bottom")
+```
+
+## Editing activity
+
+```{r editing_activity, cache=TRUE}
+daily_edits <- map_dfr(
+  projects,
+  wx_project_edits,
+  editor_type = "all", page_type = "content",
+  start_date = "20200101", end_date = "20200320",
+  granularity = "daily",
+  .id = "language"
+)
+daily_editors <- map_dfr(
+  projects,
+  wx_active_editors,
+  editor_type = "all", page_type = "content",
+  start_date = "20200101", end_date = "20200320",
+  granularity = "daily",
+  .id = "language"
+)
+editing_activity <- daily_edits %>%
+  left_join(daily_editors, by = c("language", "date")) %>%
+  mutate(edits_per_editor = edits / editors) %>%
+  arrange(language, date)
+```
+```{r}
+head(editing_activity)
+```
+
+Using [{RcppRoll}](https://cran.r-project.org/package=RcppRoll) we can create a rolling 7-day average to smooth out the day-to-day variability, which will be helpful for visualization:
+
+```{r plot_editing_activity}
+editing_activity %>%
+  group_by(language) %>%
+  mutate(
+    rolling_avg = c(
+      rep(NA, 3), # first 3 days
+      RcppRoll::roll_mean(edits_per_editor, n = 7),
+      rep(NA, 3) # last 3 days
+    )
+  ) %>%
+  ungroup %>%
+  ggplot(aes(x = date, color = language)) +
+  geom_line(aes(y = edits_per_editor), alpha = 0.25) +
+  geom_line(aes(y = rolling_avg)) +
+  scale_y_continuous(minor_breaks = NULL) +
+  scale_x_date(date_labels = "%d %b\n%Y", date_breaks = "2 weeks", minor_breaks = NULL) +
+  labs(
+    title = "Average article edits per editor",
+    x = "Date", y = "Average edits per editor", color = "Wikipedia"
+  ) +
+  theme_minimal() +
+  theme(
+    panel.grid.major.y = element_line(color = "gray90", size = 0.2),
+    panel.grid.major.x = element_line(color = "gray90", size = 0.5),
+    legend.position = "bottom"
+  )
+```
+
+## Most edited pages
+
+What were the top 5 most edited articles by on English Wikipedia in January and February of 2020?
+
+```{r edited_pages, cache=TRUE}
+edited_pages <- wx_top_edited_pages(
+  "en.wikipedia",
+  page_type = "content",
+  granularity = "monthly",
+  start_date = "20200101",
+  end_date = "20200229"
+)
+```
+```{r}
+head(edited_pages)
+```
+
+```{r}
+edited_pages %>%
+  mutate(month = month(date, label = TRUE, abbr = FALSE)) %>%
+  group_by(month) %>%
+  top_n(5, desc(rank)) %>%
+  select(month, rank, page_name)
 ```

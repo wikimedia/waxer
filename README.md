@@ -1,16 +1,11 @@
 Wikimedia Analytics Query Service (AQS) API in R
 ================
 
-  - [Installation](#installation)
-  - [Usage](#usage)
-  - [Additional Information](#additional-information)
-
 {waxer} is an R wrapper for the [Wikimedia Analytics Query Service
-(AQS)](https://www.mediawiki.org/wiki/Wikidata_query_service). The [REST
-API](https://wikimedia.org/api/rest_v1/) provides cacheable and
-straightforward access to Wikimedia content and data, in
-machine-readable formats. This particular wrapper is for the `/metrics`
-endpoint.
+(AQS)](https://www.mediawiki.org/wiki/Wikidata_query_service). This
+particular wrapper is for the `/metrics` endpoint of the [REST
+API](https://wikimedia.org/api/rest_v1/) which provides data and metrics
+around traffic, users, and content on Wikimedia sites.
 
 **Author:** Mikhail Popov (Wikimedia Foundation)<br/> **License:**
 [MIT](http://opensource.org/licenses/MIT)<br/> **Status:** In early

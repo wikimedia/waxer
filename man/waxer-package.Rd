@@ -12,6 +12,31 @@ The \href{https://wikimedia.org/api/rest_v1/}{REST API} provides cacheable and
 straightforward access to Wikimedia content and data, in machine-readable
 formats. This particular wrapper is for the \verb{/metrics} endpoint.
 }
+\section{Definitions}{
+
+\subsection{Editor type}{
+
+The \code{editor_type} parameter in functions allows you to filter the type of
+editors having performed the related action. Can be \code{anonymous} for users
+not logged in,\verb{ bot group} for logged in users that are part of the bot
+group, \code{bot} for logged in users whose name contains \code{bot} (high probability
+of being a bot, even if counter examples exists), and\code{ user} for logged-in
+users not in \verb{bot group} nor \code{bot} sets. Finally, you can use \code{all} to not
+filter by editor type.
+}
+
+\subsection{Page type}{
+
+The \code{page_type} parameter in functions allows you to filter for the type of
+page over which the action is performed. Can be \code{content} for pages
+belonging in content namespaces, also known as "main" namespaces. This page
+type is also referred to as articles, and for most wikis includes pages in
+namespace 0 only. Can also be \code{non-content} for pages in namespaces not
+considered content (talk pages, user pages etc). Finally, you can use \code{all}
+to not filter by page type.
+}
+}
+
 \section{Wikimedia projects}{
 
 The package comes bundled with a list of \emph{active} Wikibooks, Wikinews,
@@ -30,27 +55,6 @@ The columns are:
 
 This dataset was generated from the
 \href{https://www.mediawiki.org/wiki/Special:SiteMatrix}{Wikimedia site matrix}.
-}
-
-\section{Metrics}{
-
-\subsection{Traffic}{
-
-\describe{
-\item{\link{wx_project_views}}{Project page-views}
-\item{\link{wx_page_views}}{Article page-views}
-\item{\link{wx_top_viewed_articles}}{Top 1000 viewed articles}
-\item{\link{wx_unique_device}}{Unique devices}
-}
-}
-
-\subsection{Editors}{
-
-\describe{
-\item{\link{wx_active_editors}}{Number of active editors}
-\item{\link{wx_top_editors}}{Top 100 editors per day by number of edits}
-}
-}
 }
 
 \seealso{

@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Page view counts — wx_page_views • waxer</title>
+<title>Top viewed pages — wx_top_viewed_pages • waxer</title>
 
 
 <!-- jquery -->
@@ -35,8 +35,9 @@
 
 
 
-<meta property="og:title" content="Page view counts — wx_page_views" />
-<meta property="og:description" content="Page view counts" />
+<meta property="og:title" content="Top viewed pages — wx_top_viewed_pages" />
+<meta property="og:description" content="Lists the 1000 most viewed pages for a given project and
+timespan (month or day)." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -106,20 +107,19 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Page view counts</h1>
+    <h1>Top viewed pages</h1>
     <small class="dont-index">Source: <a href='https://github.com/bearloga/waxer/blob/master/R/traffic.R'><code>R/traffic.R</code></a></small>
-    <div class="hidden name"><code>wx_page_views.Rd</code></div>
+    <div class="hidden name"><code>wx_top_viewed_pages.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Page view counts</p>
+    <p>Lists the 1000 most viewed pages for a given project and
+timespan (month or day).</p>
     </div>
 
-    <pre class="usage"><span class='fu'>wx_page_views</span>(
+    <pre class="usage"><span class='fu'>wx_top_viewed_pages</span>(
   <span class='no'>project</span>,
-  <span class='no'>page_name</span>,
   <span class='kw'>access_method</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"all"</span>, <span class='st'>"desktop"</span>, <span class='st'>"mobile web"</span>, <span class='st'>"mobile app"</span>),
-  <span class='kw'>agent_type</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"all"</span>, <span class='st'>"user"</span>, <span class='st'>"bot"</span>),
   <span class='kw'>granularity</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"daily"</span>, <span class='st'>"monthly"</span>),
   <span class='kw'>start_date</span> <span class='kw'>=</span> <span class='st'>"20191231"</span>,
   <span class='kw'>end_date</span> <span class='kw'>=</span> <span class='st'>"20200101"</span>
@@ -138,26 +138,10 @@ projects like www.mediawiki.org, you can use that full string, or just use
 mediawiki or mediawiki.org.</p></td>
     </tr>
     <tr>
-      <th>page_name</th>
-      <td><p>The title of any article in the specified project.
-The function takes care of replacing spaces with underscores and
-URI-encoding, so that non-URI-safe characters like %, / or ? are accepted
--- e.g. "Are You the One?" becomes "Are_You_the_One%3F". Internally this
-is done with a non-exported <code>wx_encode_page_name</code> function. If you need to
-get the pageviews for multiple pages, you're encouraged to provide all the
-page names at once as this function has been optimized for that use-case.</p></td>
-    </tr>
-    <tr>
       <th>access_method</th>
       <td><p>If you want to filter by access method, use one of:
 "desktop", "mobile app", or "mobile web". If you are interested in
 pageviews regardless of access method, use "all" (default).</p></td>
-    </tr>
-    <tr>
-      <th>agent_type</th>
-      <td><p>If you want to filter by agent type, use "user" or "bot".
-If you are interested in pageviews regardless of agent type, use "all"
-(default).</p></td>
     </tr>
     <tr>
       <th>granularity</th>
@@ -179,9 +163,13 @@ Can also be a <code>Date</code> or a <code>POSIXt</code> object, which will be a
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>A tibble data frame with the following columns:</p><dl class='dl-horizontal'>
-<dt><code>page_name</code></dt><dd><p>the <code>page_name</code> provided by the user</p></dd>
 <dt><code>date</code></dt><dd><p><code>Date</code>; beginning of each month if <code>granularity = "monthly"</code></p></dd>
-<dt><code>views</code></dt><dd><p>total number of views for the page</p></dd>
+<dt><code>page_name</code></dt><dd><p>page name; <strong>NOTE</strong>: in wikitext, the first letter
+of the target page is automatically capitalized</p></dd>
+<dt><code>views</code></dt><dd><p>number of page-views (see
+<a href='https://meta.wikimedia.org/wiki/Research:Page_view'>meta:Research:Page view</a>
+for more information on what is considered a page-view)</p></dd>
+<dt><code>rank</code></dt><dd><p><code>views</code>-based ranking</p></dd>
 
 </dl>
 
@@ -191,18 +179,10 @@ Can also be a <code>Date</code> or a <code>POSIXt</code> object, which will be a
 
 <p>Data retrieved from the API endpoint is available under the
 <a href='https://creativecommons.org/publicdomain/zero/1.0/'>CC0 1.0 license</a>.</p>
-    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
-
-    <div class='dont-index'>
-<ul>
-<li><p><a href='https://meta.wikimedia.org/wiki/Research:Page_view'>meta:Reseach:Page view</a></p></li>
-<li><p><a href='https://wikitech.wikimedia.org/wiki/Analytics/AQS/Pageviews'>wikitech:Analytics/AQS/Pageviews</a></p></li>
-</ul>
-</div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
-<span class='fu'>wx_page_views</span>(<span class='st'>"en.wikipedia"</span>, <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"New Year's Eve"</span>, <span class='st'>"New Year's Day"</span>))
+<span class='fu'>wx_top_viewed_pages</span>(<span class='st'>"en.wikipedia"</span>)
 }</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
@@ -211,7 +191,6 @@ Can also be a <code>Date</code> or a <code>POSIXt</code> object, which will be a
       <li><a href="#arguments">Arguments</a></li>
       <li><a href="#value">Value</a></li>
       <li><a href="#license">License</a></li>
-      <li><a href="#see-also">See also</a></li>
       <li><a href="#examples">Examples</a></li>
     </ul>
 

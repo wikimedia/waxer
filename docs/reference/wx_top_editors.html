@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Top editors by edits — wx_top_editors • waxer</title>
+<title>Top editors by edit count — wx_top_editors • waxer</title>
 
 
 <!-- jquery -->
@@ -35,7 +35,7 @@
 
 
 
-<meta property="og:title" content="Top editors by edits — wx_top_editors" />
+<meta property="og:title" content="Top editors by edit count — wx_top_editors" />
 <meta property="og:description" content="Top 100 editors per day by number of edits. Caution:
 anonymous editors IPs are replaced by NA." />
 <meta name="twitter:card" content="summary" />
@@ -70,7 +70,7 @@ anonymous editors IPs are replaced by NA." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">waxer</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.1.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.9.0</span>
       </span>
     </div>
 
@@ -107,8 +107,8 @@ anonymous editors IPs are replaced by NA." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Top editors by edits</h1>
-    <small class="dont-index">Source: <a href='https://github.com/bearloga/waxer/blob/master/R/editors.R'><code>R/editors.R</code></a></small>
+    <h1>Top editors by edit count</h1>
+    <small class="dont-index">Source: <a href='https://github.com/bearloga/waxer/blob/master/R/users.R'><code>R/users.R</code></a></small>
     <div class="hidden name"><code>wx_top_editors.Rd</code></div>
     </div>
 
@@ -119,8 +119,8 @@ anonymous editors IPs are replaced by <code>NA</code>.</p>
 
     <pre class="usage"><span class='fu'>wx_top_editors</span>(
   <span class='no'>project</span>,
-  <span class='kw'>editor_type</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"all-editor-types"</span>, <span class='st'>"anonymous"</span>, <span class='st'>"user"</span>, <span class='st'>"name-bot"</span>, <span class='st'>"group-bot"</span>),
-  <span class='kw'>page_type</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"all-page-types"</span>, <span class='st'>"content"</span>, <span class='st'>"non-content"</span>),
+  <span class='kw'>editor_type</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"all"</span>, <span class='st'>"anonymous"</span>, <span class='st'>"user"</span>, <span class='st'>"bot"</span>, <span class='st'>"bot group"</span>),
+  <span class='kw'>page_type</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"all"</span>, <span class='st'>"content"</span>, <span class='st'>"non-content"</span>),
   <span class='kw'>start_date</span> <span class='kw'>=</span> <span class='st'>"20191231"</span>,
   <span class='kw'>end_date</span> <span class='kw'>=</span> <span class='st'>"20200101"</span>
 )</pre>
@@ -151,7 +151,7 @@ type, use "all-editor-types" (default).</p></td>
       <td><p>If you want to filter by page-type, use one of: "content"
 (edits made in content namespaces) or "non-content" (edits made in
 non-content namespaces). If you are interested in editors regardless of
-their page type, use "all-page-types" (default).</p></td>
+their page type, use "all" (default).</p></td>
     </tr>
     <tr>
       <th>start_date</th>
@@ -175,6 +175,12 @@ Can also be a <code>Date</code> or a <code>POSIXt</code> object, which will be a
 
 </dl>
 
+    <h2 class="hasAnchor" id="license"><a class="anchor" href="#license"></a>License</h2>
+
+    
+
+<p>Data retrieved from the API endpoint is available under the
+<a href='https://creativecommons.org/publicdomain/zero/1.0/'>CC0 1.0 license</a>.</p>
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
@@ -182,6 +188,7 @@ Can also be a <code>Date</code> or a <code>POSIXt</code> object, which will be a
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
       <li><a href="#value">Value</a></li>
+      <li><a href="#license">License</a></li>
     </ul>
 
   </div>

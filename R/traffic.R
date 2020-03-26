@@ -1,37 +1,26 @@
-#' @title Top viewed articles
-#' @description Lists the 1000 most viewed articles for a given project and
+#' @title Top viewed pages
+#' @description Lists the 1000 most viewed pages for a given project and
 #'   timespan (month or day).
-#' @param project The name of any Wikimedia project formatted like
-#'   `{language code}.{project name}`, for example en.wikipedia. You may pass
-#'   en.wikipedia.org and the .org will be stripped off. For projects like
-#'   Wikimedia Commons (without language codes), use commons.wikimedia. For
-#'   projects like www.mediawiki.org, you can use that full string, or just use
-#'   mediawiki or mediawiki.org.
+#' @inheritParams wx_top_edited_pages
 #' @param access_method If you want to filter by access method, use one of:
 #'   "desktop", "mobile app", or "mobile web". If you are interested in
 #'   pageviews regardless of access method, use "all" (default).
-#' @param granularity The time unit for the response data; "daily" by default
-#'   but if you want to get the top articles of a whole month use "monthly".
-#' @param start_date The date of the first day to include, in YYYYMMDD format.
-#'   Can also be a `Date` or a `POSIXt` object, which will be auto-formatted.
-#' @param end_date The date of the last day to include, in YYYYMMDD format.
-#'   Can also be a `Date` or a `POSIXt` object, which will be auto-formatted.
+#' @inheritSection wx_query_api License
 #' @examples \dontrun{
-#' wx_top_viewed_articles("en.wikipedia")
+#' wx_top_viewed_pages("en.wikipedia")
 #' }
 #' @return A tibble data frame with the following columns:
 #' \describe{
 #'   \item{`date`}{`Date`; beginning of each month if `granularity = "monthly"`}
-#'   \item{`article`}{article name; **NOTE**: in wikitext, the first letter
-#'     of the target page is automatically capitalized and spaces are
-#'     represented as underscores}
+#'   \item{`page_name`}{page name; **NOTE**: in wikitext, the first letter
+#'     of the target page is automatically capitalized}
 #'  \item{`views`}{number of page-views (see
 #'    [meta:Research:Page view](https://meta.wikimedia.org/wiki/Research:Page_view)
 #'    for more information on what is considered a page-view)}
 #'  \item{`rank`}{`views`-based ranking}
 #' }
 #' @export
-wx_top_viewed_articles <- function(
+wx_top_viewed_pages <- function(
   project,
   access_method = c("all", "desktop", "mobile web", "mobile app"),
   granularity = c("daily", "monthly"),
@@ -45,27 +34,24 @@ wx_top_viewed_articles <- function(
     list("access_method" = access_method, "granularity" = granularity),
     args[c("access_method", "granularity")]
   )
+  c(access_method) %<-% wx_types(access = access_method)
   c(start_date, end_date) %<-% wx_format_dates(start_date, end_date)
   c(start_date, end_date) %<-% as.Date(c(start_date, end_date), "%Y%m%d")
   dates <- seq(start_date, end_date, by = "day")
-  access_methods <- c(
-    "all" = "all-access", "desktop" = "desktop",
-    "mobile app" = "mobile-app", "mobile web" = "mobile-web"
-  )
   query <- wx_query_api(reqs_per_second = 100)
   if (granularity == "daily") {
     results <- purrr::map_dfr(dates, function(date) {
       c(year, month, day) %<-% wx_extract_yyyymmdd(date)
       path <- paste(
-        "pageviews", "top",
-        project, access_methods[access_method], year, month, day,
+        "/pageviews/top",
+        project, access_method, year, month, day,
         sep = "/"
       )
       result <- query(path)
       data_frame <- result$items[[1]]$articles %>%
         purrr::map_dfr(dplyr::as_tibble) %>%
-        dplyr::mutate(date = date) %>%
-        dplyr::select(date, dplyr::everything())
+        dplyr::mutate(date = date, article = wx_decode_page_name(article)) %>%
+        dplyr::select(date, page_name = article, dplyr::everything())
       return(data_frame)
     })
     return(results)
@@ -75,8 +61,8 @@ wx_top_viewed_articles <- function(
       c(year, month, day) %<-% wx_extract_yyyymmdd(date)
       day <- "all-days"
       path <- paste(
-        "pageviews", "top",
-        project, access_methods[access_method], year, month, day,
+        "/pageviews/top",
+        project, access_method, year, month, day,
         sep = "/"
       )
       tryCatch(
@@ -84,8 +70,8 @@ wx_top_viewed_articles <- function(
           result <- query(path)
           data_frame <- result$items[[1]]$articles %>%
             purrr::map_dfr(dplyr::as_tibble) %>%
-            dplyr::mutate(date = date) %>%
-            dplyr::select(date, dplyr::everything())
+            dplyr::mutate(date = date, article = wx_decode_page_name(article)) %>%
+            dplyr::select(date, page_name = article, dplyr::everything())
           return(data_frame)
         },
         error = function(e) {
@@ -98,26 +84,26 @@ wx_top_viewed_articles <- function(
   }
 }
 
-#' @title Unique devices
+#' @title Unique device counts
 #' @description Unique Devices dataset (v1) as developed and maintained by the
 #'   Wikimedia Foundation since January 1st, 2016. This data set contains the
 #'   number of unique devices having visited Wikipedia or its sisters project
 #'   over some period of time. The Analytics team counts unique devices per
 #'   project per day and month in a way that does not uniquely identify,
 #'   fingerprint or otherwise track users.
-#' @inheritParams wx_top_viewed_articles
-#' @param access_method If you want to filter by accessed site, use "desktop"
-#'   or "mobile web". If you are interested in unique devices regardless of
-#'   accessed site, use "all" (default).
-#' @section Access method:
-#' A couple of notes about `access_method`. First, mobile apps are **_NOT_**
-#' included in this dataset.
-#'
-#' Second, desktop devices can (and *do*) access the mobile website, usually
-#' because the user clicked on a link shared by a user from a mobile device.
+#' @inheritParams wx_top_edited_pages
+#' @param access_site If you want to filter by accessed site, use "desktop"
+#'   or "mobile". If you are interested in unique devices regardless of
+#'   accessed site, use "all" (default). **_NOT_** to be confused with
+#'   `access_method` parameter in other functions.
+#' @section Site:
+#' Desktop devices can (and *do*) access the mobile website, usually because
+#' the user clicked on a link shared by a user from a mobile device. So do not
+#' use this metric as a proxy for mobile vs desktop devices.
 #'
 #' To learn more about how mobile traffic is handled by Wikimedia, refer to
 #' [mw:Reading/Web/Mobile](https://www.mediawiki.org/wiki/Reading/Web/Mobile).
+#' @inheritSection wx_query_api License
 #' @return A tibble data frame with the following columns:
 #' \describe{
 #'   \item{`date`}{`Date`; beginning of each month if `granularity = "monthly"`}
@@ -141,7 +127,7 @@ wx_top_viewed_articles <- function(
 #' @export
 wx_unique_devices <- function(
   project,
-  access_method = c("all", "desktop", "mobile web"),
+  access_site = c("all", "desktop", "mobile"),
   granularity = c("daily", "monthly"),
   start_date = "20191231",
   end_date = "20200101"
@@ -149,21 +135,18 @@ wx_unique_devices <- function(
   project <- project[1] # force 1 project per call
   # Validate "one of" arguments:
   args <- formals()
-  c(granularity, access_method) %<-% wx_check_args(
-    list("granularity" = granularity, "access_method" = access_method),
-    args[c("granularity", "access_method")]
+  c(granularity, access_site) %<-% wx_check_args(
+    list("granularity" = granularity, "access_site" = access_site),
+    args[c("granularity", "access_site")]
   )
   c(start_date, end_date) %<-% wx_format_dates(start_date, end_date)
-  access_methods <- c(
-    "all" = "all-sites", "desktop" = "desktop-site", "mobile web" = "mobile-site"
-  )
-  query <- wx_query_api(reqs_per_second = 100)
+  access_sites <- c("all" = "all-sites", "desktop" = "desktop-site", "mobile web" = "mobile-site")
   path <- paste(
-    "unique-devices",
-    project, access_methods[access_method], granularity, start_date, end_date,
+    "/unique-devices",
+    project, access_sites[access_site], granularity, start_date, end_date,
     sep = "/"
   )
-  result <- query(path)
+  result <- wx_query_api(reqs_per_second = 100)(path)
   data_frame <- result$items %>%
     purrr::map_dfr(dplyr::as_tibble) %>%
     dplyr::mutate(date = as.Date(timestamp, "%Y%m%d")) %>%
@@ -171,14 +154,22 @@ wx_unique_devices <- function(
   return(data_frame)
 }
 
-#' @title Project page-views
-#' @inheritParams wx_top_viewed_articles
+#' @title Project page-view counts
+#' @inheritParams wx_top_edited_pages
+#' @inheritParams wx_top_viewed_pages
 #' @param agent_type If you want to filter by agent type, use "user" or "bot".
 #'   If you are interested in pageviews regardless of agent type, use "all"
 #'   (default).
+#' @param granularity The time unit for the response data. As of today,
+#'   supported values are daily (default), monthly, and hourly. In case of
+#'   hourly granularity, for simplicity, the function retrieves data from the
+#'   very start of `start_date` (hour 00) to the very end of `end_date` (hour
+#'   23).
+#' @inheritSection wx_query_api License
 #' @return A tibble data frame with the following columns:
 #' \describe{
-#'   \item{`date`}{`Date`; beginning of each month if `granularity = "monthly"`}
+#'   \item{`date` if daily or monthly granularity}{`Date`; beginning of each month if `granularity = "monthly"`}
+#'   \item{`time` if hourly granularity}{`POSIXct`; all times are in UTC}
 #'   \item{`views`}{total number of page-views for the project}
 #' }
 #' @seealso
@@ -192,7 +183,7 @@ wx_project_views <- function(
   project,
   access_method = c("all", "desktop", "mobile web", "mobile app"),
   agent_type = c("all", "user", "bot"),
-  granularity = c("daily", "monthly"),
+  granularity = c("daily", "monthly", "hourly"),
   start_date = "20191231",
   end_date = "20200101"
 ) {
@@ -203,39 +194,43 @@ wx_project_views <- function(
     list("granularity" = granularity, "access_method" = access_method, "agent_type" = agent_type),
     args[c("granularity", "access_method", "agent_type")]
   )
+  c(access_method, agent_type) %<-% wx_types(access = access_method, agent = agent_type)
   c(start_date, end_date) %<-% wx_format_dates(start_date, end_date)
-  access_methods <- c(
-    "all" = "all-access", "desktop" = "desktop",
-    "mobile app" = "mobile-app", "mobile web" = "mobile-web"
-  )
-  agent_types <- c(
-    "all" = "all-agents", "user" = "user", "bot" = "spider"
-  )
-  query <- wx_query_api(reqs_per_second = 100)
-  path <- paste(
-    "pageviews", "aggregate",
-    project, access_methods[access_method], agent_types[agent_type], granularity,
-    start_date, end_date,
-    sep = "/"
-  )
-  result <- query(path)
+  if (granularity == "hourly") {
+    path <- paste(
+      "/pageviews/aggregate",
+      project, access_method, agent_type, granularity,
+      paste0(start_date, "00"), paste0(end_date, "23"),
+      sep = "/"
+    )
+  } else {
+    path <- paste(
+      "/pageviews/aggregate",
+      project, access_method, agent_type, granularity, start_date, end_date,
+      sep = "/"
+    )
+  }
+  result <- wx_query_api(reqs_per_second = 100)(path)
   data_frame <- result$items %>%
-    purrr::map_dfr(dplyr::as_tibble) %>%
-    dplyr::mutate(date = as.Date(timestamp, "%Y%m%d")) %>%
-    dplyr::select(date, views)
+    purrr::map_dfr(dplyr::as_tibble)
+  if (granularity == "hourly") {
+    data_frame <- data_frame %>%
+      dplyr::mutate(time = lubridate::ymd_h(timestamp)) %>%
+      dplyr::select(time, views)
+  } else {
+    data_frame <- data_frame %>%
+      dplyr::mutate(date = as.Date(timestamp, "%Y%m%d00")) %>%
+      dplyr::select(date, views)
+  }
   return(data_frame)
 }
 
-#' @title Article page-views
-#' @inheritParams wx_top_viewed_articles
+#' @title Page view counts
+#' @inheritParams wx_top_edited_pages
+#' @inheritParams wx_top_viewed_pages
 #' @inheritParams wx_project_views
-#' @param page_name The title(s) of any article(s) in the specified project.
-#'   The function takes care of replacing spaces with underscores and
-#'   URI-encoding, so that non-URI-safe characters like %, / or ? are accepted
-#'   -- e.g. "Are You the One?" becomes "Are_You_the_One%3F". Internally this
-#'   is done with a non-exported `wx_encode_page_name` function. If you need to
-#'   get the pageviews for multiple pages, you're encouraged to provide all the
-#'   page names at once as this function has been optimized for that use-case.
+#' @inheritParams wx_page_edits
+#' @inheritSection wx_query_api License
 #' @examples \dontrun{
 #' wx_page_views("en.wikipedia", c("New Year's Eve", "New Year's Day"))
 #' }
@@ -264,21 +259,14 @@ wx_page_views <- function(
     list("granularity" = granularity, "access_method" = access_method, "agent_type" = agent_type),
     args[c("granularity", "access_method", "agent_type")]
   )
+  c(access_method, agent_type) %<-% wx_types(access = access_method, agent = agent_type)
   c(start_date, end_date) %<-% wx_format_dates(start_date, end_date)
-  access_methods <- c(
-    "all" = "all-access", "desktop" = "desktop",
-    "mobile app" = "mobile-app", "mobile web" = "mobile-web"
-  )
-  agent_types <- c(
-    "all" = "all-agents", "user" = "user", "bot" = "bot"
-  )
   query <- wx_query_api(reqs_per_second = 100)
   page_names <- wx_encode_page_name(page_name)
   results <- purrr::map_dfr(page_names, function(encoded_name) {
     path <- paste(
-      "pageviews", "per-article",
-      project, access_methods[access_method], agent_types[agent_type], encoded_name, granularity,
-      start_date, end_date,
+      "/pageviews/per-article",
+      project, access_method, agent_type, encoded_name, granularity, start_date, end_date,
       sep = "/"
     )
     result <- query(path)

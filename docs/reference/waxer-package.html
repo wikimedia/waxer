@@ -73,7 +73,7 @@ formats. This particular wrapper is for the /metrics endpoint." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">waxer</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.1.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.9.0</span>
       </span>
     </div>
 
@@ -125,6 +125,32 @@ formats. This particular wrapper is for the <code>/metrics</code> endpoint.</p>
 
 
 
+    <h2 class="hasAnchor" id="definitions"><a class="anchor" href="#definitions"></a>Definitions</h2>
+
+    
+
+<h3>Editor type</h3>
+
+
+<p>The <code>editor_type</code> parameter in functions allows you to filter the type of
+editors having performed the related action. Can be <code>anonymous</code> for users
+not logged in,<code> bot group</code> for logged in users that are part of the bot
+group, <code>bot</code> for logged in users whose name contains <code>bot</code> (high probability
+of being a bot, even if counter examples exists), and<code> user</code> for logged-in
+users not in <code>bot group</code> nor <code>bot</code> sets. Finally, you can use <code>all</code> to not
+filter by editor type.</p>
+
+<h3>Page type</h3>
+
+
+<p>The <code>page_type</code> parameter in functions allows you to filter for the type of
+page over which the action is performed. Can be <code>content</code> for pages
+belonging in content namespaces, also known as "main" namespaces. This page
+type is also referred to as articles, and for most wikis includes pages in
+namespace 0 only. Can also be <code>non-content</code> for pages in namespaces not
+considered content (talk pages, user pages etc). Finally, you can use <code>all</code>
+to not filter by page type.</p>
+
     <h2 class="hasAnchor" id="wikimedia-projects"><a class="anchor" href="#wikimedia-projects"></a>Wikimedia projects</h2>
 
     
@@ -145,32 +171,6 @@ wikis.</p><pre>wikis &lt;- read.csv(system.file("extdata/wikis.csv", package = "
 
 <p>This dataset was generated from the
 <a href='https://www.mediawiki.org/wiki/Special:SiteMatrix'>Wikimedia site matrix</a>.</p>
-    <h2 class="hasAnchor" id="metrics"><a class="anchor" href="#metrics"></a>Metrics</h2>
-
-    
-
-<h3>Traffic</h3>
-
-
-<dl class='dl-horizontal'>
-<dt><a href='wx_project_views.html'>wx_project_views</a></dt><dd><p>Project page-views</p></dd>
-<dt><a href='wx_page_views.html'>wx_page_views</a></dt><dd><p>Article page-views</p></dd>
-<dt><a href='wx_top_viewed_articles.html'>wx_top_viewed_articles</a></dt><dd><p>Top 1000 viewed articles</p></dd>
-<dt>wx_unique_device</dt><dd><p>Unique devices</p></dd>
-
-</dl>
-
-
-<h3>Editors</h3>
-
-
-<dl class='dl-horizontal'>
-<dt><a href='wx_active_editors.html'>wx_active_editors</a></dt><dd><p>Number of active editors</p></dd>
-<dt><a href='wx_top_editors.html'>wx_top_editors</a></dt><dd><p>Top 100 editors per day by number of edits</p></dd>
-
-</dl>
-
-
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p>Useful links:</p><ul>
@@ -184,8 +184,8 @@ wikis.</p><pre>wikis &lt;- read.csv(system.file("extdata/wikis.csv", package = "
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
+      <li><a href="#definitions">Definitions</a></li>
       <li><a href="#wikimedia-projects">Wikimedia projects</a></li>
-      <li><a href="#metrics">Metrics</a></li>
       <li><a href="#see-also">See also</a></li>
     </ul>
 

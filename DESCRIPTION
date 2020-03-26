@@ -1,6 +1,6 @@
 Package: waxer
 Title: API Client Library for 'Wikimedia Analytics Query Service (AQS)'
-Version: 0.0.1.9000
+Version: 0.9.0
 Authors@R: c(
     person("Mikhail", "Popov", email = "mikhail@wikimedia.org",
            role = c("aut", "cre")),
@@ -27,6 +27,7 @@ Suggests:
     ggplot2,
     readr,
     knitr,
+    RcppRoll,
     rmarkdown
 URL: https://github.com/bearloga/waxer
 BugReports: https://github.com/bearloga/waxer/issues

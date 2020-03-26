@@ -2,13 +2,13 @@
 % Please edit documentation in R/traffic.R
 \name{wx_project_views}
 \alias{wx_project_views}
-\title{Project page-views}
+\title{Project page-view counts}
 \usage{
 wx_project_views(
   project,
   access_method = c("all", "desktop", "mobile web", "mobile app"),
   agent_type = c("all", "user", "bot"),
-  granularity = c("daily", "monthly"),
+  granularity = c("daily", "monthly", "hourly"),
   start_date = "20191231",
   end_date = "20200101"
 )
@@ -29,8 +29,11 @@ pageviews regardless of access method, use "all" (default).}
 If you are interested in pageviews regardless of agent type, use "all"
 (default).}
 
-\item{granularity}{The time unit for the response data; "daily" by default
-but if you want to get the top articles of a whole month use "monthly".}
+\item{granularity}{The time unit for the response data. As of today,
+supported values are daily (default), monthly, and hourly. In case of
+hourly granularity, for simplicity, the function retrieves data from the
+very start of \code{start_date} (hour 00) to the very end of \code{end_date} (hour
+23).}
 
 \item{start_date}{The date of the first day to include, in YYYYMMDD format.
 Can also be a \code{Date} or a \code{POSIXt} object, which will be auto-formatted.}
@@ -41,13 +44,20 @@ Can also be a \code{Date} or a \code{POSIXt} object, which will be auto-formatte
 \value{
 A tibble data frame with the following columns:
 \describe{
-\item{\code{date}}{\code{Date}; beginning of each month if \code{granularity = "monthly"}}
+\item{\code{date} if daily or monthly granularity}{\code{Date}; beginning of each month if \code{granularity = "monthly"}}
+\item{\code{time} if hourly granularity}{\code{POSIXct}; all times are in UTC}
 \item{\code{views}}{total number of page-views for the project}
 }
 }
 \description{
-Project page-views
+Project page-view counts
 }
+\section{License}{
+
+Data retrieved from the API endpoint is available under the
+\href{https://creativecommons.org/publicdomain/zero/1.0/}{CC0 1.0 license}.
+}
+
 \examples{
 \dontrun{
 wx_project_views("en.wikipedia")
