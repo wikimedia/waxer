@@ -5,6 +5,7 @@
 #' @inheritSection wx_query_api License
 #' @return A tibble data frame with the following columns:
 #' \describe{
+#'   \item{`project`}{project}
 #'   \item{`date`}{`Date`}
 #'   \item{`user_text`}{the editor's username; `NA` if anonymous (instead of IP address)}
 #'   \item{`edits`}{number of edits the user made on `date`}
@@ -53,13 +54,18 @@ wx_top_editors <- function(
       purrr::map_dfr(dplyr::as_tibble) %>%
       dplyr::mutate(
         timestamp = lubridate::ymd_hms(timestamp),
-        date = as.Date(timestamp)
+        date = as.Date(timestamp),
+        project = project
       ) %>%
       dplyr::select(-timestamp) %>%
-      dplyr::select(date, dplyr::everything())
+      dplyr::select(project, date, top) %>%
+      dplyr::arrange(project, date, top)
     return(data_frame)
   })
-  return(tidyr::unnest_wider(results, top))
+  results <- results %>%
+    tidyr::unnest_wider(top) %>%
+    dplyr::arrange(project, date, rank)
+  return(results)
 }
 
 #' @title Active editors counts
@@ -81,7 +87,12 @@ wx_top_editors <- function(
 #' Frustratingly, `start_date = "20191201"` and `end_date = "20191231"` does
 #' **_not_** yield 2019-12 monthly total. Use `end_date = "20200101"` for that.
 #' @inheritSection wx_query_api License
-#' @return A tibble data frame with columns `date` and `editors`.
+#' @return A tibble data frame with columns
+#' \describe{
+#'   \item{`project`}{project}
+#'   \item{`date`}{`Date`; beginning of the month if `granularity = "monthly"`}
+#'   \item{`editors`}{Number of active editors}
+#' }
 #' @seealso [wikitech:Analytics/AQS/Wikistats 2](https://wikitech.wikimedia.org/wiki/Analytics/AQS/Wikistats_2)
 #' @examples
 #' wx_active_editors(
@@ -122,8 +133,9 @@ wx_active_editors <- function(
   # Tidy up results:
   data_frame <- result$items[[1]]$results %>%
     purrr::map_dfr(dplyr::as_tibble) %>%
-    dplyr::mutate(date = as.Date(lubridate::ymd_hms(timestamp))) %>%
-    dplyr::select(date, editors)
+    dplyr::mutate(project = project, date = as.Date(lubridate::ymd_hms(timestamp))) %>%
+    dplyr::select(project, date, editors) %>%
+    dplyr::arrange(project, date)
   return(data_frame)
 }
 
@@ -156,7 +168,12 @@ wx_active_editors <- function(
 #' Frustratingly, `start_date = "20191201"` and `end_date = "20191231"` does
 #' **_not_** yield 2019-12 monthly total. Use `end_date = "20200101"` for that.
 #' @inheritSection wx_query_api License
-#' @return A tibble data frame with columns `date` and `new_registered_users`.
+#' @return A tibble data frame with columns
+#' \describe{
+#'   \item{`project`}{project}
+#'   \item{`date`}{`Date`; beginning of the month if `granularity = "monthly"`}
+#'   \item{`new_registered_users`}{Number of newly registered users}
+#' }
 #' @seealso [wikitech:Analytics/AQS/Wikistats 2](https://wikitech.wikimedia.org/wiki/Analytics/AQS/Wikistats_2)
 #' @examples
 #' wx_newly_registered_users(
@@ -190,7 +207,7 @@ wx_newly_registered_users <- function(
   # Tidy up results:
   data_frame <- result$items[[1]]$results %>%
     purrr::map_dfr(dplyr::as_tibble) %>%
-    dplyr::mutate(date = as.Date(lubridate::ymd_hms(timestamp))) %>%
-    dplyr::select(date, new_registered_users)
+    dplyr::mutate(project = project, date = as.Date(lubridate::ymd_hms(timestamp))) %>%
+    dplyr::select(project, date, new_registered_users)
   return(data_frame)
 }

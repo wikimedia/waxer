@@ -34,6 +34,7 @@ Can also be a \code{Date} or a \code{POSIXt} object, which will be auto-formatte
 A tibble data frame with the following columns:
 \describe{
 \item{\code{date}}{\code{Date}; beginning of each month if \code{granularity = "monthly"}}
+\item{\code{referer}}{referer}
 \item{\code{file_path}}{the media file's path on upload.wikimedia.org}
 \item{\code{requests}}{number of requests}
 \item{\code{rank}}{\code{requests}-based ranking}

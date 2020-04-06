@@ -1,3 +1,9 @@
+# waxer 0.9.3
+
+* Adds 'project' column to the output ([issue 2](https://github.com/bearloga/waxer/issues/2))
+* `wx_total_pages` output now includes 'existing_pages' and 'new_pages'
+* Minor documentation updates
+
 # waxer 0.9.2
 
 * Adds mediarequest endpoints ([issue 1](https://github.com/bearloga/waxer/issues/1)):

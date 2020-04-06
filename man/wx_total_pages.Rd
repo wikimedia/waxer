@@ -45,8 +45,11 @@ Can also be a \code{Date} or a \code{POSIXt} object, which will be auto-formatte
 \value{
 A tibble data frame with the following columns:
 \describe{
+\item{\code{project}}{project}
 \item{\code{date}}{\code{Date}}
-\item{\code{total_pages}}{Number of pages at every \code{date}}
+\item{\code{total_pages}}{Number of total (new + existing) pages},
+\item{\code{existing_pages}}{Number of pages already in project},
+\item{\code{new_pages}}{Number of new pages created}
 }
 }
 \description{

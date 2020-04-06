@@ -41,6 +41,7 @@ Can also be a \code{Date} or a \code{POSIXt} object, which will be auto-formatte
 \value{
 A tibble data frame with the following columns:
 \describe{
+\item{\code{project}}{project}
 \item{\code{date}}{\code{Date}}
 \item{\code{user_text}}{the editor's username; \code{NA} if anonymous (instead of IP address)}
 \item{\code{edits}}{number of edits the user made on \code{date}}

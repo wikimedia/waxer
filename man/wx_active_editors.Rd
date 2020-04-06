@@ -49,7 +49,12 @@ Can also be a \code{Date} or a \code{POSIXt} object, which will be auto-formatte
 Can also be a \code{Date} or a \code{POSIXt} object, which will be auto-formatted.}
 }
 \value{
-A tibble data frame with columns \code{date} and \code{editors}.
+A tibble data frame with columns
+\describe{
+\item{\code{project}}{project}
+\item{\code{date}}{\code{Date}; beginning of the month if \code{granularity = "monthly"}}
+\item{\code{editors}}{Number of active editors}
+}
 }
 \description{
 Number of active editors. \strong{Caution}: This metric measures

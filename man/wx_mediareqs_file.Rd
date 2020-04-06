@@ -42,6 +42,7 @@ Can also be a \code{Date} or a \code{POSIXt} object, which will be auto-formatte
 \value{
 A tibble data frame with the following columns:
 \describe{
+\item{\code{referer}}{referer}
 \item{\code{file_path}}{media file path provided by the user}
 \item{\code{date}}{\code{Date}; beginning of each month if \code{granularity = "monthly"}}
 \item{\code{requests}}{number of requests}

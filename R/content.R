@@ -25,6 +25,7 @@
 #' @inheritSection wx_query_api License
 #' @return A tibble data frame with the following columns:
 #' \describe{
+#'   \item{`project`}{project}
 #'   \item{`date`}{`Date`; beginning of each month if `granularity = "monthly"`}
 #'   \item{`page_name`}{page name; **NOTE**: in wikitext, the first letter
 #'     of the target page is automatically capitalized}
@@ -64,8 +65,9 @@ wx_top_edited_pages <- function(
       result <- query(path)
       data_frame <- result$items[[1]]$results[[1]]$top %>%
         purrr::map_dfr(dplyr::as_tibble) %>%
-        dplyr::mutate(date = date, page_title = wx_decode_page_name(page_title)) %>%
-        dplyr::select(date, page_name = page_title, edits, rank)
+        dplyr::mutate(date = date, project = project, page_title = wx_decode_page_name(page_title)) %>%
+        dplyr::select(project, date, page_name = page_title, edits, rank) %>%
+        dplyr::arrange(project, date, rank)
       return(data_frame)
     })
     return(results)
@@ -80,8 +82,9 @@ wx_top_edited_pages <- function(
           result <- query(path)
           data_frame <- result$items[[1]]$results[[1]]$top %>%
             purrr::map_dfr(dplyr::as_tibble) %>%
-            dplyr::mutate(date = date, page_title = wx_decode_page_name(page_title)) %>%
-            dplyr::select(date, page_name = page_title, edits, rank)
+            dplyr::mutate(date = date, project = project, page_title = wx_decode_page_name(page_title)) %>%
+            dplyr::select(project, date, page_name = page_title, edits, rank) %>%
+            dplyr::arrange(project, date, rank)
           return(data_frame)
         },
         error = function(e) {
@@ -102,6 +105,12 @@ wx_top_edited_pages <- function(
 #' @examples
 #' # Monthly new articles on French Wiktionary:
 #' wx_new_pages("fr.wiktionary", granularity = "monthly", page_type = "content")
+#' @return A tibble data frame with the following columns:
+#' \describe{
+#'   \item{`project`}{project}
+#'   \item{`date`}{`Date`}
+#'   \item{`new_pages`}{Number of pages created}
+#' }
 #' @family {content data & metrics}
 #' @export
 wx_new_pages <- function(
@@ -129,8 +138,9 @@ wx_new_pages <- function(
   result <- wx_query_api(reqs_per_second = 25)(path)
   data_frame <- result$items[[1]]$results %>%
     purrr::map_dfr(dplyr::as_tibble) %>%
-    dplyr::mutate(date = as.Date(lubridate::ymd_hms(timestamp))) %>%
-    dplyr::select(date, new_pages)
+    dplyr::mutate(project = project, date = as.Date(lubridate::ymd_hms(timestamp))) %>%
+    dplyr::select(project, date, new_pages) %>%
+    dplyr::arrange(project, date)
   return(data_frame)
 }
 
@@ -147,8 +157,11 @@ wx_new_pages <- function(
 #' @inheritSection wx_query_api License
 #' @return A tibble data frame with the following columns:
 #' \describe{
+#'   \item{`project`}{project}
 #'   \item{`date`}{`Date`}
-#'   \item{`total_pages`}{Number of pages at every `date`}
+#'   \item{`total_pages`}{Number of total (new + existing) pages},
+#'   \item{`existing_pages`}{Number of pages already in project},
+#'   \item{`new_pages`}{Number of new pages created}
 #' }
 #' @examples \dontrun{
 #' wx_total_pages("en.wikipedia")
@@ -167,9 +180,14 @@ wx_total_pages <- function(
   start_date <- as.Date(wx_format_date(start_date), "%Y%m%d")
   total_pages <- new_pages %>%
     dplyr::arrange(date) %>%
-    dplyr::mutate(total_pages = cumsum(new_pages)) %>%
+    dplyr::mutate(
+      project = project,
+      total_pages = cumsum(new_pages),
+      existing_pages = dplyr::lag(total_pages, n = 1L, default = 0)
+    ) %>%
     dplyr::filter(date >= start_date) %>%
-    dplyr::select(date, total_pages)
+    dplyr::select(project, date, total_pages, existing_pages, new_pages) %>%
+    dplyr::arrange(project, date)
   return(total_pages)
 }
 
@@ -184,6 +202,12 @@ wx_total_pages <- function(
 #' @examples
 #' # Monthly edited pages on Hindi Wikipedia:
 #' wx_edited_pages("hi.wikipedia", page_type = "content", granularity = "monthly")
+#' @return A tibble data frame with the following columns:
+#' \describe{
+#'   \item{`project`}{project}
+#'   \item{`date`}{`Date`}
+#'   \item{`edited_pages`}{Number of pages which have been edited}
+#' }
 #' @family {content data & metrics}
 #' @export
 wx_edited_pages <- function(
@@ -212,8 +236,9 @@ wx_edited_pages <- function(
   result <- wx_query_api(reqs_per_second = 25)(path)
   data_frame <- result$items[[1]]$results %>%
     purrr::map_dfr(dplyr::as_tibble) %>%
-    dplyr::mutate(date = as.Date(lubridate::ymd_hms(timestamp))) %>%
-    dplyr::select(date, edited_pages)
+    dplyr::mutate(project = project, date = as.Date(lubridate::ymd_hms(timestamp))) %>%
+    dplyr::select(project, date, edited_pages) %>%
+    dplyr::arrange(project, date)
   return(data_frame)
 }
 
@@ -224,6 +249,12 @@ wx_edited_pages <- function(
 #' @examples
 #' # Monthly article edits on Arabic Wikipedia:
 #' wx_project_edits("ar.wikipedia", page_type = "content", granularity = "monthly")
+#' @return A tibble data frame with the following columns:
+#' \describe{
+#'   \item{`project`}{project}
+#'   \item{`date`}{`Date`}
+#'   \item{`edits`}{Number of edits made}
+#' }
 #' @family {content data & metrics}
 #' @export
 wx_project_edits <- function(
@@ -251,8 +282,9 @@ wx_project_edits <- function(
   result <- wx_query_api(reqs_per_second = 25)(path)
   data_frame <- result$items[[1]]$results %>%
     purrr::map_dfr(dplyr::as_tibble) %>%
-    dplyr::mutate(date = as.Date(lubridate::ymd_hms(timestamp))) %>%
-    dplyr::select(date, edits)
+    dplyr::mutate(project = project, date = as.Date(lubridate::ymd_hms(timestamp))) %>%
+    dplyr::select(project, date, edits) %>%
+    dplyr::arrange(project, date)
   return(data_frame)
 }
 
@@ -278,6 +310,13 @@ wx_project_edits <- function(
 #'   start_date = "20190101",
 #'   end_date = "20191231"
 #' )
+#' }
+#' @return A tibble data frame with the following columns:
+#' \describe{
+#'   \item{`project`}{project}
+#'   \item{`page_name`}{page name}
+#'   \item{`date`}{`Date`}
+#'   \item{`edits`}{Number of edits made to the page}
 #' }
 #' @family {content data & metrics}
 #' @export
@@ -317,7 +356,8 @@ wx_page_edits <- function(
     return(data_frame)
   }, .id = "page_name")
   results <- results %>%
-    dplyr::select(page_name, date, edits) %>%
-    dplyr::arrange(page_name, date)
+    dplyr::mutate(project = project) %>%
+    dplyr::select(project, page_name, date, edits) %>%
+    dplyr::arrange(project, page_name, date)
   return(results)
 }

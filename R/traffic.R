@@ -11,6 +11,7 @@
 #' @return A tibble data frame with the following columns:
 #' \describe{
 #'   \item{`date`}{`Date`; beginning of each month if `granularity = "monthly"`}
+#'   \item{`project`}{project}
 #'   \item{`page_name`}{page name; **NOTE**: in wikitext, the first letter
 #'     of the target page is automatically capitalized}
 #'  \item{`views`}{number of page-views (see
@@ -50,8 +51,9 @@ wx_top_viewed_pages <- function(
       result <- query(path)
       data_frame <- result$items[[1]]$articles %>%
         purrr::map_dfr(dplyr::as_tibble) %>%
-        dplyr::mutate(date = date, article = wx_decode_page_name(article)) %>%
-        dplyr::select(date, page_name = article, dplyr::everything())
+        dplyr::mutate(date = date, project = project, article = wx_decode_page_name(article)) %>%
+        dplyr::select(date, project, page_name = article, views, rank) %>%
+        dplyr::arrange(date, rank)
       return(data_frame)
     })
     return(results)
@@ -70,8 +72,9 @@ wx_top_viewed_pages <- function(
           result <- query(path)
           data_frame <- result$items[[1]]$articles %>%
             purrr::map_dfr(dplyr::as_tibble) %>%
-            dplyr::mutate(date = date, article = wx_decode_page_name(article)) %>%
-            dplyr::select(date, page_name = article, dplyr::everything())
+            dplyr::mutate(date = date, project = project, article = wx_decode_page_name(article)) %>%
+            dplyr::select(date, project, page_name = article, views, rank) %>%
+            dplyr::arrange(date, rank)
           return(data_frame)
         },
         error = function(e) {
@@ -106,6 +109,7 @@ wx_top_viewed_pages <- function(
 #' @inheritSection wx_query_api License
 #' @return A tibble data frame with the following columns:
 #' \describe{
+#'   \item{`project`}{project}
 #'   \item{`date`}{`Date`; beginning of each month if `granularity = "monthly"`}
 #'   \item{`devices`}{Estimated number of unique devices.}
 #'   \item{`offset`}{The number added to `underestimate` to produce `devices` estimate.}
@@ -144,8 +148,9 @@ wx_unique_devices <- function(
   result <- wx_query_api(reqs_per_second = 100)(path)
   data_frame <- result$items %>%
     purrr::map_dfr(dplyr::as_tibble) %>%
-    dplyr::mutate(date = as.Date(timestamp, "%Y%m%d")) %>%
-    dplyr::select(date, devices, offset, underestimate)
+    dplyr::mutate(project = project, date = as.Date(timestamp, "%Y%m%d")) %>%
+    dplyr::select(project, date, devices, offset, underestimate) %>%
+    dplyr::arrange(project, date)
   return(data_frame)
 }
 
@@ -163,8 +168,8 @@ wx_unique_devices <- function(
 #' @inheritSection wx_query_api License
 #' @return A tibble data frame with the following columns:
 #' \describe{
-#'   \item{`date` if daily or monthly granularity}{`Date`; beginning of each month if `granularity = "monthly"`}
-#'   \item{`time` if hourly granularity}{`POSIXct`; all times are in UTC}
+#'   \item{`project`}{project}
+#'   \item{`date` if daily or monthly granularity, `time` if hourly granularity}{`Date`/`POSIXct`; all times are in UTC`}
 #'   \item{`views`}{total number of page-views for the project}
 #' }
 #' @seealso
@@ -213,15 +218,18 @@ wx_project_views <- function(
   }
   result <- wx_query_api(reqs_per_second = 100)(path)
   data_frame <- result$items %>%
-    purrr::map_dfr(dplyr::as_tibble)
+    purrr::map_dfr(dplyr::as_tibble) %>%
+    dplyr::mutate(project = project)
   if (granularity == "hourly") {
     data_frame <- data_frame %>%
       dplyr::mutate(time = lubridate::ymd_h(timestamp)) %>%
-      dplyr::select(time, views)
+      dplyr::select(project, time, views) %>%
+      dplyr::arrange(project, time)
   } else {
     data_frame <- data_frame %>%
       dplyr::mutate(date = as.Date(timestamp, "%Y%m%d00")) %>%
-      dplyr::select(date, views)
+      dplyr::select(project, date, views) %>%
+      dplyr::arrange(project, date)
   }
   return(data_frame)
 }
@@ -241,6 +249,7 @@ wx_project_views <- function(
 #' )
 #' @return A tibble data frame with the following columns:
 #' \describe{
+#'   \item{`project`}{project}
 #'   \item{`page_name`}{the `page_name` provided by the user}
 #'   \item{`date`}{`Date`; beginning of each month if `granularity = "monthly"`}
 #'   \item{`views`}{total number of views for the page}
@@ -283,7 +292,8 @@ wx_page_views <- function(
     return(data_frame)
   }, .id = "page_name")
   results <- results %>%
-    dplyr::select(page_name, date, views) %>%
-    dplyr::arrange(page_name, date)
+    dplyr::mutate(project = project) %>%
+    dplyr::select(project, page_name, date, views) %>%
+    dplyr::arrange(project, page_name, date)
   return(results)
 }

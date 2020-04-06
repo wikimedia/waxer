@@ -146,7 +146,7 @@ projects <- c(
 project_views <- map_dfr(
   projects, wx_project_views,
   access_method = "desktop", agent_type = "user",
-  granularity = "monthly", start_date = "20160101", end_date = "20200201",
+  granularity = "monthly", start_date = "20160101", end_date = "20200401",
   .id = "language"
 )
 ```
@@ -226,7 +226,7 @@ top_viewed <- wx_top_viewed_pages(
   project = "en.wikipedia",
   granularity = "monthly",
   start_date = "20190101",
-  end_date = "20190301"
+  end_date = "20190331"
 )
 ```
 
@@ -242,7 +242,7 @@ top_viewed %>%
 
 ## Unique devices
 
-To obtain the monthly estimated number of unique devices that visited German Wikivoyage from Jan 2018 to Feb 2020:
+To obtain the monthly estimated number of unique devices that visited German Wikivoyage from Jan 2018 to March 2020:
 
 ```{r unique_devices, cache=TRUE}
 unique_devices <- wx_unique_devices(
@@ -250,7 +250,7 @@ unique_devices <- wx_unique_devices(
   granularity = "monthly",
   access_site = "all",
   start_date = "20180101",
-  end_date = "20200228"
+  end_date = "20200331"
 )
 ```
 ```{r}
@@ -351,7 +351,7 @@ active_editors_by_wiki <- map_dfr(
   projects,
   wx_active_editors,
   editor_type = "user", page_type = "content",
-  start_date = "20150101", end_date = "20200301",
+  start_date = "20150101", end_date = "20200401",
   granularity = "monthly",
   .id = "language"
 )
@@ -403,12 +403,12 @@ total_pages <- wx_total_pages(
   editor_type = "all",
   page_type = "content", # focus on articles
   granularity = "monthly",
-  start_date = "20010401",
-  end_date = "20200301"
+  start_date = "20010501",
+  end_date = "20200401"
 )
 ```
 ```{r}
-head(total_pages)
+tail(total_pages)
 ```
 
 ```{r plot_total_pages, fig.height=4, fig.width=8, out.height=350}
@@ -437,7 +437,7 @@ page_edits <- wx_page_edits(
   "en.wikipedia",
   c("Coronavirus disease 2019", "Coronavirus outbreak"),
   start_date = "20200101",
-  end_date = "20200320"
+  end_date = "20200401"
 )
 ```
 ```{r}
@@ -462,7 +462,7 @@ daily_edits <- map_dfr(
   projects,
   wx_project_edits,
   editor_type = "all", page_type = "content",
-  start_date = "20200101", end_date = "20200320",
+  start_date = "20200101", end_date = "20200401",
   granularity = "daily",
   .id = "language"
 )
@@ -470,12 +470,12 @@ daily_editors <- map_dfr(
   projects,
   wx_active_editors,
   editor_type = "all", page_type = "content",
-  start_date = "20200101", end_date = "20200320",
+  start_date = "20200101", end_date = "20200401",
   granularity = "daily",
   .id = "language"
 )
 editing_activity <- daily_edits %>%
-  left_join(daily_editors, by = c("language", "date")) %>%
+  left_join(daily_editors, by = c("project", "language", "date")) %>%
   mutate(edits_per_editor = edits / editors) %>%
   arrange(language, date)
 ```
@@ -515,7 +515,7 @@ editing_activity %>%
 
 ## Most edited pages
 
-What were the top 5 most edited articles by on English Wikipedia in January and February of 2020?
+What were the top 5 most edited articles by on English Wikipedia from January through March of 2020?
 
 ```{r edited_pages, cache=TRUE}
 edited_pages <- wx_top_edited_pages(
@@ -523,7 +523,7 @@ edited_pages <- wx_top_edited_pages(
   page_type = "content",
   granularity = "monthly",
   start_date = "20200101",
-  end_date = "20200229"
+  end_date = "20200331"
 )
 ```
 ```{r}

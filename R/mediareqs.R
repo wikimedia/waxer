@@ -37,6 +37,7 @@
 #' - [wikitech:Analytics/AQS/Mediarequests](https://wikitech.wikimedia.org/wiki/Analytics/AQS/Mediarequests)
 #' @return A tibble data frame with the following columns:
 #' \describe{
+#'   \item{`project`}{project}
 #'   \item{`date`}{`Date`; beginning of each month if `granularity = "monthly"`}
 #'   \item{`requests`}{number of media file requests}
 #' }
@@ -65,8 +66,8 @@ wx_mediareqs_referer <- function(
   result <- wx_query_api(reqs_per_second = 100)(path)
   data_frame <- result$items %>%
     purrr::map_dfr(dplyr::as_tibble) %>%
-    dplyr::mutate(date = as.Date(timestamp, "%Y%m%d00")) %>%
-    dplyr::select(date, requests)
+    dplyr::mutate(project = project, date = as.Date(timestamp, "%Y%m%d00")) %>%
+    dplyr::select(project, date, requests)
   return(data_frame)
 }
 
@@ -95,6 +96,7 @@ wx_mediareqs_referer <- function(
 #' )
 #' @return A tibble data frame with the following columns:
 #' \describe{
+#'   \item{`referer`}{referer}
 #'   \item{`file_path`}{media file path provided by the user}
 #'   \item{`date`}{`Date`; beginning of each month if `granularity = "monthly"`}
 #'   \item{`requests`}{number of requests}
@@ -126,10 +128,14 @@ wx_mediareqs_file <- function(
     result <- wx_query_api(reqs_per_second = 100)(path)
     data_frame <- result$items %>%
       purrr::map_dfr(dplyr::as_tibble) %>%
-      dplyr::mutate(date = as.Date(timestamp, "%Y%m%d00")) %>%
+      dplyr::mutate(referer = referer, date = as.Date(timestamp, "%Y%m%d00")) %>%
       dplyr::select(date, requests)
     return(data_frame)
   }, .id = "file_path")
+  results <- results %>%
+    dplyr::mutate(project = project) %>%
+    dplyr::select(project, file_path, date, requests) %>%
+    dplyr::arrange(project, file_path, date)
   return(results)
 }
 
@@ -144,6 +150,7 @@ wx_mediareqs_file <- function(
 #' @return A tibble data frame with the following columns:
 #' \describe{
 #'   \item{`date`}{`Date`; beginning of each month if `granularity = "monthly"`}
+#'   \item{`referer`}{referer}
 #'   \item{`file_path`}{the media file's path on upload.wikimedia.org}
 #'   \item{`requests`}{number of requests}
 #'   \item{`rank`}{`requests`-based ranking}
@@ -180,8 +187,8 @@ wx_most_requested_files <- function(
       result <- query(path)
       data_frame <- result$items[[1]]$files %>%
         purrr::map_dfr(dplyr::as_tibble) %>%
-        dplyr::mutate(date = date) %>%
-        dplyr::select(date, file_path, requests, rank)
+        dplyr::mutate(date = date, referer = referer) %>%
+        dplyr::select(date, referer, file_path, requests, rank)
       return(data_frame)
     })
     return(results)
@@ -196,8 +203,8 @@ wx_most_requested_files <- function(
           result <- query(path)
           data_frame <- result$items[[1]]$files %>%
             purrr::map_dfr(dplyr::as_tibble) %>%
-            dplyr::mutate(date = date) %>%
-            dplyr::select(date, file_path, requests, rank)
+            dplyr::mutate(date = date, referer = referer) %>%
+            dplyr::select(date, referer, file_path, requests, rank)
           return(data_frame)
         },
         error = function(e) {

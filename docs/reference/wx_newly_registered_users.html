@@ -74,7 +74,7 @@ system, and accounts created by peers." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">waxer</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.9.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.9.3</span>
       </span>
     </div>
 
@@ -160,7 +160,13 @@ Can also be a <code>Date</code> or a <code>POSIXt</code> object, which will be a
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>A tibble data frame with columns <code>date</code> and <code>new_registered_users</code>.</p>
+    <p>A tibble data frame with columns</p><dl'>
+<dt><code>project</code></dt><dd><p>project</p></dd>
+<dt><code>date</code></dt><dd><p><code>Date</code>; beginning of the month if <code>granularity = "monthly"</code></p></dd>
+<dt><code>new_registered_users</code></dt><dd><p>Number of newly registered users</p></dd>
+
+</dl>
+
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>Thanks to <a href='https://www.mediawiki.org/wiki/Extension:CentralAuth'>CentralAuth</a>,
@@ -204,15 +210,15 @@ include 2019-12, use <code>end_date = "20200101"</code>.</p>
   <span class='kw'>granularity</span> <span class='kw'>=</span> <span class='st'>"monthly"</span>,
   <span class='kw'>start_date</span> <span class='kw'>=</span> <span class='st'>"20190401"</span>,
   <span class='kw'>end_date</span> <span class='kw'>=</span> <span class='st'>"20191001"</span>
-)</div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 6 x 2</span><span>
-#&gt;   date       new_registered_users
-#&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;date&gt;</span><span>                    </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span>
-#&gt; </span><span style='color: #555555;'>1</span><span> 2019-04-01                  193
-#&gt; </span><span style='color: #555555;'>2</span><span> 2019-05-01                  246
-#&gt; </span><span style='color: #555555;'>3</span><span> 2019-06-01                  232
-#&gt; </span><span style='color: #555555;'>4</span><span> 2019-07-01                  301
-#&gt; </span><span style='color: #555555;'>5</span><span> 2019-08-01                  378
-#&gt; </span><span style='color: #555555;'>6</span><span> 2019-09-01                  319</div></span></pre>
+)</div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 6 x 3</span><span>
+#&gt;   project      date       new_registered_users
+#&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>        </span><span style='color: #555555;font-style: italic;'>&lt;date&gt;</span><span>                    </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span>
+#&gt; </span><span style='color: #555555;'>1</span><span> mr.wikipedia 2019-04-01                  193
+#&gt; </span><span style='color: #555555;'>2</span><span> mr.wikipedia 2019-05-01                  246
+#&gt; </span><span style='color: #555555;'>3</span><span> mr.wikipedia 2019-06-01                  232
+#&gt; </span><span style='color: #555555;'>4</span><span> mr.wikipedia 2019-07-01                  301
+#&gt; </span><span style='color: #555555;'>5</span><span> mr.wikipedia 2019-08-01                  378
+#&gt; </span><span style='color: #555555;'>6</span><span> mr.wikipedia 2019-09-01                  319</div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

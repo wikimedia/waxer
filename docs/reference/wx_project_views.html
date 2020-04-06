@@ -72,7 +72,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">waxer</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.9.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.9.3</span>
       </span>
     </div>
 
@@ -174,9 +174,8 @@ Can also be a <code>Date</code> or a <code>POSIXt</code> object, which will be a
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>A tibble data frame with the following columns:</p><dl'>
-<dt><code>date</code> if daily or monthly granularity</dt><dd><p><code>Date</code>; beginning of each month if <code>granularity = "monthly"</code></p></dd>
-<dt><code>time</code> if hourly granularity</dt><dd><p><code>POSIXct</code>; all times are in UTC</p></dd>
-<dt><code>views</code></dt><dd><p>total number of page-views for the project</p></dd>
+<dt><code>project</code></dt><dd><p>project</p></dd>
+<dt><code>date</code> if daily or monthly granularity, <code>time</code> if hourly granularity</dt><dd><p><code>Date</code>/<code>POSIXct</code>; all times are in UTC<code>} \item{</code>views`</p></dd>total number of page-views for the project
 
 </dl>
 
@@ -206,14 +205,14 @@ Can also be a <code>Date</code> or a <code>POSIXt</code> object, which will be a
   <span class='kw'>granularity</span> <span class='kw'>=</span> <span class='st'>"monthly"</span>,
   <span class='kw'>start_date</span> <span class='kw'>=</span> <span class='st'>"20191001"</span>,
   <span class='kw'>end_date</span> <span class='kw'>=</span> <span class='st'>"20200229"</span>
-)</div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 5 x 2</span><span>
-#&gt;   date           views
-#&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;date&gt;</span><span>         </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span>
-#&gt; </span><span style='color: #555555;'>1</span><span> 2019-10-01  74</span><span style='text-decoration: underline;'>376</span><span>756
-#&gt; </span><span style='color: #555555;'>2</span><span> 2019-11-01  69</span><span style='text-decoration: underline;'>159</span><span>777
-#&gt; </span><span style='color: #555555;'>3</span><span> 2019-12-01  74</span><span style='text-decoration: underline;'>319</span><span>107
-#&gt; </span><span style='color: #555555;'>4</span><span> 2020-01-01 113</span><span style='text-decoration: underline;'>732</span><span>170
-#&gt; </span><span style='color: #555555;'>5</span><span> 2020-02-01 127</span><span style='text-decoration: underline;'>052</span><span>947</div></span></pre>
+)</div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 5 x 3</span><span>
+#&gt;   project      date           views
+#&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>        </span><span style='color: #555555;font-style: italic;'>&lt;date&gt;</span><span>         </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span>
+#&gt; </span><span style='color: #555555;'>1</span><span> tr.wikipedia 2019-10-01  74</span><span style='text-decoration: underline;'>376</span><span>756
+#&gt; </span><span style='color: #555555;'>2</span><span> tr.wikipedia 2019-11-01  69</span><span style='text-decoration: underline;'>159</span><span>777
+#&gt; </span><span style='color: #555555;'>3</span><span> tr.wikipedia 2019-12-01  74</span><span style='text-decoration: underline;'>319</span><span>107
+#&gt; </span><span style='color: #555555;'>4</span><span> tr.wikipedia 2020-01-01 113</span><span style='text-decoration: underline;'>732</span><span>170
+#&gt; </span><span style='color: #555555;'>5</span><span> tr.wikipedia 2020-02-01 127</span><span style='text-decoration: underline;'>052</span><span>947</div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

@@ -48,6 +48,14 @@ Can also be a \code{Date} or a \code{POSIXt} object, which will be auto-formatte
 \item{end_date}{The date of the last day to include, in YYYYMMDD format.
 Can also be a \code{Date} or a \code{POSIXt} object, which will be auto-formatted.}
 }
+\value{
+A tibble data frame with the following columns:
+\describe{
+\item{\code{project}}{project}
+\item{\code{date}}{\code{Date}}
+\item{\code{edited_pages}}{Number of pages which have been edited}
+}
+}
 \description{
 Number of edited pages for a given project and timespan.
 }

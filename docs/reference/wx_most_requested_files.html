@@ -72,7 +72,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">waxer</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.9.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.9.3</span>
       </span>
     </div>
 
@@ -162,6 +162,7 @@ Can also be a <code>Date</code> or a <code>POSIXt</code> object, which will be a
 
     <p>A tibble data frame with the following columns:</p><dl'>
 <dt><code>date</code></dt><dd><p><code>Date</code>; beginning of each month if <code>granularity = "monthly"</code></p></dd>
+<dt><code>referer</code></dt><dd><p>referer</p></dd>
 <dt><code>file_path</code></dt><dd><p>the media file's path on upload.wikimedia.org</p></dd>
 <dt><code>requests</code></dt><dd><p>number of requests</p></dd>
 <dt><code>rank</code></dt><dd><p><code>requests</code>-based ranking</p></dd>
@@ -220,19 +221,19 @@ limited to data from May 2019 onward.</p></li>
 <code><a href='wx_mediareqs_referer.html'>wx_mediareqs_referer</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'>wx_most_requested_files</span>(<span class='st'>"en.wikipedia"</span>, <span class='kw'>media_type</span> <span class='kw'>=</span> <span class='st'>"video"</span>, <span class='kw'>granularity</span> <span class='kw'>=</span> <span class='st'>"monthly"</span>)</div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 2,000 x 4</span><span>
-#&gt;    date       file_path                                           requests  rank
-#&gt;    </span><span style='color: #555555;font-style: italic;'>&lt;date&gt;</span><span>     </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>                                                  </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span>
-#&gt; </span><span style='color: #555555;'> 1</span><span> 2019-12-01 /wikipedia/commons/c/c2/December_18_1998_house_ses…   </span><span style='text-decoration: underline;'>389</span><span>645     1
-#&gt; </span><span style='color: #555555;'> 2</span><span> 2019-12-01 /wikipedia/commons/4/40/WASPS-Women-Airforce-Servi…   </span><span style='text-decoration: underline;'>358</span><span>472     2
-#&gt; </span><span style='color: #555555;'> 3</span><span> 2019-12-01 /wikipedia/commons/0/06/Response_to_the_Lewinsky_A…   </span><span style='text-decoration: underline;'>288</span><span>922     3
-#&gt; </span><span style='color: #555555;'> 4</span><span> 2019-12-01 /wikipedia/commons/2/2b/Women_at_NASA-nov4-2016.we…   </span><span style='text-decoration: underline;'>244</span><span>143     4
-#&gt; </span><span style='color: #555555;'> 5</span><span> 2019-12-01 /wikipedia/commons/c/c6/Greta_Thunberg-_World_Econ…   </span><span style='text-decoration: underline;'>235</span><span>248     5
-#&gt; </span><span style='color: #555555;'> 6</span><span> 2019-12-01 /wikipedia/commons/5/56/Secret_Santa_Video.webm       </span><span style='text-decoration: underline;'>229</span><span>283     6
-#&gt; </span><span style='color: #555555;'> 7</span><span> 2019-12-01 /wikipedia/commons/b/b6/President_Trump_Participat…   </span><span style='text-decoration: underline;'>214</span><span>381     7
-#&gt; </span><span style='color: #555555;'> 8</span><span> 2019-12-01 /wikipedia/commons/1/1c/Wikipedia-VideoWiki-Pneumo…   </span><span style='text-decoration: underline;'>210</span><span>783     8
-#&gt; </span><span style='color: #555555;'> 9</span><span> 2019-12-01 /wikipedia/commons/3/3d/Epstein_Body_Moved_From_Ne…   </span><span style='text-decoration: underline;'>200</span><span>499     9
-#&gt; </span><span style='color: #555555;'>10</span><span> 2019-12-01 /wikipedia/commons/1/14/President_Trump_Gives_a_St…   </span><span style='text-decoration: underline;'>196</span><span>129    10
+    <pre class="examples"><div class='input'><span class='fu'>wx_most_requested_files</span>(<span class='st'>"en.wikipedia"</span>, <span class='kw'>media_type</span> <span class='kw'>=</span> <span class='st'>"video"</span>, <span class='kw'>granularity</span> <span class='kw'>=</span> <span class='st'>"monthly"</span>)</div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 2,000 x 5</span><span>
+#&gt;    date       referer    file_path                                requests  rank
+#&gt;    </span><span style='color: #555555;font-style: italic;'>&lt;date&gt;</span><span>     </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>      </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>                                       </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span>
+#&gt; </span><span style='color: #555555;'> 1</span><span> 2019-12-01 en.wikipe… /wikipedia/commons/c/c2/December_18_199…   </span><span style='text-decoration: underline;'>389</span><span>645     1
+#&gt; </span><span style='color: #555555;'> 2</span><span> 2019-12-01 en.wikipe… /wikipedia/commons/4/40/WASPS-Women-Air…   </span><span style='text-decoration: underline;'>358</span><span>472     2
+#&gt; </span><span style='color: #555555;'> 3</span><span> 2019-12-01 en.wikipe… /wikipedia/commons/0/06/Response_to_the…   </span><span style='text-decoration: underline;'>288</span><span>922     3
+#&gt; </span><span style='color: #555555;'> 4</span><span> 2019-12-01 en.wikipe… /wikipedia/commons/2/2b/Women_at_NASA-n…   </span><span style='text-decoration: underline;'>244</span><span>143     4
+#&gt; </span><span style='color: #555555;'> 5</span><span> 2019-12-01 en.wikipe… /wikipedia/commons/c/c6/Greta_Thunberg-…   </span><span style='text-decoration: underline;'>235</span><span>248     5
+#&gt; </span><span style='color: #555555;'> 6</span><span> 2019-12-01 en.wikipe… /wikipedia/commons/5/56/Secret_Santa_Vi…   </span><span style='text-decoration: underline;'>229</span><span>283     6
+#&gt; </span><span style='color: #555555;'> 7</span><span> 2019-12-01 en.wikipe… /wikipedia/commons/b/b6/President_Trump…   </span><span style='text-decoration: underline;'>214</span><span>381     7
+#&gt; </span><span style='color: #555555;'> 8</span><span> 2019-12-01 en.wikipe… /wikipedia/commons/1/1c/Wikipedia-Video…   </span><span style='text-decoration: underline;'>210</span><span>783     8
+#&gt; </span><span style='color: #555555;'> 9</span><span> 2019-12-01 en.wikipe… /wikipedia/commons/3/3d/Epstein_Body_Mo…   </span><span style='text-decoration: underline;'>200</span><span>499     9
+#&gt; </span><span style='color: #555555;'>10</span><span> 2019-12-01 en.wikipe… /wikipedia/commons/1/14/President_Trump…   </span><span style='text-decoration: underline;'>196</span><span>129    10
 #&gt; </span><span style='color: #555555;'># … with 1,990 more rows</span><span></div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

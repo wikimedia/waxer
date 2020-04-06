@@ -29,7 +29,12 @@ Can also be a \code{Date} or a \code{POSIXt} object, which will be auto-formatte
 Can also be a \code{Date} or a \code{POSIXt} object, which will be auto-formatted.}
 }
 \value{
-A tibble data frame with columns \code{date} and \code{new_registered_users}.
+A tibble data frame with columns
+\describe{
+\item{\code{project}}{project}
+\item{\code{date}}{\code{Date}; beginning of the month if \code{granularity = "monthly"}}
+\item{\code{new_registered_users}}{Number of newly registered users}
+}
 }
 \description{
 The count of users having registered themselves. This metric

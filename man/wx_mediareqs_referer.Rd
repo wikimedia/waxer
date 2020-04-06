@@ -38,6 +38,7 @@ Can also be a \code{Date} or a \code{POSIXt} object, which will be auto-formatte
 \value{
 A tibble data frame with the following columns:
 \describe{
+\item{\code{project}}{project}
 \item{\code{date}}{\code{Date}; beginning of each month if \code{granularity = "monthly"}}
 \item{\code{requests}}{number of media file requests}
 }
