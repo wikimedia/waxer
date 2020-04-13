@@ -169,7 +169,7 @@ wx_unique_devices <- function(
 #' @return A tibble data frame with the following columns:
 #' \describe{
 #'   \item{`project`}{project}
-#'   \item{`date` if daily or monthly granularity, `time` if hourly granularity}{`Date`/`POSIXct`; all times are in UTC`}
+#'   \item{`date`}{`Date` if daily or monthly granularity, `POSIXct` for hourly; all times are in UTC}
 #'   \item{`views`}{total number of page-views for the project}
 #' }
 #' @seealso

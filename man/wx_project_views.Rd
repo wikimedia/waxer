@@ -45,7 +45,8 @@ Can also be a \code{Date} or a \code{POSIXt} object, which will be auto-formatte
 A tibble data frame with the following columns:
 \describe{
 \item{\code{project}}{project}
-\item{\code{date} if daily or monthly granularity, \code{time} if hourly granularity}{\code{Date}/\code{POSIXct}; all times are in UTC\verb{\} \\item\{}views`}{total number of page-views for the project}
+\item{\code{date}}{\code{Date} if daily or monthly granularity, \code{POSIXct} for hourly; all times are in UTC}
+\item{\code{views}}{total number of page-views for the project}
 }
 }
 \description{
