@@ -239,6 +239,43 @@ wx_project_views <- function(
 #' @inheritParams wx_top_viewed_pages
 #' @inheritParams wx_project_views
 #' @inheritParams wx_page_edits
+#' @param project The name of any Wikimedia project formatted like
+#'   `{language code}.{project name}`, for example en.wikipedia. You *may* pass
+#'   'en.wikipedia.org' and the .org will be stripped off. For projects without
+#'   language codes like Wikimedia Commons or MediaWiki, use
+#'   commons.wikimedia.org and mediawiki.org, respectively. This inclusion of
+#'   .org is especially important if including redirects, as the project's MW
+#'   API will need to be queried.
+#' @param include_redirects Whether to include redirects to requested pages.
+#'   Currently, only article (mainspace) redirects are supported. See
+#'   "Redirects" section below for more details.
+#' @section Redirects:
+#' By default `include_redirects = FALSE` for performance reasons. The
+#' pageviews API does not roll up view counts for redirects into total view
+#' counts of the target page, so set `include_redirects` to `TRUE` if you want
+#' to have this function automatically locate the redirects via the MediaWiki
+#' API and request their pageview counts. Obviously this makes the function
+#' much slower, especially if the number of redirects to the page(s) is high.
+#'
+#' For example, if the user visits "2019-20 coronavirus pandemic" (with a
+#' minus) they will be redirected to the actual article "2019–20 coronavirus
+#' pandemic" (with an en-dash). Any visits to the redirect (the page with the
+#' minus sign instead of the en-dash) will not be counted toward the page view
+#' count of the redirected-to article, although once the client is taken to the
+#' target page that counts as a separate page view.
+#'
+#' In some cases, you may want to include page views of the redirects in your
+#' total or you may want to the ability to disentangle the portion of traffic
+#' that is from users arriving to a page via a redirect vs. users arriving to
+#' a page directly.
+#'
+#' **Note on performance**: again, the process of finding and fetching view
+#' counts for redirects is considerably slower. The function has been optimized
+#' for multiple pages, since the [redirects API](https://www.mediawiki.org/wiki/API:Redirects)
+#' supports up to 50 pages per call. Therefore, it is *highly recommended* that
+#' if you have multiple pages to retrieve traffic for within the same project,
+#' try not to retrieve traffic for one page at a time but instead provide the
+#' full vector of page names to minimize the burden on the MediaWiki API.
 #' @inheritSection wx_query_api License
 #' @examples
 #' wx_page_views(
@@ -247,10 +284,20 @@ wx_project_views <- function(
 #'   start_date = "20191231",
 #'   end_date = "20200101"
 #' )
+#' \dontrun{
+#' wx_page_views(
+#'   "en.wikipedia",
+#'   "2019–20 coronavirus pandemic",
+#'   start_date = "20200301",
+#'   end_date = "20200501",
+#'   include_redirects = TRUE
+#' )
+#' }
 #' @return A tibble data frame with the following columns:
 #' \describe{
 #'   \item{`project`}{project}
 #'   \item{`page_name`}{the `page_name` provided by the user}
+#'   \item{`redirect_name`}{the name of the redirect to the page if `include_redirects = TRUE`; `NA` for the page itself}
 #'   \item{`date`}{`Date`; beginning of each month if `granularity = "monthly"`}
 #'   \item{`views`}{total number of views for the page}
 #' }
@@ -265,7 +312,8 @@ wx_page_views <- function(
   agent_type = c("all", "user", "bot"),
   granularity = c("daily", "monthly"),
   start_date = "20191101",
-  end_date = "20191231"
+  end_date = "20191231",
+  include_redirects = FALSE
 ) {
   project <- project[1] # force 1 project per call
   # Validate "one of" arguments:
@@ -274,26 +322,57 @@ wx_page_views <- function(
     list("granularity" = granularity, "access_method" = access_method, "agent_type" = agent_type),
     args[c("granularity", "access_method", "agent_type")]
   )
-  c(access_method, agent_type) %<-% wx_types(access = access_method, agent = agent_type)
   c(start_date, end_date) %<-% wx_format_dates(start_date, end_date)
-  query <- wx_query_api(reqs_per_second = 100)
   page_names <- wx_encode_page_name(page_name)
+  if (include_redirects == TRUE) {
+    redirects <- wx_get_redirects(project, page_names)
+    # Recursion!!!
+    redirect_views <- wx_page_views(
+      project = project,
+      page_name = redirects$redirect_title,
+      access_method = access_method,
+      agent_type = agent_type,
+      granularity = granularity,
+      start_date = start_date,
+      end_date = end_date,
+      include_redirects = FALSE
+    )
+    redirect_views <- redirects %>%
+      dplyr::left_join(redirect_views, by = c("redirect_title" = "page_name")) %>%
+      # Filter out pages which 404'ed either because
+      # - no traffic to them
+      # - they didn't exist at the time
+      dplyr::filter(!is.na(views))
+  }
+  c(access_method, agent_type) %<-% wx_types(access = access_method, agent = agent_type)
+  aqs_query <- wx_query_api(reqs_per_second = 100)
   results <- purrr::map_dfr(page_names, function(encoded_name) {
     path <- paste(
       "/pageviews/per-article",
       project, access_method, agent_type, encoded_name, granularity, start_date, end_date,
       sep = "/"
     )
-    result <- query(path)
-    data_frame <- result$items %>%
-      purrr::map_dfr(dplyr::as_tibble) %>%
-      dplyr::mutate(date = as.Date(timestamp, "%Y%m%d00")) %>%
-      dplyr::select(date, views)
-    return(data_frame)
+    safe_query <- purrr::possibly(function(p) {
+      result <- aqs_query(p)
+      data_frame <- result$items %>%
+        purrr::map_dfr(dplyr::as_tibble) %>%
+        dplyr::mutate(date = as.Date(timestamp, "%Y%m%d00")) %>%
+        dplyr::select(date, views)
+      return(data_frame)
+    }, otherwise = NULL)
+    return(safe_query(path))
   }, .id = "page_name")
   results <- results %>%
     dplyr::mutate(project = project) %>%
-    dplyr::select(project, page_name, date, views) %>%
+    dplyr::select(project, page_name, date, views)
+  if (include_redirects == TRUE) {
+    # Bring redirect page traffic back in, if needed
+    results <- redirect_views %>%
+      dplyr::rename(page_name = page_title, redirect_name = redirect_title) %>%
+      dplyr::bind_rows(results, .) %>%
+      dplyr::select(project, page_name, redirect_name, date, views)
+  }
+  results <- results %>%
     dplyr::arrange(project, page_name, date)
   return(results)
 }

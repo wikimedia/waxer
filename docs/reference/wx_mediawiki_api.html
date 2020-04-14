@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>waxer: Wikimedia Analytics Query Service (AQS) API — waxer-package • waxer</title>
+<title>Generate a rate-limited MediaWiki API caller — wx_mediawiki_api • waxer</title>
 
 
 <!-- jquery -->
@@ -39,12 +39,11 @@
 
 
 
-<meta property="og:title" content="waxer: Wikimedia Analytics Query Service (AQS) API — waxer-package" />
-<meta property="og:description" content="This is an R wrapper for the
-Wikimedia Analytics Query Service (AQS).
-The REST API provides cacheable and
-straightforward access to Wikimedia content and data, in machine-readable
-formats. This particular wrapper is for the /metrics endpoint." />
+<meta property="og:title" content="Generate a rate-limited MediaWiki API caller — wx_mediawiki_api" />
+<meta property="og:description" content="Generates a function which makes a request to MediaWiki APIs.
+This generator is primarily intended for internal use, but can
+theoretically be used by others to write custom MediaWiki API queries. The
+generated function is rate-limited at 100 queries per second." />
 
 
 
@@ -113,73 +112,42 @@ formats. This particular wrapper is for the /metrics endpoint." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>waxer: Wikimedia Analytics Query Service (AQS) API</h1>
-    <small class="dont-index">Source: <a href='https://github.com/bearloga/waxer/blob/master/R/waxer.R'><code>R/waxer.R</code></a></small>
-    <div class="hidden name"><code>waxer-package.Rd</code></div>
+    <h1>Generate a rate-limited MediaWiki API caller</h1>
+    <small class="dont-index">Source: <a href='https://github.com/bearloga/waxer/blob/master/R/http.R'><code>R/http.R</code></a></small>
+    <div class="hidden name"><code>wx_mediawiki_api.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>This is an R wrapper for the
-<a href='https://www.mediawiki.org/wiki/Wikidata_query_service'>Wikimedia Analytics Query Service (AQS)</a>.
-The <a href='https://wikimedia.org/api/rest_v1/'>REST API</a> provides cacheable and
-straightforward access to Wikimedia content and data, in machine-readable
-formats. This particular wrapper is for the <code>/metrics</code> endpoint.</p>
+    <p>Generates a function which makes a request to MediaWiki APIs.
+This generator is primarily intended for internal use, but can
+theoretically be used by others to write custom MediaWiki API queries. The
+generated function is rate-limited at 100 queries per second.</p>
     </div>
 
+    <pre class="usage"><span class='fu'>wx_mediawiki_api</span>(<span class='no'>project</span>)</pre>
 
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
+    <table class="ref-arguments">
+    <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>project</th>
+      <td><p>The project for which to generate queryable MW API endpoint</p></td>
+    </tr>
+    </table>
 
-    <h2 class="hasAnchor" id="definitions"><a class="anchor" href="#definitions"></a>Definitions</h2>
+    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    
-
-<h3>Editor type</h3>
-
-
-<p>The <code>editor_type</code> parameter in functions allows you to filter the type of
-editors having performed the related action. Can be <code>anonymous</code> for users
-not logged in,<code> bot group</code> for logged in users that are part of the bot
-group, <code>bot</code> for logged in users whose name contains <code>bot</code> (high probability
-of being a bot, even if counter examples exists), and<code> user</code> for logged-in
-users not in <code>bot group</code> nor <code>bot</code> sets. Finally, you can use <code>all</code> to not
-filter by editor type.</p>
-
-<h3>Page type</h3>
-
-
-<p>The <code>page_type</code> parameter in functions allows you to filter for the type of
-page over which the action is performed. Can be <code>content</code> for pages
-belonging in content namespaces, also known as "main" namespaces. This page
-type is also referred to as articles, and for most wikis includes pages in
-namespace 0 only. Can also be <code>non-content</code> for pages in namespaces not
-considered content (talk pages, user pages etc). Finally, you can use <code>all</code>
-to not filter by page type.</p>
-
-    <h2 class="hasAnchor" id="wikimedia-projects"><a class="anchor" href="#wikimedia-projects"></a>Wikimedia projects</h2>
-
-    
-
-<p>The package comes bundled with a list of <em>active</em> Wikibooks, Wikinews,
-Wikipedia, Wikiquote, Wikisource, Wikiversity, Wikivoyage, and Wiktionary
-wikis.</p><pre><span class='no'>wikis</span> <span class='kw'>&amp;</span><span class='no'>lt</span>;- <span class='fu'><a href='https://rdrr.io/r/utils/read.table.html'>read.csv</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span>(<span class='st'>"extdata/wikis.csv"</span>, <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"waxer"</span>))</pre>
-
-<p>The columns are:</p><dl'>
-<dt><code>language</code></dt><dd><p>e.g. "English", "Arabic"</p></dd>
-<dt><code>language_code</code></dt><dd><p>e.g. "en", "ar"</p></dd>
-<dt><code>project_code</code></dt><dd><p>e.g. "wikipedia", "wikibooks"</p></dd>
-<dt><code>url</code></dt><dd><p>e.g. "en.wikipedia.org", "ar.wikibooks.org"</p></dd>
-<dt><code>direction</code></dt><dd><p>e.g. "left-to-right", "right-to-left"</p></dd>
+    <p>A rate-limited function with parameters:</p><dl'>
+<dt><code>query</code></dt><dd><p>query after endpoint; e.g. <code>action=query&amp;format=json&amp;titles=Main%20page</code></p></dd>
 
 </dl>
 
-<p>This dataset was generated from the
-<a href='https://www.mediawiki.org/wiki/Special:SiteMatrix'>Wikimedia site matrix</a>.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p>Useful links:</p><ul>
-<li><p><a href='https://github.com/bearloga/waxer'>https://github.com/bearloga/waxer</a></p></li>
-<li><p>Report bugs at <a href='https://github.com/bearloga/waxer/issues'>https://github.com/bearloga/waxer/issues</a></p></li>
+    <div class='dont-index'>
+<ul>
+<li><p><a href='https://www.mediawiki.org/wiki/API:Main_page'>MediaWiki API</a></p></li>
 </ul>
-
 </div>
 
   </div>

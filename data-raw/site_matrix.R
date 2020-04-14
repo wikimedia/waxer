@@ -47,6 +47,7 @@ wikis <- map_dfr(
 wikis %>%
   mutate(
     project_code = if_else(project_code == "wiki", "wikipedia", project_code),
+    project = paste0(language_code, ".", project_code),
     direction = if_else(direction == "ltr", "left-to-right", "right-to-left"),
     closed = if_else(is.na(closed), FALSE, closed),
     url = sub("https://", "", url, fixed = TRUE)

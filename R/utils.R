@@ -132,3 +132,34 @@ wx_check_args <- function(values, params) {
   }
   return(purrr::map(values, ~ .x[1]))
 }
+
+wx_get_redirects <- function(project, page_names) {
+  # Break up the list of pages in blocks of 50 or fewer,
+  # which is the maximum limit for 1 call to redirect API:
+  n_pages <- length(page_names)
+  if (n_pages > 50) {
+    n_segments <- floor(n_pages / 50)
+    n_remainder <- n_pages %% 50
+    if (n_remainder > 0) {
+      remainder_pages <- page_names[1:n_remainder]
+      segments <- unname(split(page_names[-(1:n_remainder)], 1:n_segments))
+      segments <- c(segments, list(remainder_pages))
+    } else {
+      segments <- unname(split(page_names, 1:n_segments))
+    }
+  } else {
+    segments <- list(page_names)
+  }
+  mw_query <- wx_mediawiki_api(project)
+  purrr::map_dfr(segments, function(segment) {
+    titles <- paste0(segment, collapse = "|")
+    query <- glue::glue("action=query&format=json&prop=redirects&meta=&titles={titles}&rdnamespace=0&rdlimit=max")
+    result <- mw_query(query)
+    purrr::map_dfr(result$query$pages, function(page) {
+      page$redirects %>%
+        purrr::map_dfr(as.data.frame, stringsAsFactors = FALSE) %>%
+        dplyr::mutate(page_title = page$title) %>% # unused: page_id = page$pageid
+        dplyr::select(page_title, redirect_title = title) # unused: redirect_id = pageid
+    })
+  })
+}

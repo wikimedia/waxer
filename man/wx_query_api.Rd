@@ -2,7 +2,7 @@
 % Please edit documentation in R/http.R
 \name{wx_query_api}
 \alias{wx_query_api}
-\title{Generate a rate-limited API caller}
+\title{Generate a rate-limited Analytics Query Service API caller}
 \usage{
 wx_query_api(reqs_per_second = 200)
 }

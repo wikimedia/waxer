@@ -133,6 +133,51 @@ ggplot(new_years_views, aes(x = day, y = views)) +
   theme(legend.position = "bottom")
 ```
 
+### Including redirects
+
+MediaWiki enables users to create [redirects](https://www.mediawiki.org/wiki/Help:Redirects). This is usually done for common typos and aliases, to make it easier for users (both readers and editors) to arrive at a single article. The thing is, when someone visits a redirect page, that page view is not counted towards the total view count for the destination page. To include redirects in the output for `wx_page_views`:
+
+```{r pvs_with_redirects, cache=TRUE}
+pvs_with_redirects <- wx_page_views(
+  "en.wikipedia",
+  "2019–20 coronavirus pandemic",
+  start_date = "20200401",
+  end_date = "20200401",
+  include_redirects = TRUE
+)
+```
+
+**Caution**: this process requires finding all the redirects (*within the article namespace*) to the requested pages and retrieving those redirects' page views. This has a considerable impact on the speed with which page views are retrieved. However, the function is optimized to work with many pages and will query the MediaWiki API the fewest times it can (since the redirects API supports up to 50 titles per query). Other than that the same rate limits apply.
+
+```{r}
+head(pvs_with_redirects)
+```
+
+On 1 April 2020, the [*2019–20 coronavirus pandemic*](https://en.wikipedia.org/wiki/2019%E2%80%9320_coronavirus_pandemic) article had `r sum(!is.na(pvs_with_redirects$redirect_name))` redirects to it with traffic to them (at least 1 view). The most visited redirects are:
+
+```{r}
+pvs_with_redirects %>%
+  filter(!is.na(redirect_name)) %>%
+  top_n(10, views) %>%
+  select(redirect_name, views) %>%
+  arrange(desc(views))
+```
+
+(The difference between the target article and a **very** similarly named redirect is that the actual article uses an en-dash but the redirect uses a minus sign, which is much more easily accessible on most keyboards than the more typographically-correct en-dash.)
+
+If we wanted to roll up the page views to the redirects into the overall total for the article (and calculate some additional summary metrics), this is easily done within the tidyverse framework:
+
+```{r}
+pvs_with_redirects %>%
+  group_by(project, page_name, date) %>%
+  summarize(
+    total_views = sum(views),
+    redirect_views = sum(views[!is.na(redirect_name)]),
+    redirects = sum(!is.na(redirect_name))
+  ) %>%
+  ungroup
+```
+
 ### Project views
 
 For consistency, the `project` parameter in every {waxer} function can only accept 1 value -- unlike the `page_name` parameter in `wx_page_views()`. So if we want to get multiple projects' views (the total number of page-views across all of the project's pages), we can use the `map_dfr` to iterate through a named vector of projects, keeping all the other parameters the same:

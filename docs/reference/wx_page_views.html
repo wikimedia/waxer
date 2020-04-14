@@ -72,7 +72,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">waxer</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.9.3</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.9.4</span>
       </span>
     </div>
 
@@ -125,7 +125,8 @@
   <span class='kw'>agent_type</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"all"</span>, <span class='st'>"user"</span>, <span class='st'>"bot"</span>),
   <span class='kw'>granularity</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"daily"</span>, <span class='st'>"monthly"</span>),
   <span class='kw'>start_date</span> <span class='kw'>=</span> <span class='st'>"20191101"</span>,
-  <span class='kw'>end_date</span> <span class='kw'>=</span> <span class='st'>"20191231"</span>
+  <span class='kw'>end_date</span> <span class='kw'>=</span> <span class='st'>"20191231"</span>,
+  <span class='kw'>include_redirects</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>
 )</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -134,11 +135,12 @@
     <tr>
       <th>project</th>
       <td><p>The name of any Wikimedia project formatted like
-<code>{language code}.{project name}</code>, for example en.wikipedia. You may pass
-en.wikipedia.org and the .org will be stripped off. For projects like
-Wikimedia Commons (without language codes), use commons.wikimedia. For
-projects like www.mediawiki.org, you can use that full string, or just use
-mediawiki or mediawiki.org.</p></td>
+<code>{language code}.{project name}</code>, for example en.wikipedia. You <em>may</em> pass
+'en.wikipedia.org' and the .org will be stripped off. For projects without
+language codes like Wikimedia Commons or MediaWiki, use
+commons.wikimedia.org and mediawiki.org, respectively. This inclusion of
+.org is especially important if including redirects, as the project's MW
+API will need to be queried.</p></td>
     </tr>
     <tr>
       <th>page_name</th>
@@ -177,6 +179,12 @@ Can also be a <code>Date</code> or a <code>POSIXt</code> object, which will be a
       <td><p>The date of the last day to include, in YYYYMMDD format.
 Can also be a <code>Date</code> or a <code>POSIXt</code> object, which will be auto-formatted.</p></td>
     </tr>
+    <tr>
+      <th>include_redirects</th>
+      <td><p>Whether to include redirects to requested pages.
+Currently, only article (mainspace) redirects are supported. See
+"Redirects" section below for more details.</p></td>
+    </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
@@ -184,11 +192,39 @@ Can also be a <code>Date</code> or a <code>POSIXt</code> object, which will be a
     <p>A tibble data frame with the following columns:</p><dl'>
 <dt><code>project</code></dt><dd><p>project</p></dd>
 <dt><code>page_name</code></dt><dd><p>the <code>page_name</code> provided by the user</p></dd>
+<dt><code>redirect_name</code></dt><dd><p>the name of the redirect to the page if <code>include_redirects = TRUE</code>; <code>NA</code> for the page itself</p></dd>
 <dt><code>date</code></dt><dd><p><code>Date</code>; beginning of each month if <code>granularity = "monthly"</code></p></dd>
 <dt><code>views</code></dt><dd><p>total number of views for the page</p></dd>
 
 </dl>
 
+    <h2 class="hasAnchor" id="redirects"><a class="anchor" href="#redirects"></a>Redirects</h2>
+
+    
+
+<p>By default <code>include_redirects = FALSE</code> for performance reasons. The
+pageviews API does not roll up view counts for redirects into total view
+counts of the target page, so set <code>include_redirects</code> to <code>TRUE</code> if you want
+to have this function automatically locate the redirects via the MediaWiki
+API and request their pageview counts. Obviously this makes the function
+much slower, especially if the number of redirects to the page(s) is high.</p>
+<p>For example, if the user visits "2019-20 coronavirus pandemic" (with a
+minus) they will be redirected to the actual article "2019–20 coronavirus
+pandemic" (with an en-dash). Any visits to the redirect (the page with the
+minus sign instead of the en-dash) will not be counted toward the page view
+count of the redirected-to article, although once the client is taken to the
+target page that counts as a separate page view.</p>
+<p>In some cases, you may want to include page views of the redirects in your
+total or you may want to the ability to disentangle the portion of traffic
+that is from users arriving to a page via a redirect vs. users arriving to
+a page directly.</p>
+<p><strong>Note on performance</strong>: again, the process of finding and fetching view
+counts for redirects is considerably slower. The function has been optimized
+for multiple pages, since the <a href='https://www.mediawiki.org/wiki/API:Redirects'>redirects API</a>
+supports up to 50 pages per call. Therefore, it is <em>highly recommended</em> that
+if you have multiple pages to retrieve traffic for within the same project,
+try not to retrieve traffic for one page at a time but instead provide the
+full vector of page names to minimize the burden on the MediaWiki API.</p>
     <h2 class="hasAnchor" id="license"><a class="anchor" href="#license"></a>License</h2>
 
     
@@ -220,7 +256,15 @@ Can also be a <code>Date</code> or a <code>POSIXt</code> object, which will be a
 #&gt; </span><span style='color: #555555;'>1</span><span> en.wikipedia New Year's Day 2019-12-31  </span><span style='text-decoration: underline;'>61</span><span>379
 #&gt; </span><span style='color: #555555;'>2</span><span> en.wikipedia New Year's Day 2020-01-01 </span><span style='text-decoration: underline;'>281</span><span>166
 #&gt; </span><span style='color: #555555;'>3</span><span> en.wikipedia New Year's Eve 2019-12-31 </span><span style='text-decoration: underline;'>202</span><span>638
-#&gt; </span><span style='color: #555555;'>4</span><span> en.wikipedia New Year's Eve 2020-01-01  </span><span style='text-decoration: underline;'>51</span><span>715</div></span></pre>
+#&gt; </span><span style='color: #555555;'>4</span><span> en.wikipedia New Year's Eve 2020-01-01  </span><span style='text-decoration: underline;'>51</span><span>715</div><div class='input'><span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
+<span class='fu'>wx_page_views</span>(
+  <span class='st'>"en.wikipedia"</span>,
+  <span class='st'>"2019–20 coronavirus pandemic"</span>,
+  <span class='kw'>start_date</span> <span class='kw'>=</span> <span class='st'>"20200301"</span>,
+  <span class='kw'>end_date</span> <span class='kw'>=</span> <span class='st'>"20200501"</span>,
+  <span class='kw'>include_redirects</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>
+)
+}</div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

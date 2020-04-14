@@ -1,3 +1,8 @@
+# waxer 0.9.4
+
+* Adds `include_redirects` argument to `wx_page_views` ([issue 3](https://github.com/bearloga/waxer/issues/3))
+* Internally, adds (non-expo) `wx_mediawiki_api` for any other future functions which may need to query the MediaWiki API
+
 # waxer 0.9.3
 
 * Adds 'project' column to the output ([issue 2](https://github.com/bearloga/waxer/issues/2))

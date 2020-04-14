@@ -55,3 +55,4 @@ reference:
     desc: "Utility functions primarily for internal use"
   - contents:
     - wx_query_api
+    - wx_mediawiki_api

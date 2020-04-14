@@ -11,16 +11,18 @@ wx_page_views(
   agent_type = c("all", "user", "bot"),
   granularity = c("daily", "monthly"),
   start_date = "20191101",
-  end_date = "20191231"
+  end_date = "20191231",
+  include_redirects = FALSE
 )
 }
 \arguments{
 \item{project}{The name of any Wikimedia project formatted like
-\verb{\{language code\}.\{project name\}}, for example en.wikipedia. You may pass
-en.wikipedia.org and the .org will be stripped off. For projects like
-Wikimedia Commons (without language codes), use commons.wikimedia. For
-projects like www.mediawiki.org, you can use that full string, or just use
-mediawiki or mediawiki.org.}
+\verb{\{language code\}.\{project name\}}, for example en.wikipedia. You \emph{may} pass
+'en.wikipedia.org' and the .org will be stripped off. For projects without
+language codes like Wikimedia Commons or MediaWiki, use
+commons.wikimedia.org and mediawiki.org, respectively. This inclusion of
+.org is especially important if including redirects, as the project's MW
+API will need to be queried.}
 
 \item{page_name}{The title of any article in the specified project.
 The function takes care of replacing spaces with underscores and
@@ -46,12 +48,17 @@ Can also be a \code{Date} or a \code{POSIXt} object, which will be auto-formatte
 
 \item{end_date}{The date of the last day to include, in YYYYMMDD format.
 Can also be a \code{Date} or a \code{POSIXt} object, which will be auto-formatted.}
+
+\item{include_redirects}{Whether to include redirects to requested pages.
+Currently, only article (mainspace) redirects are supported. See
+"Redirects" section below for more details.}
 }
 \value{
 A tibble data frame with the following columns:
 \describe{
 \item{\code{project}}{project}
 \item{\code{page_name}}{the \code{page_name} provided by the user}
+\item{\code{redirect_name}}{the name of the redirect to the page if \code{include_redirects = TRUE}; \code{NA} for the page itself}
 \item{\code{date}}{\code{Date}; beginning of each month if \code{granularity = "monthly"}}
 \item{\code{views}}{total number of views for the page}
 }
@@ -59,6 +66,36 @@ A tibble data frame with the following columns:
 \description{
 Page view counts
 }
+\section{Redirects}{
+
+By default \code{include_redirects = FALSE} for performance reasons. The
+pageviews API does not roll up view counts for redirects into total view
+counts of the target page, so set \code{include_redirects} to \code{TRUE} if you want
+to have this function automatically locate the redirects via the MediaWiki
+API and request their pageview counts. Obviously this makes the function
+much slower, especially if the number of redirects to the page(s) is high.
+
+For example, if the user visits "2019-20 coronavirus pandemic" (with a
+minus) they will be redirected to the actual article "2019–20 coronavirus
+pandemic" (with an en-dash). Any visits to the redirect (the page with the
+minus sign instead of the en-dash) will not be counted toward the page view
+count of the redirected-to article, although once the client is taken to the
+target page that counts as a separate page view.
+
+In some cases, you may want to include page views of the redirects in your
+total or you may want to the ability to disentangle the portion of traffic
+that is from users arriving to a page via a redirect vs. users arriving to
+a page directly.
+
+\strong{Note on performance}: again, the process of finding and fetching view
+counts for redirects is considerably slower. The function has been optimized
+for multiple pages, since the \href{https://www.mediawiki.org/wiki/API:Redirects}{redirects API}
+supports up to 50 pages per call. Therefore, it is \emph{highly recommended} that
+if you have multiple pages to retrieve traffic for within the same project,
+try not to retrieve traffic for one page at a time but instead provide the
+full vector of page names to minimize the burden on the MediaWiki API.
+}
+
 \section{License}{
 
 Data retrieved from the API endpoint is available under the
@@ -72,6 +109,15 @@ wx_page_views(
   start_date = "20191231",
   end_date = "20200101"
 )
+\dontrun{
+wx_page_views(
+  "en.wikipedia",
+  "2019–20 coronavirus pandemic",
+  start_date = "20200301",
+  end_date = "20200501",
+  include_redirects = TRUE
+)
+}
 }
 \seealso{
 \itemize{
