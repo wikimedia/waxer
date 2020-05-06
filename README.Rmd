@@ -22,6 +22,12 @@ To install the development version:
 remotes::install_github("bearloga/waxer")
 ```
 
+To update:
+
+```R
+remotes::update_packages(packages = "waxer")
+```
+
 ## Usage
 
 ```{r load, eval=FALSE}
