@@ -7,7 +7,7 @@
 wx_project_views(
   project,
   access_method = c("all", "desktop", "mobile web", "mobile app"),
-  agent_type = c("all", "user", "bot"),
+  agent_type = c("all", "user", "bot", "spider", "automated"),
   granularity = c("daily", "monthly", "hourly"),
   start_date = "20191231",
   end_date = "20200101"
@@ -25,7 +25,8 @@ mediawiki or mediawiki.org.}
 "desktop", "mobile app", or "mobile web". If you are interested in
 pageviews regardless of access method, use "all" (default).}
 
-\item{agent_type}{If you want to filter by agent type, use "user" or "bot".
+\item{agent_type}{If you want to filter by agent type, use "user", "bot"/"spider",
+or "automated" (refer to \href{https://wikitech.wikimedia.org/wiki/Analytics/Data_Lake/Traffic/BotDetection}{wikitech:Analytics/Data Lake/Traffic/BotDetection}).
 If you are interested in pageviews regardless of agent type, use "all"
 (default).}
 

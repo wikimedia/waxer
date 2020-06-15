@@ -4,7 +4,7 @@ output:
   rmarkdown::html_vignette:
     df_print: kable
 vignette: >
-  %\VignetteIndexEntry{waxer}
+  %\VignetteIndexEntry{Introduction to waxer}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -140,7 +140,7 @@ MediaWiki enables users to create [redirects](https://www.mediawiki.org/wiki/Hel
 ```{r pvs_with_redirects, cache=TRUE}
 pvs_with_redirects <- wx_page_views(
   "en.wikipedia",
-  "2019–20 coronavirus pandemic",
+  c("COVID-19 pandemic", "2019–20 coronavirus pandemic"),
   start_date = "20200401",
   end_date = "20200401",
   include_redirects = TRUE
@@ -191,7 +191,7 @@ projects <- c(
 project_views <- map_dfr(
   projects, wx_project_views,
   access_method = "desktop", agent_type = "user",
-  granularity = "monthly", start_date = "20160101", end_date = "20200401",
+  granularity = "monthly", start_date = "20160101", end_date = "20200601",
   .id = "language"
 )
 ```
@@ -201,7 +201,16 @@ head(project_views)
 
 ```{r plot_project_views}
 ggplot(project_views) +
+  geom_vline(aes(xintercept = as.Date("2020-05-01")), linetype = "dashed") +
   geom_line(aes(x = date, y = views, color = language), size = 0.8) +
+  geom_text(
+    aes(
+      x = as.Date("2020-05-01"), y = 0,
+      label = "Automated traffic detection",
+      vjust = "bottom", hjust = "left"
+    ),
+    angle = 90, nudge_x = -10
+  ) +
   scale_y_continuous(
     minor_breaks = NULL,
     labels = scales::label_number(scale = 1e-6, suffix = "M")
@@ -271,7 +280,7 @@ top_viewed <- wx_top_viewed_pages(
   project = "en.wikipedia",
   granularity = "monthly",
   start_date = "20190101",
-  end_date = "20190331"
+  end_date = "20190430"
 )
 ```
 
@@ -287,7 +296,7 @@ top_viewed %>%
 
 ## Unique devices
 
-To obtain the monthly estimated number of unique devices that visited German Wikivoyage from Jan 2018 to March 2020:
+To obtain the monthly estimated number of unique devices that visited German Wikivoyage from Jan 2018 to May 2020:
 
 ```{r unique_devices, cache=TRUE}
 unique_devices <- wx_unique_devices(
@@ -295,7 +304,7 @@ unique_devices <- wx_unique_devices(
   granularity = "monthly",
   access_site = "all",
   start_date = "20180101",
-  end_date = "20200331"
+  end_date = "20200531"
 )
 ```
 ```{r}
@@ -396,7 +405,7 @@ active_editors_by_wiki <- map_dfr(
   projects,
   wx_active_editors,
   editor_type = "user", page_type = "content",
-  start_date = "20150101", end_date = "20200401",
+  start_date = "20150101", end_date = "20200601",
   granularity = "monthly",
   .id = "language"
 )
@@ -449,7 +458,7 @@ total_pages <- wx_total_pages(
   page_type = "content", # focus on articles
   granularity = "monthly",
   start_date = "20010501",
-  end_date = "20200401"
+  end_date = "20200601"
 )
 ```
 ```{r}
@@ -480,9 +489,9 @@ ggplot(total_pages) +
 ```{r page_edits, cache=TRUE}
 page_edits <- wx_page_edits(
   "en.wikipedia",
-  c("Coronavirus disease 2019", "Coronavirus outbreak"),
+  c("Coronavirus disease 2019", "COVID-19 pandemic"),
   start_date = "20200101",
-  end_date = "20200401"
+  end_date = "20200601"
 )
 ```
 ```{r}
@@ -507,7 +516,7 @@ daily_edits <- map_dfr(
   projects,
   wx_project_edits,
   editor_type = "all", page_type = "content",
-  start_date = "20200101", end_date = "20200401",
+  start_date = "20200101", end_date = "20200601",
   granularity = "daily",
   .id = "language"
 )
@@ -515,7 +524,7 @@ daily_editors <- map_dfr(
   projects,
   wx_active_editors,
   editor_type = "all", page_type = "content",
-  start_date = "20200101", end_date = "20200401",
+  start_date = "20200101", end_date = "20200601",
   granularity = "daily",
   .id = "language"
 )

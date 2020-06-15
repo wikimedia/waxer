@@ -72,7 +72,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">waxer</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.9.4</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.9.5</span>
       </span>
     </div>
 
@@ -122,7 +122,7 @@
   <span class='no'>project</span>,
   <span class='no'>page_name</span>,
   <span class='kw'>access_method</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"all"</span>, <span class='st'>"desktop"</span>, <span class='st'>"mobile web"</span>, <span class='st'>"mobile app"</span>),
-  <span class='kw'>agent_type</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"all"</span>, <span class='st'>"user"</span>, <span class='st'>"bot"</span>),
+  <span class='kw'>agent_type</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"all"</span>, <span class='st'>"user"</span>, <span class='st'>"bot"</span>, <span class='st'>"spider"</span>, <span class='st'>"automated"</span>),
   <span class='kw'>granularity</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"daily"</span>, <span class='st'>"monthly"</span>),
   <span class='kw'>start_date</span> <span class='kw'>=</span> <span class='st'>"20191101"</span>,
   <span class='kw'>end_date</span> <span class='kw'>=</span> <span class='st'>"20191231"</span>,
@@ -160,7 +160,8 @@ pageviews regardless of access method, use "all" (default).</p></td>
     </tr>
     <tr>
       <th>agent_type</th>
-      <td><p>If you want to filter by agent type, use "user" or "bot".
+      <td><p>If you want to filter by agent type, use "user", "bot"/"spider",
+or "automated" (refer to <a href='https://wikitech.wikimedia.org/wiki/Analytics/Data_Lake/Traffic/BotDetection'>wikitech:Analytics/Data Lake/Traffic/BotDetection</a>).
 If you are interested in pageviews regardless of agent type, use "all"
 (default).</p></td>
     </tr>
@@ -259,7 +260,7 @@ full vector of page names to minimize the burden on the MediaWiki API.</p>
 #&gt; </span><span style='color: #555555;'>4</span><span> en.wikipedia New Year's Eve 2020-01-01  </span><span style='text-decoration: underline;'>51</span><span>715</div><div class='input'><span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
 <span class='fu'>wx_page_views</span>(
   <span class='st'>"en.wikipedia"</span>,
-  <span class='st'>"2019–20 coronavirus pandemic"</span>,
+  <span class='st'>"COVID-19 pandemic"</span>,
   <span class='kw'>start_date</span> <span class='kw'>=</span> <span class='st'>"20200301"</span>,
   <span class='kw'>end_date</span> <span class='kw'>=</span> <span class='st'>"20200501"</span>,
   <span class='kw'>include_redirects</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>

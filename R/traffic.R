@@ -157,7 +157,8 @@ wx_unique_devices <- function(
 #' @title Project page-view counts
 #' @inheritParams wx_top_edited_pages
 #' @inheritParams wx_top_viewed_pages
-#' @param agent_type If you want to filter by agent type, use "user" or "bot".
+#' @param agent_type If you want to filter by agent type, use "user", "bot"/"spider",
+#'   or "automated" (refer to [wikitech:Analytics/Data Lake/Traffic/BotDetection](https://wikitech.wikimedia.org/wiki/Analytics/Data_Lake/Traffic/BotDetection)).
 #'   If you are interested in pageviews regardless of agent type, use "all"
 #'   (default).
 #' @param granularity The time unit for the response data. As of today,
@@ -188,7 +189,7 @@ wx_unique_devices <- function(
 wx_project_views <- function(
   project,
   access_method = c("all", "desktop", "mobile web", "mobile app"),
-  agent_type = c("all", "user", "bot"),
+  agent_type = c("all", "user", "bot", "spider", "automated"),
   granularity = c("daily", "monthly", "hourly"),
   start_date = "20191231",
   end_date = "20200101"
@@ -287,7 +288,7 @@ wx_project_views <- function(
 #' \dontrun{
 #' wx_page_views(
 #'   "en.wikipedia",
-#'   "2019–20 coronavirus pandemic",
+#'   "COVID-19 pandemic",
 #'   start_date = "20200301",
 #'   end_date = "20200501",
 #'   include_redirects = TRUE
@@ -309,7 +310,7 @@ wx_project_views <- function(
 wx_page_views <- function(
   project, page_name,
   access_method = c("all", "desktop", "mobile web", "mobile app"),
-  agent_type = c("all", "user", "bot"),
+  agent_type = c("all", "user", "bot", "spider", "automated"),
   granularity = c("daily", "monthly"),
   start_date = "20191101",
   end_date = "20191231",

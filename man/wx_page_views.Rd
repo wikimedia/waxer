@@ -8,7 +8,7 @@ wx_page_views(
   project,
   page_name,
   access_method = c("all", "desktop", "mobile web", "mobile app"),
-  agent_type = c("all", "user", "bot"),
+  agent_type = c("all", "user", "bot", "spider", "automated"),
   granularity = c("daily", "monthly"),
   start_date = "20191101",
   end_date = "20191231",
@@ -36,7 +36,8 @@ page names at once as this function has been optimized for that use-case.}
 "desktop", "mobile app", or "mobile web". If you are interested in
 pageviews regardless of access method, use "all" (default).}
 
-\item{agent_type}{If you want to filter by agent type, use "user" or "bot".
+\item{agent_type}{If you want to filter by agent type, use "user", "bot"/"spider",
+or "automated" (refer to \href{https://wikitech.wikimedia.org/wiki/Analytics/Data_Lake/Traffic/BotDetection}{wikitech:Analytics/Data Lake/Traffic/BotDetection}).
 If you are interested in pageviews regardless of agent type, use "all"
 (default).}
 
@@ -112,7 +113,7 @@ wx_page_views(
 \dontrun{
 wx_page_views(
   "en.wikipedia",
-  "2019–20 coronavirus pandemic",
+  "COVID-19 pandemic",
   start_date = "20200301",
   end_date = "20200501",
   include_redirects = TRUE

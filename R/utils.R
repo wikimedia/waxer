@@ -30,7 +30,13 @@ wx_types <- function(...) {
   return(args)
 }
 wx_agent_type <- function(x) {
-  agent_types <- c("all" = "all-agents", "user" = "user", "bot" = "spider")
+  agent_types <- c(
+    "all" = "all-agents",
+    "user" = "user",
+    "bot" = "spider",
+    "spider" = "spider",
+    "automated" = "automated"
+  )
   return(agent_types[x])
 }
 wx_access_method <- function(x) {
@@ -156,10 +162,10 @@ wx_get_redirects <- function(project, page_names) {
     query <- glue::glue("action=query&format=json&prop=redirects&meta=&titles={titles}&rdnamespace=0&rdlimit=max")
     result <- mw_query(query)
     purrr::map_dfr(result$query$pages, function(page) {
-      page$redirects %>%
-        purrr::map_dfr(as.data.frame, stringsAsFactors = FALSE) %>%
-        dplyr::mutate(page_title = page$title) %>% # unused: page_id = page$pageid
-        dplyr::select(page_title, redirect_title = title) # unused: redirect_id = pageid
+      if (!"redirects" %in% names(page)) return(NULL)
+      df <- purrr::map_dfr(page$redirects, as.data.frame, stringsAsFactors = FALSE, col.names = c("page_id", "namespace", "redirect_title"))
+      df$page_title = page$title # unused: page_id = page$pageid
+      return(df[, c("page_title", "redirect_title")])
     })
   })
 }

@@ -26,7 +26,8 @@ Wikimedia project (e.g. de.wikipedia), "all", "internal", "external",
 image, audio, video, document, or other. Default is "all" media types.
 See Media section below.}
 
-\item{agent_type}{If you want to filter by agent type, use "user" or "bot".
+\item{agent_type}{If you want to filter by agent type, use "user", "bot"/"spider",
+or "automated" (refer to \href{https://wikitech.wikimedia.org/wiki/Analytics/Data_Lake/Traffic/BotDetection}{wikitech:Analytics/Data Lake/Traffic/BotDetection}).
 If you are interested in pageviews regardless of agent type, use "all"
 (default).}
 

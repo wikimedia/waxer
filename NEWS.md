@@ -1,3 +1,10 @@
+# waxer 0.9.5
+
+* Adds "automated" agent type for traffic metrics
+  * See [wikitech:Analytics/Data Lake/Traffic/BotDetection](https://wikitech.wikimedia.org/wiki/Analytics/Data_Lake/Traffic/BotDetection)
+  * And ["automated" marker added to pageview data](https://lists.wikimedia.org/pipermail/analytics/2020-May/006850.html)
+* "bot" and "spider" agent types can not be used interchangeably
+
 # waxer 0.9.4
 
 * Adds `include_redirects` argument to `wx_page_views` ([issue 3](https://github.com/bearloga/waxer/issues/3))
