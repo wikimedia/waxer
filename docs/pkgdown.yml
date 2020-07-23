@@ -3,7 +3,7 @@ pkgdown: 1.5.1
 pkgdown_sha: ~
 articles:
   waxer: waxer.html
-last_built: 2020-07-23T13:20Z
+last_built: 2020-07-23T13:27Z
 urls:
   reference: https://bearloga.github.io/waxer/reference
   article: https://bearloga.github.io/waxer/articles
