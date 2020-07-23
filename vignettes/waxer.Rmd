@@ -1,5 +1,5 @@
 ---
-title: "Introduction to {waxer}"
+title: "Introduction to waxer"
 output:
   rmarkdown::html_vignette:
     df_print: kable
@@ -191,7 +191,7 @@ projects <- c(
 project_views <- map_dfr(
   projects, wx_project_views,
   access_method = "desktop", agent_type = "user",
-  granularity = "monthly", start_date = "20160101", end_date = "20200601",
+  granularity = "monthly", start_date = "20160101", end_date = "20200701",
   .id = "language"
 )
 ```
@@ -280,7 +280,7 @@ top_viewed <- wx_top_viewed_pages(
   project = "en.wikipedia",
   granularity = "monthly",
   start_date = "20190101",
-  end_date = "20190430"
+  end_date = "20190301"
 )
 ```
 
@@ -296,7 +296,7 @@ top_viewed %>%
 
 ## Unique devices
 
-To obtain the monthly estimated number of unique devices that visited German Wikivoyage from Jan 2018 to May 2020:
+To obtain the monthly estimated number of unique devices that visited German Wikivoyage from Jan 2018 to June 2020:
 
 ```{r unique_devices, cache=TRUE}
 unique_devices <- wx_unique_devices(
@@ -304,7 +304,7 @@ unique_devices <- wx_unique_devices(
   granularity = "monthly",
   access_site = "all",
   start_date = "20180101",
-  end_date = "20200531"
+  end_date = "20200630"
 )
 ```
 ```{r}
@@ -405,7 +405,7 @@ active_editors_by_wiki <- map_dfr(
   projects,
   wx_active_editors,
   editor_type = "user", page_type = "content",
-  start_date = "20150101", end_date = "20200601",
+  start_date = "20150101", end_date = "20200701",
   granularity = "monthly",
   .id = "language"
 )
@@ -458,7 +458,7 @@ total_pages <- wx_total_pages(
   page_type = "content", # focus on articles
   granularity = "monthly",
   start_date = "20010501",
-  end_date = "20200601"
+  end_date = "20200701"
 )
 ```
 ```{r}
@@ -491,7 +491,7 @@ page_edits <- wx_page_edits(
   "en.wikipedia",
   c("Coronavirus disease 2019", "COVID-19 pandemic"),
   start_date = "20200101",
-  end_date = "20200601"
+  end_date = "20200701"
 )
 ```
 ```{r}

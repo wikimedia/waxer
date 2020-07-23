@@ -7,5 +7,5 @@ of some pageviews from \"user\" to \"automated\". Therefore the number
 of user pageviews decreased when the mechanism was deployed 2020-05-01.
 
 See https://wikitech.wikimedia.org/wiki/Analytics/Data_Lake/Traffic/BotDetection"
-  message(msg)
+  packageStartupMessage(msg)
 }

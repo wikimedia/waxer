@@ -5,13 +5,13 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Introduction to {waxer} • waxer</title>
+<title>Introduction to waxer • waxer</title>
 <!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script><!-- Bootstrap --><link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.4.0/paper/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script><!-- bootstrap-toc --><link rel="stylesheet" href="../bootstrap-toc.css">
 <script src="../bootstrap-toc.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
 <!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
-<script src="../pkgdown.js"></script><meta property="og:title" content="Introduction to {waxer}">
+<script src="../pkgdown.js"></script><meta property="og:title" content="Introduction to waxer">
 <meta property="og:description" content="waxer">
 <!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
@@ -63,10 +63,10 @@
 
       
 
-      </header><script src="waxer_files/header-attrs-2.2/header-attrs.js"></script><div class="row">
+      </header><script src="waxer_files/header-attrs-2.3/header-attrs.js"></script><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
-      <h1 data-toc-skip>Introduction to {waxer}</h1>
+      <h1 data-toc-skip>Introduction to waxer</h1>
             
       
       <small class="dont-index">Source: <a href="https://github.com/bearloga/waxer/blob/master/vignettes/waxer.Rmd"><code>vignettes/waxer.Rmd</code></a></small>
@@ -226,7 +226,7 @@
 <span class="co">#&gt; 4 en.wikiped… COVID-19 pandemic     2019-20 China pneumonia o… 2020-04-01     16</span>
 <span class="co">#&gt; 5 en.wikiped… COVID-19 pandemic     China pneumonia outbreak   2020-04-01      4</span>
 <span class="co">#&gt; 6 en.wikiped… COVID-19 pandemic     2019–20 China pneumonia o… 2020-04-01    153</span></pre></body></html></div>
-<p>On 1 April 2020, the <a href="https://en.wikipedia.org/wiki/2019%E2%80%9320_coronavirus_pandemic"><em>2019–20 coronavirus pandemic</em></a> article had 96 redirects to it with traffic to them (at least 1 view). The most visited redirects are:</p>
+<p>On 1 April 2020, the <a href="https://en.wikipedia.org/wiki/2019%E2%80%9320_coronavirus_pandemic"><em>2019–20 coronavirus pandemic</em></a> article had 97 redirects to it with traffic to them (at least 1 view). The most visited redirects are:</p>
 <div class="sourceCode" id="cb12"><html><body><pre class="r"><span class="no">pvs_with_redirects</span> <span class="kw">%&gt;%</span>
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span>(!<span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span>(<span class="no">redirect_name</span>)) <span class="kw">%&gt;%</span>
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/top_n.html">top_n</a></span>(<span class="fl">10</span>, <span class="no">views</span>) <span class="kw">%&gt;%</span>
@@ -260,7 +260,7 @@
 <span class="co">#&gt;   project    page_name           date       total_views redirect_views redirects</span>
 <span class="co">#&gt;   &lt;chr&gt;      &lt;chr&gt;               &lt;date&gt;           &lt;int&gt;          &lt;int&gt;     &lt;int&gt;</span>
 <span class="co">#&gt; 1 en.wikipe… 2019–20 coronaviru… 2020-04-01      810193              0         0</span>
-<span class="co">#&gt; 2 en.wikipe… COVID-19 pandemic   2020-04-01      899018         898647        96</span></pre></body></html></div>
+<span class="co">#&gt; 2 en.wikipe… COVID-19 pandemic   2020-04-01      899028         898657        97</span></pre></body></html></div>
 </div>
 <div id="project-views" class="section level3">
 <h3 class="hasAnchor">
@@ -274,7 +274,7 @@
 <span class="no">project_views</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html">map_dfr</a></span>(
   <span class="no">projects</span>, <span class="no">wx_project_views</span>,
   <span class="kw">access_method</span> <span class="kw">=</span> <span class="st">"desktop"</span>, <span class="kw">agent_type</span> <span class="kw">=</span> <span class="st">"user"</span>,
-  <span class="kw">granularity</span> <span class="kw">=</span> <span class="st">"monthly"</span>, <span class="kw">start_date</span> <span class="kw">=</span> <span class="st">"20160101"</span>, <span class="kw">end_date</span> <span class="kw">=</span> <span class="st">"20200601"</span>,
+  <span class="kw">granularity</span> <span class="kw">=</span> <span class="st">"monthly"</span>, <span class="kw">start_date</span> <span class="kw">=</span> <span class="st">"20160101"</span>, <span class="kw">end_date</span> <span class="kw">=</span> <span class="st">"20200701"</span>,
   <span class="kw">.id</span> <span class="kw">=</span> <span class="st">"language"</span>
 )</pre></body></html></div>
 <div class="sourceCode" id="cb15"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(<span class="no">project_views</span>)
@@ -369,7 +369,7 @@
   <span class="kw">project</span> <span class="kw">=</span> <span class="st">"en.wikipedia"</span>,
   <span class="kw">granularity</span> <span class="kw">=</span> <span class="st">"monthly"</span>,
   <span class="kw">start_date</span> <span class="kw">=</span> <span class="st">"20190101"</span>,
-  <span class="kw">end_date</span> <span class="kw">=</span> <span class="st">"20190430"</span>
+  <span class="kw">end_date</span> <span class="kw">=</span> <span class="st">"20190301"</span>
 )</pre></body></html></div>
 <p>Top 3 articles from each month:</p>
 <div class="sourceCode" id="cb21"><html><body><pre class="r"><span class="no">top_viewed</span> <span class="kw">%&gt;%</span>
@@ -377,32 +377,30 @@
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span>(<span class="no">page_name</span> <span class="kw">!=</span> <span class="st">"Main Page"</span>, !<span class="fu"><a href="https://rdrr.io/r/base/grep.html">grepl</a></span>(<span class="st">"^(Special|Wikipedia)\\:.*"</span>, <span class="no">page_name</span>)) <span class="kw">%&gt;%</span>
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span>(<span class="no">date</span>) <span class="kw">%&gt;%</span>
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/top_n.html">top_n</a></span>(<span class="fl">3</span>, <span class="no">views</span>)
-<span class="co">#&gt; # A tibble: 12 x 5</span>
-<span class="co">#&gt; # Groups:   date [4]</span>
-<span class="co">#&gt;    date       project      page_name                views  rank</span>
-<span class="co">#&gt;    &lt;date&gt;     &lt;chr&gt;        &lt;chr&gt;                    &lt;int&gt; &lt;int&gt;</span>
-<span class="co">#&gt;  1 2019-01-01 en.wikipedia Ted Bundy              7293874     3</span>
-<span class="co">#&gt;  2 2019-01-01 en.wikipedia Louis Tomlinson        5231127     4</span>
-<span class="co">#&gt;  3 2019-01-01 en.wikipedia XHamster               4039614     6</span>
-<span class="co">#&gt;  4 2019-02-01 en.wikipedia Freddie Mercury        6464633     3</span>
-<span class="co">#&gt;  5 2019-02-01 en.wikipedia Louis Tomlinson        5497023     4</span>
-<span class="co">#&gt;  6 2019-02-01 en.wikipedia Grover                 4975383     5</span>
-<span class="co">#&gt;  7 2019-03-01 en.wikipedia Captain Marvel (film)  7070703     3</span>
-<span class="co">#&gt;  8 2019-03-01 en.wikipedia Luke Perry             6362644     4</span>
-<span class="co">#&gt;  9 2019-03-01 en.wikipedia Us (2019 film)         4590483     6</span>
-<span class="co">#&gt; 10 2019-04-01 en.wikipedia Avengers: Endgame     13499153     3</span>
-<span class="co">#&gt; # … with 2 more rows</span></pre></body></html></div>
+<span class="co">#&gt; # A tibble: 9 x 5</span>
+<span class="co">#&gt; # Groups:   date [3]</span>
+<span class="co">#&gt;   date       project      page_name               views  rank</span>
+<span class="co">#&gt;   &lt;date&gt;     &lt;chr&gt;        &lt;chr&gt;                   &lt;int&gt; &lt;int&gt;</span>
+<span class="co">#&gt; 1 2019-01-01 en.wikipedia Ted Bundy             7293874     3</span>
+<span class="co">#&gt; 2 2019-01-01 en.wikipedia Louis Tomlinson       5231127     4</span>
+<span class="co">#&gt; 3 2019-01-01 en.wikipedia XHamster              4039614     6</span>
+<span class="co">#&gt; 4 2019-02-01 en.wikipedia Freddie Mercury       6464633     3</span>
+<span class="co">#&gt; 5 2019-02-01 en.wikipedia Louis Tomlinson       5497023     4</span>
+<span class="co">#&gt; 6 2019-02-01 en.wikipedia Grover                4975383     5</span>
+<span class="co">#&gt; 7 2019-03-01 en.wikipedia Captain Marvel (film) 7070703     3</span>
+<span class="co">#&gt; 8 2019-03-01 en.wikipedia Luke Perry            6362644     4</span>
+<span class="co">#&gt; 9 2019-03-01 en.wikipedia Us (2019 film)        4590483     6</span></pre></body></html></div>
 </div>
 <div id="unique-devices" class="section level2">
 <h2 class="hasAnchor">
 <a href="#unique-devices" class="anchor"></a>Unique devices</h2>
-<p>To obtain the monthly estimated number of unique devices that visited German Wikivoyage from Jan 2018 to May 2020:</p>
+<p>To obtain the monthly estimated number of unique devices that visited German Wikivoyage from Jan 2018 to June 2020:</p>
 <div class="sourceCode" id="cb22"><html><body><pre class="r"><span class="no">unique_devices</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/wx_unique_devices.html">wx_unique_devices</a></span>(
   <span class="kw">project</span> <span class="kw">=</span> <span class="st">"de.wikivoyage"</span>,
   <span class="kw">granularity</span> <span class="kw">=</span> <span class="st">"monthly"</span>,
   <span class="kw">access_site</span> <span class="kw">=</span> <span class="st">"all"</span>,
   <span class="kw">start_date</span> <span class="kw">=</span> <span class="st">"20180101"</span>,
-  <span class="kw">end_date</span> <span class="kw">=</span> <span class="st">"20200531"</span>
+  <span class="kw">end_date</span> <span class="kw">=</span> <span class="st">"20200630"</span>
 )</pre></body></html></div>
 <div class="sourceCode" id="cb23"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(<span class="no">unique_devices</span>)
 <span class="co">#&gt; # A tibble: 6 x 5</span>
@@ -451,12 +449,12 @@
 <span class="co">#&gt; # A tibble: 6 x 3</span>
 <span class="co">#&gt;   project      date       editors</span>
 <span class="co">#&gt;   &lt;chr&gt;        &lt;date&gt;       &lt;int&gt;</span>
-<span class="co">#&gt; 1 en.wikipedia 2020-01-01    9078</span>
-<span class="co">#&gt; 2 en.wikipedia 2020-01-02   10544</span>
-<span class="co">#&gt; 3 en.wikipedia 2020-01-03   10494</span>
-<span class="co">#&gt; 4 en.wikipedia 2020-01-04    9887</span>
-<span class="co">#&gt; 5 en.wikipedia 2020-01-05    9952</span>
-<span class="co">#&gt; 6 en.wikipedia 2020-01-06   10863</span></pre></body></html></div>
+<span class="co">#&gt; 1 en.wikipedia 2020-01-01    9079</span>
+<span class="co">#&gt; 2 en.wikipedia 2020-01-02   10543</span>
+<span class="co">#&gt; 3 en.wikipedia 2020-01-03   10491</span>
+<span class="co">#&gt; 4 en.wikipedia 2020-01-04    9888</span>
+<span class="co">#&gt; 5 en.wikipedia 2020-01-05    9953</span>
+<span class="co">#&gt; 6 en.wikipedia 2020-01-06   10866</span></pre></body></html></div>
 <div id="by-activity-level" class="section level2">
 <h2 class="hasAnchor">
 <a href="#by-activity-level" class="anchor"></a>By activity level</h2>
@@ -478,12 +476,12 @@
 <span class="co">#&gt; # A tibble: 6 x 4</span>
 <span class="co">#&gt;   activity_level project      date       editors</span>
 <span class="co">#&gt;   &lt;chr&gt;          &lt;chr&gt;        &lt;date&gt;       &lt;int&gt;</span>
-<span class="co">#&gt; 1 low            en.wikipedia 2020-01-01    6427</span>
-<span class="co">#&gt; 2 low            en.wikipedia 2020-01-02    7610</span>
-<span class="co">#&gt; 3 low            en.wikipedia 2020-01-03    7581</span>
-<span class="co">#&gt; 4 low            en.wikipedia 2020-01-04    7046</span>
-<span class="co">#&gt; 5 low            en.wikipedia 2020-01-05    7013</span>
-<span class="co">#&gt; 6 low            en.wikipedia 2020-01-06    7878</span></pre></body></html></div>
+<span class="co">#&gt; 1 low            en.wikipedia 2020-01-01    6429</span>
+<span class="co">#&gt; 2 low            en.wikipedia 2020-01-02    7609</span>
+<span class="co">#&gt; 3 low            en.wikipedia 2020-01-03    7578</span>
+<span class="co">#&gt; 4 low            en.wikipedia 2020-01-04    7047</span>
+<span class="co">#&gt; 5 low            en.wikipedia 2020-01-05    7014</span>
+<span class="co">#&gt; 6 low            en.wikipedia 2020-01-06    7881</span></pre></body></html></div>
 <div class="sourceCode" id="cb29"><html><body><pre class="r"><span class="no">active_editors_by_activity</span> <span class="kw">&lt;-</span> <span class="no">active_editors_by_activity</span> <span class="kw">%&gt;%</span>
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span>(
     <span class="kw">activity_level</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">factor</a></span>(
@@ -513,7 +511,7 @@
   <span class="no">projects</span>,
   <span class="no">wx_active_editors</span>,
   <span class="kw">editor_type</span> <span class="kw">=</span> <span class="st">"user"</span>, <span class="kw">page_type</span> <span class="kw">=</span> <span class="st">"content"</span>,
-  <span class="kw">start_date</span> <span class="kw">=</span> <span class="st">"20150101"</span>, <span class="kw">end_date</span> <span class="kw">=</span> <span class="st">"20200601"</span>,
+  <span class="kw">start_date</span> <span class="kw">=</span> <span class="st">"20150101"</span>, <span class="kw">end_date</span> <span class="kw">=</span> <span class="st">"20200701"</span>,
   <span class="kw">granularity</span> <span class="kw">=</span> <span class="st">"monthly"</span>,
   <span class="kw">.id</span> <span class="kw">=</span> <span class="st">"language"</span>
 )</pre></body></html></div>
@@ -521,12 +519,12 @@
 <span class="co">#&gt; # A tibble: 6 x 4</span>
 <span class="co">#&gt;   language project      date       editors</span>
 <span class="co">#&gt;   &lt;chr&gt;    &lt;chr&gt;        &lt;date&gt;       &lt;int&gt;</span>
-<span class="co">#&gt; 1 French   fr.wikipedia 2015-01-01   14180</span>
-<span class="co">#&gt; 2 French   fr.wikipedia 2015-02-01   14150</span>
-<span class="co">#&gt; 3 French   fr.wikipedia 2015-03-01   15312</span>
-<span class="co">#&gt; 4 French   fr.wikipedia 2015-04-01   13917</span>
-<span class="co">#&gt; 5 French   fr.wikipedia 2015-05-01   13769</span>
-<span class="co">#&gt; 6 French   fr.wikipedia 2015-06-01   13314</span></pre></body></html></div>
+<span class="co">#&gt; 1 French   fr.wikipedia 2015-01-01   14177</span>
+<span class="co">#&gt; 2 French   fr.wikipedia 2015-02-01   14143</span>
+<span class="co">#&gt; 3 French   fr.wikipedia 2015-03-01   15307</span>
+<span class="co">#&gt; 4 French   fr.wikipedia 2015-04-01   13914</span>
+<span class="co">#&gt; 5 French   fr.wikipedia 2015-05-01   13768</span>
+<span class="co">#&gt; 6 French   fr.wikipedia 2015-06-01   13311</span></pre></body></html></div>
 <div class="sourceCode" id="cb32"><html><body><pre class="r"><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span>(<span class="no">active_editors_by_wiki</span>) +
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html">geom_line</a></span>(<span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span>(<span class="kw">x</span> <span class="kw">=</span> <span class="no">date</span>, <span class="kw">color</span> <span class="kw">=</span> <span class="no">language</span>, <span class="kw">y</span> <span class="kw">=</span> <span class="no">editors</span>)) +
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_date.html">scale_x_date</a></span>(<span class="kw">date_breaks</span> <span class="kw">=</span> <span class="st">"1 year"</span>, <span class="kw">minor_breaks</span> <span class="kw">=</span> <span class="kw">NULL</span>, <span class="kw">date_labels</span> <span class="kw">=</span> <span class="st">"%b\n%Y"</span>) +
@@ -561,7 +559,7 @@
 <span class="co">#&gt; # A tibble: 1 x 3</span>
 <span class="co">#&gt;   project      date       new_pages</span>
 <span class="co">#&gt;   &lt;chr&gt;        &lt;date&gt;         &lt;int&gt;</span>
-<span class="co">#&gt; 1 ru.wikipedia 2019-12-01      5562</span></pre></body></html></div>
+<span class="co">#&gt; 1 ru.wikipedia 2019-12-01      5559</span></pre></body></html></div>
 <p>How has Russian Wikipedia grown over time since it started in May 2001?</p>
 <div class="sourceCode" id="cb35"><html><body><pre class="r"><span class="no">total_pages</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/wx_total_pages.html">wx_total_pages</a></span>(
   <span class="st">"ru.wikipedia"</span>,
@@ -569,18 +567,18 @@
   <span class="kw">page_type</span> <span class="kw">=</span> <span class="st">"content"</span>, <span class="co"># focus on articles</span>
   <span class="kw">granularity</span> <span class="kw">=</span> <span class="st">"monthly"</span>,
   <span class="kw">start_date</span> <span class="kw">=</span> <span class="st">"20010501"</span>,
-  <span class="kw">end_date</span> <span class="kw">=</span> <span class="st">"20200601"</span>
+  <span class="kw">end_date</span> <span class="kw">=</span> <span class="st">"20200701"</span>
 )</pre></body></html></div>
 <div class="sourceCode" id="cb36"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/utils/head.html">tail</a></span>(<span class="no">total_pages</span>)
 <span class="co">#&gt; # A tibble: 6 x 5</span>
 <span class="co">#&gt;   project      date       total_pages existing_pages new_pages</span>
 <span class="co">#&gt;   &lt;chr&gt;        &lt;date&gt;           &lt;int&gt;          &lt;dbl&gt;     &lt;int&gt;</span>
-<span class="co">#&gt; 1 ru.wikipedia 2019-12-01     1587165        1581235      5930</span>
-<span class="co">#&gt; 2 ru.wikipedia 2020-01-01     1594452        1587165      7287</span>
-<span class="co">#&gt; 3 ru.wikipedia 2020-02-01     1601305        1594452      6853</span>
-<span class="co">#&gt; 4 ru.wikipedia 2020-03-01     1610220        1601305      8915</span>
-<span class="co">#&gt; 5 ru.wikipedia 2020-04-01     1620164        1610220      9944</span>
-<span class="co">#&gt; 6 ru.wikipedia 2020-05-01     1631430        1620164     11266</span></pre></body></html></div>
+<span class="co">#&gt; 1 ru.wikipedia 2020-01-01     1594429        1587146      7283</span>
+<span class="co">#&gt; 2 ru.wikipedia 2020-02-01     1601288        1594429      6859</span>
+<span class="co">#&gt; 3 ru.wikipedia 2020-03-01     1610212        1601288      8924</span>
+<span class="co">#&gt; 4 ru.wikipedia 2020-04-01     1620174        1610212      9962</span>
+<span class="co">#&gt; 5 ru.wikipedia 2020-05-01     1631391        1620174     11217</span>
+<span class="co">#&gt; 6 ru.wikipedia 2020-06-01     1639934        1631391      8543</span></pre></body></html></div>
 <div class="sourceCode" id="cb37"><html><body><pre class="r"><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span>(<span class="no">total_pages</span>) +
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html">geom_line</a></span>(<span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span>(<span class="kw">x</span> <span class="kw">=</span> <span class="no">date</span>, <span class="kw">y</span> <span class="kw">=</span> <span class="no">total_pages</span>)) +
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html">scale_y_continuous</a></span>(
@@ -606,7 +604,7 @@
   <span class="st">"en.wikipedia"</span>,
   <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"Coronavirus disease 2019"</span>, <span class="st">"COVID-19 pandemic"</span>),
   <span class="kw">start_date</span> <span class="kw">=</span> <span class="st">"20200101"</span>,
-  <span class="kw">end_date</span> <span class="kw">=</span> <span class="st">"20200601"</span>
+  <span class="kw">end_date</span> <span class="kw">=</span> <span class="st">"20200701"</span>
 )</pre></body></html></div>
 <div class="sourceCode" id="cb39"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(<span class="no">page_edits</span>)
 <span class="co">#&gt; # A tibble: 6 x 4</span>
@@ -655,12 +653,12 @@
 <span class="co">#&gt; # A tibble: 6 x 6</span>
 <span class="co">#&gt;   language project      date       edits editors edits_per_editor</span>
 <span class="co">#&gt;   &lt;chr&gt;    &lt;chr&gt;        &lt;date&gt;     &lt;int&gt;   &lt;int&gt;            &lt;dbl&gt;</span>
-<span class="co">#&gt; 1 French   fr.wikipedia 2020-01-01 17249    2733             6.31</span>
-<span class="co">#&gt; 2 French   fr.wikipedia 2020-01-02 20741    3523             5.89</span>
-<span class="co">#&gt; 3 French   fr.wikipedia 2020-01-03 26661    3567             7.47</span>
-<span class="co">#&gt; 4 French   fr.wikipedia 2020-01-04 25213    3375             7.47</span>
-<span class="co">#&gt; 5 French   fr.wikipedia 2020-01-05 26269    3614             7.27</span>
-<span class="co">#&gt; 6 French   fr.wikipedia 2020-01-06 23295    3562             6.54</span></pre></body></html></div>
+<span class="co">#&gt; 1 French   fr.wikipedia 2020-01-01 17237    2729             6.32</span>
+<span class="co">#&gt; 2 French   fr.wikipedia 2020-01-02 20732    3522             5.89</span>
+<span class="co">#&gt; 3 French   fr.wikipedia 2020-01-03 26628    3563             7.47</span>
+<span class="co">#&gt; 4 French   fr.wikipedia 2020-01-04 25191    3370             7.48</span>
+<span class="co">#&gt; 5 French   fr.wikipedia 2020-01-05 26238    3614             7.26</span>
+<span class="co">#&gt; 6 French   fr.wikipedia 2020-01-06 23278    3559             6.54</span></pre></body></html></div>
 <p>Using <a href="https://cran.r-project.org/package=RcppRoll">{RcppRoll}</a> we can create a rolling 7-day average to smooth out the day-to-day variability, which will be helpful for visualization:</p>
 <div class="sourceCode" id="cb43"><html><body><pre class="r"><span class="no">editing_activity</span> <span class="kw">%&gt;%</span>
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span>(<span class="no">language</span>) <span class="kw">%&gt;%</span>
@@ -728,7 +726,7 @@
 <span class="co">#&gt;  6 February     1 COVID-19 pandemic                                 </span>
 <span class="co">#&gt;  7 February     2 COVID-19 pandemic by country and territory        </span>
 <span class="co">#&gt;  8 February     3 Deaths in 2020                                    </span>
-<span class="co">#&gt;  9 February     4 2020 Iowa Democratic caucuses                     </span>
+<span class="co">#&gt;  9 February     4 2020 Iowa Democratic presidential caucuses        </span>
 <span class="co">#&gt; 10 February     5 Timeline of the COVID-19 pandemic in February 2020</span>
 <span class="co">#&gt; # … with 5 more rows</span></pre></body></html></div>
 </div>
