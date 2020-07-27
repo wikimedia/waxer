@@ -1,5 +1,12 @@
-url: https://bearloga.github.io/waxer
+url: https://wikimedia.github.io/waxer
 destination: docs
+
+repo:
+  url:
+    home: https://github.com/wikimedia/waxer/
+    source: https://github.com/wikimedia/waxer/blob/main/
+    issue: https://github.com/wikimedia/waxer/issues/
+    user: https://github.com/wikimedia/
 
 authors:
   Mikhail Popov:

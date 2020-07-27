@@ -60,8 +60,8 @@ This dataset was generated from the
 \seealso{
 Useful links:
 \itemize{
-  \item \url{https://github.com/bearloga/waxer}
-  \item Report bugs at \url{https://github.com/bearloga/waxer/issues}
+  \item \url{https://github.com/wikimedia/waxer}
+  \item Report bugs at \url{https://github.com/wikimedia/waxer/issues}
 }
 
 }

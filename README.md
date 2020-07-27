@@ -8,8 +8,7 @@ API](https://wikimedia.org/api/rest_v1/) which provides data and metrics
 around traffic, users, and content on Wikimedia sites.
 
 **Author:** Mikhail Popov (Wikimedia Foundation)<br/> **License:**
-[MIT](http://opensource.org/licenses/MIT)<br/> **Status:** Actively
-maintained
+[MIT](http://opensource.org/licenses/MIT)<br/> **Status:** Active
 
 ## Installation
 
@@ -17,7 +16,7 @@ To install the development version:
 
 ``` r
 # install.packages("remotes")
-remotes::install_github("bearloga/waxer")
+remotes::install_github("wikimedia/waxer@main")
 ```
 
 To update:

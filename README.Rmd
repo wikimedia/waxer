@@ -11,7 +11,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 __Author:__ Mikhail Popov (Wikimedia Foundation)<br/>
 __License:__ [MIT](http://opensource.org/licenses/MIT)<br/>
-__Status:__ Actively maintained
+__Status:__ Active
 
 ## Installation
     
@@ -19,7 +19,7 @@ To install the development version:
 
 ```R
 # install.packages("remotes")
-remotes::install_github("bearloga/waxer")
+remotes::install_github("wikimedia/waxer@main")
 ```
 
 To update:

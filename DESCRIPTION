@@ -29,8 +29,8 @@ Suggests:
     knitr,
     RcppRoll,
     rmarkdown
-URL: https://github.com/bearloga/waxer
-BugReports: https://github.com/bearloga/waxer/issues
+URL: https://github.com/wikimedia/waxer
+BugReports: https://github.com/wikimedia/waxer/issues
 License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
