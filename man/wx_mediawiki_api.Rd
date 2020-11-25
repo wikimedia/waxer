@@ -4,7 +4,7 @@
 \alias{wx_mediawiki_api}
 \title{Generate a rate-limited MediaWiki API caller}
 \usage{
-wx_mediawiki_api(project)
+wx_mediawiki_api(project, ...)
 }
 \arguments{
 \item{project}{The project for which to generate queryable MW API endpoint}
@@ -21,6 +21,13 @@ This generator is primarily intended for internal use, but can
 theoretically be used by others to write custom MediaWiki API queries. The
 generated function is rate-limited at 100 queries per second.
 }
+\section{Additional parameters}{
+
+\itemize{
+\item \code{user_agent} lets you override the default User-Agent that waxer uses
+}
+}
+
 \seealso{
 \itemize{
 \item \href{https://www.mediawiki.org/wiki/API:Main_page}{MediaWiki API}

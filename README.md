@@ -14,23 +14,17 @@ around traffic, users, and content on Wikimedia sites.
 
 To install the development version:
 
-``` r
-# install.packages("remotes")
-remotes::install_github("wikimedia/waxer@main")
-```
+    # install.packages("remotes")
+    remotes::install_github("wikimedia/waxer@main")
 
 To update:
 
-``` r
-remotes::update_packages(packages = "waxer")
-```
+    remotes::update_packages(packages = "waxer")
 
 ## Usage
 
-``` r
-library(waxer)
-?waxer
-```
+    library(waxer)
+    ?waxer
 
 ## Additional Information
 

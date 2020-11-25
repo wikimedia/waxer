@@ -139,23 +139,38 @@ wx_check_args <- function(values, params) {
   return(purrr::map(values, ~ .x[1]))
 }
 
+#' @title Bucket items
+#' @description Split a vector of items into buckets not exceeding some maximum
+#'   bucket size. Useful for making fewer MediaWiki API calls when an endpoint
+#'   accepts multiple page titles per call (for example).
+#' @param items A vector of items
+#' @param bucket_size Maximum number of items a bucket may have
+#' @return A list with each element containing no more than `bucket_size` number
+#'   of items. Flattening the returned list would yield the original `items`
+#'   vector.
+#' @export
+wx_bucket_items <- function(items, bucket_size) {
+  n_items <- length(items)
+  if (n_items > bucket_size) {
+    n_segments <- floor(n_items / bucket_size)
+    n_remainder <- n_items %% bucket_size
+    if (n_remainder > 0) {
+      remainder_pages <- items[1:n_remainder]
+      buckets <- unname(split(items[-(1:n_remainder)], 1:n_segments))
+      buckets <- c(buckets, list(remainder_pages))
+    } else {
+      buckets <- unname(split(items, 1:n_segments))
+    }
+  } else {
+    buckets <- list(items)
+  }
+  return(buckets)
+}
+
 wx_get_redirects <- function(project, page_names) {
   # Break up the list of pages in blocks of 50 or fewer,
   # which is the maximum limit for 1 call to redirect API:
-  n_pages <- length(page_names)
-  if (n_pages > 50) {
-    n_segments <- floor(n_pages / 50)
-    n_remainder <- n_pages %% 50
-    if (n_remainder > 0) {
-      remainder_pages <- page_names[1:n_remainder]
-      segments <- unname(split(page_names[-(1:n_remainder)], 1:n_segments))
-      segments <- c(segments, list(remainder_pages))
-    } else {
-      segments <- unname(split(page_names, 1:n_segments))
-    }
-  } else {
-    segments <- list(page_names)
-  }
+  segments <- wx_bucket_items(page_names, 50)
   mw_query <- wx_mediawiki_api(project)
   purrr::map_dfr(segments, function(segment) {
     titles <- paste0(segment, collapse = "|")

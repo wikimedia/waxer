@@ -1,6 +1,6 @@
 Package: waxer
 Title: API Client Library for 'Wikimedia Analytics Query Service (AQS)'
-Version: 0.9.5
+Version: 0.9.6
 Authors@R: c(
     person("Mikhail", "Popov", email = "mikhail@wikimedia.org",
            role = c("aut", "cre")),
@@ -28,7 +28,8 @@ Suggests:
     readr,
     knitr,
     RcppRoll,
-    rmarkdown
+    rmarkdown,
+    testthat
 URL: https://github.com/wikimedia/waxer
 BugReports: https://github.com/wikimedia/waxer/issues
 License: MIT + file LICENSE

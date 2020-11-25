@@ -36,6 +36,11 @@ wx_query_api <- function(reqs_per_second = 200) {
   return(limit_rate(http_get, rate(n = reqs_per_second, period = 1)))
 }
 
+wx_user_agent <- function() {
+  pkg_version <- as.character(packageVersion("waxer"))
+  return(paste0("R wrapper for Wikimedia AQS API (https://github.com/bearloga/waxer) v", pkg_version))
+}
+
 #' @title Generate a rate-limited MediaWiki API caller
 #' @description Generates a function which makes a request to MediaWiki APIs.
 #'   This generator is primarily intended for internal use, but can
@@ -46,10 +51,12 @@ wx_query_api <- function(reqs_per_second = 200) {
 #' \describe{
 #'   \item{`query`}{query after endpoint; e.g. `action=query&format=json&titles=Main%20page`}
 #' }
+#' @section Additional parameters:
+#' - `user_agent` lets you override the default User-Agent that waxer uses
 #' @seealso
 #' - [MediaWiki API](https://www.mediawiki.org/wiki/API:Main_page)
 #' @import ratelimitr
-wx_mediawiki_api <- function(project) {
+wx_mediawiki_api <- function(project, ...) {
   if (!grepl("\\.org$", project)) {
     active_wikis <- utils::read.csv(system.file("extdata/wikis.csv", package = "waxer"))
     if (!project %in% active_wikis$project) {
@@ -60,10 +67,16 @@ wx_mediawiki_api <- function(project) {
   } else {
     base_url <- paste0("https://", project) # e.g. mediawiki.org
   }
+  args <- list(...)
+  if ("user_agent" %in% names(args)) {
+    user_agent <- args[["user_agent"]]
+  } else {
+    user_agent <- wx_user_agent()
+  }
   http_get <- function(query) {
     response <- httr::GET(
       base_url, path = "w/api.php", query = query,
-      httr::user_agent("R wrapper for Wikimedia AQS API (https://github.com/bearloga/waxer)"),
+      httr::user_agent(user_agent),
       httr::accept_json()
     )
     httr::stop_for_status(response)
