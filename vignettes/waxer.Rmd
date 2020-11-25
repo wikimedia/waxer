@@ -191,7 +191,7 @@ projects <- c(
 project_views <- map_dfr(
   projects, wx_project_views,
   access_method = "desktop", agent_type = "user",
-  granularity = "monthly", start_date = "20160101", end_date = "20200701",
+  granularity = "monthly", start_date = "20160101", end_date = "20201001",
   .id = "language"
 )
 ```
@@ -304,7 +304,7 @@ unique_devices <- wx_unique_devices(
   granularity = "monthly",
   access_site = "all",
   start_date = "20180101",
-  end_date = "20200630"
+  end_date = "20201031"
 )
 ```
 ```{r}
@@ -405,7 +405,7 @@ active_editors_by_wiki <- map_dfr(
   projects,
   wx_active_editors,
   editor_type = "user", page_type = "content",
-  start_date = "20150101", end_date = "20200701",
+  start_date = "20150101", end_date = "20201001",
   granularity = "monthly",
   .id = "language"
 )
@@ -458,7 +458,7 @@ total_pages <- wx_total_pages(
   page_type = "content", # focus on articles
   granularity = "monthly",
   start_date = "20010501",
-  end_date = "20200701"
+  end_date = "20201001"
 )
 ```
 ```{r}
@@ -491,7 +491,7 @@ page_edits <- wx_page_edits(
   "en.wikipedia",
   c("Coronavirus disease 2019", "COVID-19 pandemic"),
   start_date = "20200101",
-  end_date = "20200701"
+  end_date = "20201031"
 )
 ```
 ```{r}
@@ -516,7 +516,7 @@ daily_edits <- map_dfr(
   projects,
   wx_project_edits,
   editor_type = "all", page_type = "content",
-  start_date = "20200101", end_date = "20200601",
+  start_date = "20200101", end_date = "20201001",
   granularity = "daily",
   .id = "language"
 )
@@ -524,7 +524,7 @@ daily_editors <- map_dfr(
   projects,
   wx_active_editors,
   editor_type = "all", page_type = "content",
-  start_date = "20200101", end_date = "20200601",
+  start_date = "20200101", end_date = "20201001",
   granularity = "daily",
   .id = "language"
 )

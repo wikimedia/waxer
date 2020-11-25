@@ -63,3 +63,4 @@ reference:
   - contents:
     - wx_query_api
     - wx_mediawiki_api
+    - wx_bucket_items
