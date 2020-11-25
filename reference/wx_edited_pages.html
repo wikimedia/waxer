@@ -72,7 +72,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">waxer</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.9.5</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.9.6</span>
       </span>
     </div>
 
@@ -118,15 +118,15 @@
     <p>Number of edited pages for a given project and timespan.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>wx_edited_pages</span>(
-  <span class='no'>project</span>,
-  <span class='kw'>editor_type</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"all"</span>, <span class='st'>"anonymous"</span>, <span class='st'>"user"</span>, <span class='st'>"bot"</span>, <span class='st'>"bot group"</span>),
-  <span class='kw'>page_type</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"all"</span>, <span class='st'>"content"</span>, <span class='st'>"non-content"</span>),
-  <span class='kw'>activity_level</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"all"</span>, <span class='st'>"1-4"</span>, <span class='st'>"5-24"</span>, <span class='st'>"25-99"</span>, <span class='st'>"100+"</span>),
-  <span class='kw'>granularity</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"daily"</span>, <span class='st'>"monthly"</span>),
-  <span class='kw'>start_date</span> <span class='kw'>=</span> <span class='st'>"20191101"</span>,
-  <span class='kw'>end_date</span> <span class='kw'>=</span> <span class='st'>"20200101"</span>
-)</pre>
+    <pre class="usage"><span class='fu'>wx_edited_pages</span><span class='op'>(</span>
+  <span class='va'>project</span>,
+  editor_type <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"all"</span>, <span class='st'>"anonymous"</span>, <span class='st'>"user"</span>, <span class='st'>"bot"</span>, <span class='st'>"bot group"</span><span class='op'>)</span>,
+  page_type <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"all"</span>, <span class='st'>"content"</span>, <span class='st'>"non-content"</span><span class='op'>)</span>,
+  activity_level <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"all"</span>, <span class='st'>"1-4"</span>, <span class='st'>"5-24"</span>, <span class='st'>"25-99"</span>, <span class='st'>"100+"</span><span class='op'>)</span>,
+  granularity <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"daily"</span>, <span class='st'>"monthly"</span><span class='op'>)</span>,
+  start_date <span class='op'>=</span> <span class='st'>"20191101"</span>,
+  end_date <span class='op'>=</span> <span class='st'>"20200101"</span>
+<span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -182,7 +182,7 @@ Can also be a <code>Date</code> or a <code>POSIXt</code> object, which will be a
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>A tibble data frame with the following columns:</p><dl'>
+    <p>A tibble data frame with the following columns:</p><dl>
 <dt><code>project</code></dt><dd><p>project</p></dd>
 <dt><code>date</code></dt><dd><p><code>Date</code></p></dd>
 <dt><code>edited_pages</code></dt><dd><p>Number of pages which have been edited</p></dd>
@@ -209,11 +209,12 @@ Can also be a <code>Date</code> or a <code>POSIXt</code> object, which will be a
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># Monthly edited pages on Hindi Wikipedia:</span>
-<span class='fu'>wx_edited_pages</span>(<span class='st'>"hi.wikipedia"</span>, <span class='kw'>page_type</span> <span class='kw'>=</span> <span class='st'>"content"</span>, <span class='kw'>granularity</span> <span class='kw'>=</span> <span class='st'>"monthly"</span>)</div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 2 x 3</span><span>
+<span class='fu'>wx_edited_pages</span><span class='op'>(</span><span class='st'>"hi.wikipedia"</span>, page_type <span class='op'>=</span> <span class='st'>"content"</span>, granularity <span class='op'>=</span> <span class='st'>"monthly"</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 2 x 3</span><span>
 #&gt;   project      date       edited_pages
 #&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>        </span><span style='color: #555555;font-style: italic;'>&lt;date&gt;</span><span>            </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span>
-#&gt; </span><span style='color: #555555;'>1</span><span> hi.wikipedia 2019-11-01         </span><span style='text-decoration: underline;'>5</span><span>407
-#&gt; </span><span style='color: #555555;'>2</span><span> hi.wikipedia 2019-12-01         </span><span style='text-decoration: underline;'>5</span><span>249</div></span></pre>
+#&gt; </span><span style='color: #555555;'>1</span><span> hi.wikipedia 2019-11-01         </span><span style='text-decoration: underline;'>5</span><span>366
+#&gt; </span><span style='color: #555555;'>2</span><span> hi.wikipedia 2019-12-01         </span><span style='text-decoration: underline;'>5</span><span>217</div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -229,7 +230,7 @@ Can also be a <code>Date</code> or a <code>POSIXt</code> object, which will be a
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>
